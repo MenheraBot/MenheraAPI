@@ -1,0 +1,14 @@
+{
+  "name": "menherawatch",
+  "version": "1.0.0",
+  "description": "Um bot para avisar quando a Menhera Vai Off",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo oi"
+  },
+  "author": "Luxanna",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  }
+}
