@@ -28,8 +28,8 @@ client.on("presenceUpdate", async (oldPresence, newPresence) =>{
         const embed = new Discord.MessageEmbed()
         .setTitle("🔴 | OFFLINE")
         .setColor("#ff0505")
-        .setDescription("A Menhera acaba de ficar OFFLINE, vou notificar minha dona para ver isso ")
-        .setFooter(moment.utc(Date.now()).format('LLLL'))
+        .setDescription("A Menhera acaba de ficar OFFLINE, vou notificar minha dona para ver isso")
+        .setTimestamp()
         canal.send(lux,embed)
         lux.send(`A MENHERA FICOU OFFLINE AGORA\n${moment.utc(Date.now()).format('LLLL')}`)
 }
@@ -38,6 +38,8 @@ client.on("presenceUpdate", async (oldPresence, newPresence) =>{
 })
 
 client.on("message", async message => {
+    
+    const canal = await client.channels.cache.get('757292554445127722')
 
     if (message.author.id !== config.id) return;
 
@@ -45,7 +47,6 @@ client.on("message", async message => {
     const comando = args.shift().toLowerCase();
 
     if(comando === "update"){
-        const canal = await client.channels.cache.get('757292554445127722')
     
         const embed = new Discord.MessageEmbed()
         .setTitle("🟡 | ATUALIZAÇÃO")
@@ -53,6 +54,24 @@ client.on("message", async message => {
         .setDescription("A Menhera vai reiniciar para aplicar uma atualização\nCheque <#730904048475046069> para ver as novidades")
         .setTimestamp()
         canal.send(embed)
+    }   
+
+    if(comando === "i"){
+    
+            const embed = new Discord.MessageEmbed()
+            .setTitle("<:unstable:757660425595781192> | INSTABILIDADE")
+            .setColor("#ff7c08")
+            .setDescription(args.join(" "))
+            .setTimestamp()
+            canal.send(embed)
+    }
+
+    if(comando === "ping"){
+        message.channel.send(client.ws.ping + "ms")
+    }
+
+    if(comando === "help"){
+        message.channel.send("**COMANDOS:**\n/help\n/i\n/update\n/ping")
     }
 
 });
