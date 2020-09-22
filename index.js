@@ -10,9 +10,9 @@ client.on("ready", () => {
 });
 
 client.on("presenceUpdate", async (oldPresence, newPresence) =>{
-
     if(newPresence.user.id != config.menheraId) return;
-    if(newPresence.user.presence.status != oldPresence.user.presence.status) return;
+
+    if(oldPresence.status == newPresence.status) return;
     const canal = await client.channels.cache.get('757292554445127722')
     if(newPresence.user.presence.status == "online"){
         const embed = new Discord.MessageEmbed()
