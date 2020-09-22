@@ -12,8 +12,18 @@ client.on("ready", () => {
 client.on("presenceUpdate", async (oldPresence, newPresence) =>{
     if(newPresence.user.id != config.menheraId) return;
 
-    if(oldPresence.status == newPresence.status) return;
     const canal = await client.channels.cache.get('757292554445127722')
+
+    if(newPresence.user.presence.activities[0].name === "Fui reiniciada com sucesso uwu"){
+        const embed = new Discord.MessageEmbed()
+        .setTitle("🟣 | ATUALIZADA")
+        .setColor("#792bd1")
+        .setDescription("A Menhera foi atualizada com sucesso e já está respondendo comandos!!")
+        .setTimestamp()
+        canal.send(embed)
+    }
+
+    if(oldPresence.status == newPresence.status) return;
     if(newPresence.user.presence.status == "online"){
         const embed = new Discord.MessageEmbed()
         .setTitle("🟢 | ONLINE")
