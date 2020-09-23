@@ -16,9 +16,9 @@ client.on("presenceUpdate", async (oldPresence, newPresence) =>{
 
     if(newPresence.user.presence.activities[0].name === "Fui reiniciada com sucesso uwu"){
         const embed = new Discord.MessageEmbed()
-        .setTitle("🟣 | ATUALIZADA")
+        .setTitle("🟣 | REINICIADA")
         .setColor("#792bd1")
-        .setDescription("A Menhera foi atualizada com sucesso e já está respondendo comandos!!")
+        .setDescription("A Menhera foi reiniciada e já está respondendo à comandos")
         .setTimestamp()
         canal.send(embed)
     }
