@@ -14,26 +14,25 @@ client.on("presenceUpdate", async (oldPresence, newPresence) =>{
 
     const canal = await client.channels.cache.get('757292554445127722')
 
-    if(newPresence.user.presence.activities[0].name === "Fui reiniciada com sucesso uwu"){
+     if(newPresence.user.presence.activities > 0 && newPresence.user.presence.activities[0].name === "Fui reiniciada com sucesso uwu"){
         const embed = new Discord.MessageEmbed()
         .setTitle("🟣 | REINICIADA")
         .setColor("#792bd1")
         .setDescription("A Menhera foi reiniciada e já está respondendo à comandos")
         .setTimestamp()
         canal.send(embed)
-    }
+    } 
 
     if(oldPresence.status == newPresence.status) return;
-    if(newPresence.user.presence.status == "online"){
+    if(newPresence.status == "online"){
         const embed = new Discord.MessageEmbed()
         .setTitle("🟢 | ONLINE")
         .setColor("#05ff1c")
         .setDescription("A Menhera está ONLINE novamente")
         .setTimestamp()
         canal.send(embed)
-         
 }
-    if(newPresence.user.presence.status == "offline"){
+    if(newPresence.status == "offline"){
         const lux = client.users.cache.get(config.id)
         const embed = new Discord.MessageEmbed()
         .setTitle("🔴 | OFFLINE")
@@ -41,10 +40,7 @@ client.on("presenceUpdate", async (oldPresence, newPresence) =>{
         .setDescription("A Menhera acaba de ficar OFFLINE, vou notificar minha dona para ver isso")
         .setTimestamp()
         canal.send(lux,embed)
-        lux.send(`A MENHERA FICOU OFFLINE AGORA\n${moment.utc(Date.now()).format('LLLL')}`)
 }
-    
-
 })
 
 client.on("message", async message => {
