@@ -39,7 +39,7 @@ client.on("ready", async () => {
                     .setDescription(`Menhera está demorando para responder requests!\nÚltimo ping: **${pingedTime}**ms`)
                      .setTimestamp()
 
-                    statusCanal.send(role, embed)
+                    statusCanal.send(embed)
 
                 }
                
