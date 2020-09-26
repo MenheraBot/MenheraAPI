@@ -48,6 +48,8 @@ client.on("ready", async () => {
                 const statusCanal = client.channels.cache.get('757292554445127722')
                 const role = message.guild.roles.cache.get('758706770675105802')
 
+                message.channel.send("**SEM RESPOSTA DE PING**")
+
                 const embed = new Discord.MessageEmbed()
                 .setTitle("<:unstable:757660425595781192> | OFF")
                  .setColor("#070707")
