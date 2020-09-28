@@ -108,6 +108,8 @@ client.on("message", async message => {
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const comando = args.shift().toLowerCase();
 
+    if(!message.content.startsWith(config.prefix)) return
+
     if(comando === "update"){
     
         const embed = new Discord.MessageEmbed()
