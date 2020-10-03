@@ -8,59 +8,6 @@ moment.locale('pt-BR')
 
 client.on("ready", async () => {
     client.user.setActivity("Averiguando se a Menhera está Online!")
-    
-    const pingChannel = await client.channels.cache.get('758516769664270337');
-    const menhera = await client.users.fetch(config.menheraId);
-
-    setInterval(() => {
-
-        //criar uma variavel para não pingar caso a presence.status da memnehra for offline
-        if(menhera.presence.status == "offline") return;
-        
-        const filter = m => m.author.id === config.menheraId && m.content === "Pong! That's my response to your call, master"
-
-        pingChannel.send("PINGING...").then(message =>{
-            let requestTime = Date.now();
-            let pingedTime;
-            message.channel.awaitMessages(filter, { max: 1, time: 15000, errors: ['time'] })
-            .then(collected => {
-                const responseTime = Date.now()
-                pingedTime = responseTime - requestTime
-                message.channel.send(`PINGADO COM SUCESSO\n\nPing: **${pingedTime}**ms`);
-
-                if(pingedTime > 5000) {
-
-                    const statusCanal = client.channels.cache.get('757292554445127722')
-                    const role = message.guild.roles.cache.get('758706770675105802')
-
-                    const embed = new Discord.MessageEmbed()
-                    .setTitle("<:unstable:757660425595781192> | INSTABILIDADE")
-                     .setColor("#ff7c08")
-                    .setDescription(`Menhera está demorando para responder requests!\nÚltimo ping: **${pingedTime}**ms`)
-                     .setTimestamp()
-
-                    statusCanal.send(embed)
-
-                }
-               
-            })
-            .catch(collected => {
-                const statusCanal = client.channels.cache.get('757292554445127722')
-                const role = message.guild.roles.cache.get('758706770675105802')
-
-                message.channel.send("**SEM RESPOSTA DE PING**")
-
-                const embed = new Discord.MessageEmbed()
-                .setTitle("<:unstable:757660425595781192> | OFF")
-                 .setColor("#070707")
-                .setDescription(`Menhera não respondeu ao último request depois de **15000**ms`)
-                 .setTimestamp()
-
-                statusCanal.send(role, embed)
-            });
-        })
-        
-    }, 1000 * 60 * 2)
 
 });
 
