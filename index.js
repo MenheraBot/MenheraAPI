@@ -2,14 +2,45 @@ const Discord = require("discord.js");
 const client = new Discord.Client({ fetchAllMembers: true, disableMentions: 'everyone' });
 const config = require("./config.json");
 const moment = require("moment");
-const { on } = require("nodemon");
+const database = require("./schemas/familia")
 moment.locale('pt-BR')
 
+const mongoose = require("mongoose");
+mongoose.connect(config.uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}, (err) => {
+  if (err) return console.log(`(x) Error to connecting to database \n${err}`)
+  console.log("[DATABASE] Conectado com sucesso à database")
+})
 
 client.on("ready", async () => {
     client.user.setActivity("Averiguando se a Menhera está Online!")
-
+    console.log("[READY] MENHERA WATCH IS READY")
 });
+
+client.on("guildMemberAdd", async member => {
+    const server = client.guilds.cache.get("717061688460967988")
+
+    const roleApolo = server.roles.cache.get('765069063146962995')
+    const roleLoki = server.roles.cache.get('765069110018703371')
+    const roleAres = server.roles.cache.get('765069139885948928')
+    const roleSoma = server.roles.cache.get('765069167363096616')
+    const roleFreya = server.roles.cache.get('765069003440914443')
+
+    const apolo = await database.findById("Apolo")
+    const loki = await database.findById("Loki")
+    const ares = await database.findById("Ares")
+    const soma = await database.findById("Soma")
+    const freya = await database.findById("Freya")
+
+    if(apolo.members.inlcudes(member.id)) server.members.cache.get(member.id).roles.add(roleApolo)
+    if(loki.members.inlcudes(member.id)) server.members.cache.get(member.id).roles.add(roleLoki)
+    if(ares.members.inlcudes(member.id)) server.members.cache.get(member.id).roles.add(roleAres)
+    if(soma.members.inlcudes(member.id)) server.members.cache.get(member.id).roles.add(roleSoma)
+    if(freya.members.inlcudes(member.id)) server.members.cache.get(member.id).roles.add(roleFreya)
+
+})
 
 client.on("presenceUpdate", async (oldPresence, newPresence) =>{
     if(newPresence.user.id != config.menheraId) return;
@@ -66,6 +97,41 @@ client.on("message", async message => {
         .setTimestamp()
         canal.send(role, embed)
     }   
+
+    if(comando === "gr"){
+        message.channel.send("BELEZA")
+        
+    const server = client.guilds.cache.get("717061688460967988")
+
+    const roleApolo = server.roles.cache.get('765069063146962995')
+    const roleLoki = server.roles.cache.get('765069110018703371')
+    const roleAres = server.roles.cache.get('765069139885948928')
+    const roleSoma = server.roles.cache.get('765069167363096616')
+    const roleFreya = server.roles.cache.get('765069003440914443')
+
+    const apolo = await database.findById("Apolo")
+    const loki = await database.findById("Loki")
+    const ares = await database.findById("Ares")
+    const soma = await database.findById("Soma")
+    const freya = await database.findById("Freya")
+
+        apolo.members.forEach(member => {
+            if(message.guild.members.cache.has(member)) message.guild.members.cache.get(member).roles.add(roleApolo)
+        })
+        loki.members.forEach(member => {
+            if(message.guild.members.cache.has(member)) message.guild.members.cache.get(member).roles.add(roleLoki)
+        })
+        ares.members.forEach(member => {
+            if(message.guild.members.cache.has(member)) message.guild.members.cache.get(member).roles.add(roleAres)
+        })
+        soma.members.forEach(member => {
+            if(message.guild.members.cache.has(member)) message.guild.members.cache.get(member).roles.add(roleSoma)
+        })
+        freya.members.forEach(member => {
+            if(message.guild.members.cache.has(member)) message.guild.members.cache.get(member).roles.add(roleFreya)
+        })
+
+    }
 
     if(comando === "i"){
     
