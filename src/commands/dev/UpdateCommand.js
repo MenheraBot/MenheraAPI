@@ -20,5 +20,6 @@ module.exports = class UpdateCommand extends Command {
         .setDescription("A Menhera vai reiniciar para aplicar uma atualização\nCheque <#730904048475046069> para ver as novidades")
         .setTimestamp()
          canal.send(role, embed)
+         message.react('✅')
     }
 }

@@ -7,6 +7,8 @@ module.exports = class MessageReceive {
 
     async run(message) {
 
+		if(message.channel.id == "765427597101760573") require('../structures/TopFamilyChecks')
+
         if (message.channel.type === "dm") return
 		if (message.author.bot) return
 
