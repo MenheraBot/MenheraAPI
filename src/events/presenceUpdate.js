@@ -1,5 +1,5 @@
 const config = require("../../config.json")
-const Discord = require("discord.js")
+const {MessageEmbed} = require("discord.js")
 module.exports = class {
     constructor(client) {
         this.client = client
@@ -12,7 +12,7 @@ module.exports = class {
 
         if (newPresence.user.presence.activities.length > 0) {
             if (newPresence.user.presence.activities[0].name === "Fui reiniciada com sucesso uwu") {
-                const embed = new Discord.MessageEmbed()
+                const embed = new MessageEmbed()
                     .setTitle("🟣 | REINICIADA")
                     .setColor("#792bd1")
                     .setDescription("A Menhera foi reiniciada e já está respondendo à comandos")
@@ -23,7 +23,7 @@ module.exports = class {
 
         if (oldPresence.status == newPresence.status) return;
         if (newPresence.status == "online") {
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
                 .setTitle("🟢 | ONLINE")
                 .setColor("#05ff1c")
                 .setDescription("A Menhera está ONLINE novamente")
@@ -31,7 +31,7 @@ module.exports = class {
             canal.send(role, embed)
         }
         if (newPresence.status == "offline") {
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
                 .setTitle("🔴 | OFFLINE")
                 .setColor("#ff0505")
                 .setDescription("A Menhera acaba de ficar OFFLINE, vou notificar minha dona para ver isso")
