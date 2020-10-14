@@ -1,5 +1,4 @@
 const Command = require("../../structures/command")
-const {MessageEmbed} = require("discord.js")
 module.exports = class GiveRoleCommand extends Command {
     constructor(client) {
         super(client, {
@@ -65,15 +64,5 @@ module.exports = class GiveRoleCommand extends Command {
                     message.guild.members.cache.get(member).roles.add(roleFreya)
                 }
             })
-
-            let embed = new MessageEmbed()
-                .setTitle("Sucesso")
-                .addField("Apolo", (apoloMembers.length > 0) ? apoloMembers.join(", ") : "Ninguém adicionado")
-                .addField("Loki", (lokiMembers.length > 0) ? lokiMembers.join(", ") : "Ninguém adicionado")
-                .addField("Ares", (aresMembers.length > 0) ? aresMembers.join(", ") : "Ninguém adicionado")
-                .addField("Soma", (somaMembers.length > 0) ? somaMembers.join(", ") : "Ninguém adicionado")
-                .addField("Freya", (freyaMembers.length > 0) ? freyaMembers.join(", ") : "Ninguém adicionado")
-
-            message.channel.send(embed)
     }
 }
