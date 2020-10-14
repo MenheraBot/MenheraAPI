@@ -21,5 +21,9 @@ module.exports = class {
                 activity: randomStatus
             })
         }, 1000 * 60)
+
+        setInterval(() => {
+            require('../structures/TopFamilyChecks').run()
+        }, 1000 * 60 * 60 * 24)
     }
 }

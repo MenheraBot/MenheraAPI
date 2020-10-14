@@ -1,13 +1,12 @@
 const config = require("../../config.json")
 const {MessageEmbed} = require("discord.js")
+const Familias = require('../structures/TopFamilyChecks')
 module.exports = class MessageReceive {
     constructor(client) {
         this.client = client
     }
 
     async run(message) {
-
-		if(message.channel.id == "765427597101760573") require('../structures/TopFamilyChecks')
 
         if (message.channel.type === "dm") return
 		if (message.author.bot) return
