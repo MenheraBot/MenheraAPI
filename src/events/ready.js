@@ -22,7 +22,7 @@ module.exports = class {
             })
         }, 1000 * 60)
 
-        setInterval(() => {
+        setInterval(async () => {
             require('../structures/TopFamilyChecks').run()
             const server = this.client.guilds.cache.get("717061688460967988")
 
