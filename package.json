@@ -13,6 +13,7 @@
     "fs-extra": "^9.0.1",
     "moment": "^2.29.1",
     "mongoose": "^5.10.9",
+    "nekos.life": "^2.0.7",
     "nodemon": "^2.0.4"
   }
 }
