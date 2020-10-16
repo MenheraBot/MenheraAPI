@@ -23,7 +23,7 @@ module.exports = class {
         }, 1000 * 60)
 
         setInterval(async () => {
-            require('../structures/TopFamilyChecks').run()
+            require('../structures/TopFamilyChecks').run(this.client)
             const server = this.client.guilds.cache.get("717061688460967988")
 
             const roleApolo = server.roles.cache.get('765069063146962995')
@@ -39,28 +39,28 @@ module.exports = class {
             const freya = await this.client.database.familia.findById("Freya")
 
             apolo.members.forEach(member => {
-                if (message.guild.members.cache.has(member)) {
-                    message.guild.members.cache.get(member).roles.add(roleApolo)
+                if (server.members.cache.has(member)) {
+                    server.members.cache.get(member).roles.add(roleApolo)
                 }
             })
             loki.members.forEach(member => {
-                if (message.guild.members.cache.has(member)) {
-                    message.guild.members.cache.get(member).roles.add(roleLoki)
+                if (server.members.cache.has(member)) {
+                    server.members.cache.get(member).roles.add(roleLoki)
                 }
             })
             ares.members.forEach(member => {
-                if (message.guild.members.cache.has(member)) {
-                    message.guild.members.cache.get(member).roles.add(roleAres)
+                if (server.members.cache.has(member)) {
+                    server.members.cache.get(member).roles.add(roleAres)
                 }
             })
             soma.members.forEach(member => {
-                if (message.guild.members.cache.has(member)) {
-                    message.guild.members.cache.get(member).roles.add(roleSoma)
+                if (server.members.cache.has(member)) {
+                    server.members.cache.get(member).roles.add(roleSoma)
                 }
             })
             freya.members.forEach(member => {
-                if (message.guild.members.cache.has(member)) {
-                    message.guild.members.cache.get(member).roles.add(roleFreya)
+                if (server.members.cache.has(member)) {
+                    server.members.cache.get(member).roles.add(roleFreya)
                 }
             })
         }, 1000 * 60 * 60 * 12)
