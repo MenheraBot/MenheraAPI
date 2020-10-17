@@ -1,5 +1,5 @@
 const Command = require("../../structures/command")
-module.exports = class GiveRoleCommand extends Command {
+module.exports = class FamilyMessage extends Command {
     constructor(client) {
         super(client, {
             name: "familymessage",
