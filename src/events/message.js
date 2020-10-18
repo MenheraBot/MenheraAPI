@@ -22,7 +22,7 @@ module.exports = class MessageReceive {
         }
         
         let userPermission = comando.config.UserPermission
-		let clientPermission = comando.config.ClientPermission
+		let clientPermission = comando.config.ClientPermissions
 		if (userPermission !== null) {
 			if (!message.member.hasPermission(userPermission)) {
 				let perm = userPermission.map(value => `\`${value}\``).join(", ")

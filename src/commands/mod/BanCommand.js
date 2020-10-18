@@ -6,15 +6,14 @@ module.exports = class BanCommand extends Command {
             name: "ban",
             aliases: ["banir"],
             category: "moderação",
-            ClientPermissions: ["BAN_MEMBERS"],
-            UserPermission: ["BAN_MEMBERS", "EMBED_LINKS"]
+            ClientPermissions: ["BAN_MEMBERS", "EMBED_LINKS"],
+            UserPermission: ["BAN_MEMBERS"]
         })
     }
     async run(message, args) {
 
-        
 		if (!args[0]) return message.reply("você não mencionou quem desejas banir")
-		const member = client.users.get(args[0].replace(/[<@!>]/g, ""))
+		const member = this.client.users.get(args[0].replace(/[<@!>]/g, ""))
 		if (!member) return message.reply("Usuário não encontrado")
 		let inGuild
 		inGuild = message.guild.members.cache.get(member.id)
