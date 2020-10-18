@@ -13,7 +13,7 @@ module.exports = class BanCommand extends Command {
     async run(message, args) {
 
 		if (!args[0]) return message.reply("você não mencionou quem desejas banir")
-		const member = this.client.users.get(args[0].replace(/[<@!>]/g, ""))
+		const member = this.client.users.cache.get(args[0].replace(/[<@!>]/g, ""))
 		if (!member) return message.reply("Usuário não encontrado")
 		let inGuild
 		inGuild = message.guild.members.cache.get(member.id)
