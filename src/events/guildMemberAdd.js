@@ -9,11 +9,13 @@ module.exports = class {
 
     async run(member) {
         const canal = this.client.channels.cache.get('717061688498847801')
+        const avatar = member.user.displayAvatarURL({
+            dynamic: true
+          });
         const embed = new MessageEmbed()
-            .setAuthor(member.tag, member.displayAvatarURL({
-                dynamic: true
-            }))
+            .setAuthor(member.user.tag, avatar)
             .setTitle("<:MenheraWave:767210250545659906> | Bem vindo")
+            .setColor('#e58ff0')
             .setDescription(`Olá ${member}, seja bem vindx no servidor de suporte da Menhera! Para ver todos os comandos da Menhera use m!help\nBeijos de luz da Lux`)
             .setFooter(`UserID: ${member.id}`)
             .setImage('https://i.imgur.com/p3IUT0Y.png')
