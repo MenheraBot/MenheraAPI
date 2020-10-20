@@ -2,7 +2,8 @@ const Client = require('./src/WatchClient')
 const config = require('./config.json')
 const client = new Client({
     disableMentions: "everyone",
-    fetchAllMembers: true
+    fetchAllMembers: true,
+    partials: ['MESSAGE', 'REACTION']
 })
 
 client.loadCommands("./src/commands")

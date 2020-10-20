@@ -34,7 +34,9 @@ module.exports = class LockDownCommand extends Command {
             "766139268158062672",
             "754786823259160657",
             "717061689295503416",
-            "761256642267840532"
+            "761256642267840532",
+            "767924240552296458",
+            "767924268100354098"
         ])
 
         message.guild.channels.cache.forEach(ch => {
