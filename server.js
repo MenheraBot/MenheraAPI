@@ -13,8 +13,7 @@ module.exports = class Server {
 
         app.post(config.superSecretRoute, (req, res) => {
             try {
-                const { dir } = config.dir;
-                const command = `cd ${dir}; git pull origin master;`;
+                const command = `cd ../main; git pull origin master;`;
         
                 exec(command, (error, stdout, stderr) => {
                     if (error) {
