@@ -17,16 +17,20 @@ module.exports = class Server {
         
                 exec(command, (error, stdout, stderr) => {
                     if (error) {
+                        console.log(`[SERVER ERROR] Error: ${error.message}`)
                         res.send(`error: ${error.message}`).status(500);
                         return;
                     }
                     if (stderr) {
+                        console.log(`[SERVER ERROR] StdErr: ${error.message}`)
                         res.send(`stderr: ${stderr}`).status(500);
                         return;
                     }
+                    console.log("[SERVER] Requisição concluida")
                     res.sendStatus(200);
                 });
             } catch (err) {
+                console.log(`[SERVER ERROR] Error: ${err.message}`)
                 res.sendStatus(500);
             }
         })
