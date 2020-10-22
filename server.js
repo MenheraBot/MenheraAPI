@@ -18,12 +18,12 @@ module.exports = class Server {
         
                 exec(command, (error, stdout, stderr) => {
                     if (error) {
-                        console.log(`[SERVER ERROR] Error: ${error.message}`)
+                        console.log(`[SERVER ERROR]`)
                         res.send(`error: ${error.message}`).status(500);
                         return;
                     }
                     if (stderr) {
-                        console.log(`[SERVER ERROR] StdErr: ${error.message}`)
+                        console.log(`[SERVER ERROR]`)
                         res.send(`stderr: ${stderr}`).status(500);
                         return;
                     }
@@ -31,7 +31,7 @@ module.exports = class Server {
                     res.sendStatus(200);
                 });
             } catch (err) {
-                console.log(`[SERVER ERROR] Error: ${err.message}`)
+                console.log(`[SERVER ERROR]`)
                 res.sendStatus(500);
             }
         })
