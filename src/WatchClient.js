@@ -1,6 +1,7 @@
 const { Client, Collection } = require("discord.js")
 const { readdir } = require("fs-extra")
 const EventManager = require("./structures/EventManager")
+const Server = require('../server')
 
 module.exports = class WatchClient extends Client {
     constructor(options = {}) {
@@ -47,6 +48,11 @@ module.exports = class WatchClient extends Client {
     }
     login(token) {
         return super.login(token)
+    }
+
+    startServer(){
+        const server = new Server(this)
+        return server.start()
     }
 
     loadCommands(path) {
