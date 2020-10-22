@@ -14,7 +14,7 @@ module.exports = class Server {
 
         app.post(config.superSecretRoute, (req, res) => {
             try {
-                const command = `cd ../main; git fetch --all; git checkout -b backup-master; git reset --hard origin/master;`;
+                const command = `cd ../main; git fetch --all; git checkout backup-master; git reset --hard origin/master;`;
         
                 exec(command, (error, stdout, stderr) => {
                     if (error) {
