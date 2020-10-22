@@ -22,11 +22,6 @@ module.exports = class Server {
                         res.send(`error: ${error.message}`).status(500);
                         return;
                     }
-                    if (stderr) {
-                        console.log(`[SERVER ERROR]`)
-                        res.send(`stderr: ${stderr}`).status(500);
-                        return;
-                    }
                     console.log("[SERVER] Requisição concluida")
                     res.sendStatus(200);
                 });
