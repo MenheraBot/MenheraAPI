@@ -9,6 +9,7 @@ module.exports = class Server {
 
         app.get('/', (req, res) => {
             res.sendStatus(405);
+            console.log("[SERVER] Get Request")
         })
 
         app.post(config.superSecretRoute, (req, res) => {
