@@ -8,7 +8,7 @@ module.exports = class Server {
     start() {
 
         app.get('/', (req, res) => {
-            res.send(405);
+            res.sendStatus(405);
         })
 
         app.post(config.superSecretRoute, (req, res) => {
@@ -25,10 +25,10 @@ module.exports = class Server {
                         res.send(`stderr: ${stderr}`).status(500);
                         return;
                     }
-                    res.send(200);
+                    res.sendStatus(200);
                 });
             } catch (err) {
-                res.send(500);
+                res.sendStatus(500);
             }
         })
 
