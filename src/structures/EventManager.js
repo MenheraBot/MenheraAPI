@@ -1,5 +1,3 @@
-const {Collection} = require("discord.js")
-
 module.exports = class EventManager {
     constructor(client) {
         this.client = client

@@ -1,10 +1,5 @@
-const {
-    Client,
-    Collection
-} = require("discord.js")
-const {
-    readdir
-} = require("fs-extra")
+const { Client, Collection } = require("discord.js")
+const { readdir } = require("fs-extra")
 const EventManager = require("./structures/EventManager")
 
 module.exports = class WatchClient extends Client {
@@ -60,7 +55,7 @@ module.exports = class WatchClient extends Client {
             files.forEach(category => {
                 readdir(`${__dirname}/commands/${category}`, (err, cmd) => {
                     cmd.forEach(async cmd => {
-                        const command = new(require(`${__dirname}/commands/${category}/${cmd}`))(this)
+                        const command = new (require(`${__dirname}/commands/${category}/${cmd}`))(this)
                         command.dir = `${__dirname}/commands/${category}/${cmd}`
                         this.commands.set(command.config.name, command)
                         command.config.aliases.forEach(a => this.aliases.set(a, command.config.name))
@@ -75,7 +70,7 @@ module.exports = class WatchClient extends Client {
             if (err) console.error(err)
 
             files.forEach(em => {
-                const event = new(require(`../${path}/${em}`))(this)
+                const event = new (require(`../${path}/${em}`))(this)
                 this.events.add(em.split(".")[0], event)
             })
         })
