@@ -1,4 +1,4 @@
-const config = require('./config.json')
+const config = require('../config.json')
 const { exec } = require('child_process');
 const express = require('express')
 const app = express()
@@ -12,7 +12,7 @@ module.exports = class Server {
     start() {
         app.get('/', (req, res) => {
             res.sendStatus(405);
-            console.log("[SERVER] Get Request")
+            console.log("[API] Get Request")
         })
 
         app.post(config.superSecretRoute, (req, res) => {
@@ -22,24 +22,24 @@ module.exports = class Server {
 
                 exec(command, (error, stdout, stderr) => {
                     if (error) {
-                        console.log(`[SERVER ERROR]`)
+                        console.log(`[API SERVER ERROR]`)
                         res.send(`error: ${error.message}`).status(500);
                         this.errorMessage(error)
                         return;
                     }
-                    console.log("[SERVER] Requisição concluida")
+                    console.log("[API] Requisição concluida")
                     res.sendStatus(200);
                     this.successMessage()
                 });
             } catch (err) {
-                console.log(`[SERVER ERROR]`)
+                console.log(`[API SERVER ERROR]`)
                 res.sendStatus(500);
                 this.errorMessage(err)
             }
         })
 
         server.listen(config.port, function () {
-            console.log('[SERVER] Server started')
+            console.log('[API] Server started')
         });
     }
     async startMessage() {
