@@ -1,7 +1,6 @@
 const { Client, Collection } = require("discord.js")
 const { readdir } = require("fs-extra")
 const EventManager = require("./structures/EventManager")
-const Server = require('../menhera-API/server')
 
 module.exports = class WatchClient extends Client {
     constructor(options = {}) {
