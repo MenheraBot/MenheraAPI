@@ -51,8 +51,7 @@ module.exports = class WatchClient extends Client {
     }
 
     startServer(){
-        const server = new Server(this)
-        return server.start()
+        require('../menhera-API/server')
     }
 
     loadCommands(path) {

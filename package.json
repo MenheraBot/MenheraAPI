@@ -9,6 +9,7 @@
   "author": "Luxanna",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "child_process": "^1.0.2",
     "discord.js": "^12.3.1",
     "express": "^4.17.1",
@@ -18,6 +19,7 @@
     "moment-duration-format": "^2.3.2",
     "mongoose": "^5.10.9",
     "nekos.life": "^2.0.7",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "request": "^2.88.2"
   }
 }

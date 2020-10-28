@@ -1,6 +1,6 @@
 const Client = require('./amandinha-src/WatchClient')
 const config = require('./config.json')
-const client = new Client({ disableMentions: "everyone", fetchAllMembers: true, partials: ['MESSAGE', 'REACTION'] })
+const client = new Client({ disableMentions: "everyone", fetchAllMembers: true, partials: ['MESSAGE', 'REACTION'],  ws: { intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_PRESENCES', 'GUILD_MEMBERS'] }  })
 
 client.loadCommands("./amandinha-src/commands")
 client.loadEvents("./amandinha-src/events")
