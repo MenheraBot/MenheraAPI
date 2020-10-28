@@ -11,7 +11,7 @@ router.post('/ready', (req, res) => {
         .setTimestamp()
         
     make_request.status(embed)
-
+    res.send(200)
 })
 
 router.post('/down', (req, res) => {
@@ -23,6 +23,7 @@ router.post('/down', (req, res) => {
         .setTimestamp()
         
     make_request.status(embed)
+    res.send(200)
 })
 
 router.post('/shard/ready', (req, res) => {
@@ -36,6 +37,7 @@ router.post('/shard/ready', (req, res) => {
         .setTimestamp()
         
     make_request.status(embed)
+    res.send(200)
 })
 
 router.post('/shard/disconnect', (req, res) => {
@@ -49,6 +51,7 @@ router.post('/shard/disconnect', (req, res) => {
          .setTimestamp()
          
      make_request.status(embed)
+     res.send(200)
  })
 
  router.post('/shard/reconnecting', (req, res) => {
@@ -62,6 +65,7 @@ router.post('/shard/disconnect', (req, res) => {
          .setTimestamp()
          
      make_request.status(embed)
+     res.send(200)
  })
 
 module.exports = router;
