@@ -32,7 +32,7 @@ router.post('/shard/ready', (req, res) => {
 
     const embed = new MessageEmbed()
         .setTitle("Shard On!")
-        .setDescription(`O shard ${shard} já está na batalha contra os Deuses`)
+        .setDescription(`O shard **${shard}** já está na batalha contra os Deuses`)
         .setColor("#df96e6")
         .setTimestamp()
         
@@ -46,7 +46,7 @@ router.post('/shard/disconnect', (req, res) => {
  
      const embed = new MessageEmbed()
          .setTitle("Quando você voltar, eu vou estar lá")
-         .setDescription(`O shard ${shard} foi de base`)
+         .setDescription(`O shard **${shard}** foi de base`)
          .setColor("#91a8a8")
          .setTimestamp()
          
@@ -60,7 +60,7 @@ router.post('/shard/disconnect', (req, res) => {
  
      const embed = new MessageEmbed()
          .setTitle("Achou que eu tava brincando?")
-         .setDescription(`O shard ${shard} ta se recuperando dos danos, e voltando à batalha`)
+         .setDescription(`O shard **${shard}** ta se recuperando dos danos, e voltando à batalha`)
          .setColor("#91a8a8")
          .setTimestamp()
          
