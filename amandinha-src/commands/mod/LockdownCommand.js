@@ -6,7 +6,8 @@ module.exports = class LockDownCommand extends Command {
             name: "lockdown",
             category: "moderação",
             ClientPermissions: ["MANAGE_CHANNELS", "MANAGE_ROLES"],
-            UserPermission: ["ADMINISTRATOR"]
+            UserPermission: ["ADMINISTRATOR"],
+            OnlyDevs: true
         })
     }
     async run(message, args) {

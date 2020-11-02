@@ -4,7 +4,8 @@ module.exports = class NotifyCommand extends Command {
         super(client, {
             name: "notify",
             category: "util",
-            cooldown: 5
+            cooldown: 5,
+            OnlyDevs: true
         })
     }
     async run(message, args) {

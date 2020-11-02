@@ -18,7 +18,7 @@ module.exports = class MessageReceive {
         if (!comando) return
         
         if (comando.config.OnlyDevs) {
-			if (!this.client.config.owners.includes(message.author.id)) return message.channel.send("Este comando é apena para desenvolvedores")
+			if (!this.client.config.owners.includes(message.author.id)) return message.channel.send("Este comando está disponível somente no servidor da Menhera!")
         }
         
         let userPermission = comando.config.UserPermission

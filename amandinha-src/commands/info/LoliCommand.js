@@ -4,6 +4,7 @@ module.exports = class LoliCommand extends Command {
         super(client, {
             name: "loli",
             category: "info",
+            OnlyDevs: true
         })
     }
     async run(message, args) {
