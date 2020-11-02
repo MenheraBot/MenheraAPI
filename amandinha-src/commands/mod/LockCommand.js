@@ -6,8 +6,7 @@ module.exports = class LockCommand extends Command {
             name: "lock",
             category: "moderação",
             ClientPermissions: ["MANAGE_CHANNELS", "MANAGE_ROLES"],
-            UserPermission: ["ADMINISTRATOR"],
-            OnlyDevs: true
+            UserPermission: ["ADMINISTRATOR"]
         })
     }
     async run(message, args) {
