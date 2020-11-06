@@ -21,7 +21,7 @@ router.post('/commands', (req, res) => {
         if (authorName === undefined || authorId === undefined || guildName === undefined || guildId === undefined || commandName === undefined || data === undefined) throw "O conteúdo do request é inválido!"
 
         MenheraStats.setCommands(authorName, authorId, guildName, guildId, commandName, data)
-        res.send(200);
+        res.sendStatus(200);
 
     } catch (err) {
         res.status(400).send({ "error": err })
