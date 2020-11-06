@@ -3,16 +3,18 @@ module.exports = class Variaveis {
     //Eu queria usar TypeScript para poder proteger o _commands, mas tive problemas depois de compilado, então fodase
 
     constructor() {
-        this._commands = 0
+        this._commands = []
     }
 
     getCommands() {
-        return this._commands
+        return { lenght: this._commands.length, commands: this._commands }
     }
-    setCommands(value) {
-        this._commands += value
+
+    setCommands(authorName, authorId, guildName, guildId, commandName, data) {
+        this._commands.push({ authorName, authorId, guildName, guildId, commandName, data })
     }
-    clearCommands(){
-        this._commands = 0
+
+    clearCommands() {
+        this._commands = []
     }
 }
