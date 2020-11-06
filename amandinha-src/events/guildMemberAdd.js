@@ -8,6 +8,7 @@ module.exports = class {
     }
 
     async run(member) {
+        if(member.guild.id != "717061688460967988") return;
         const canal = this.client.channels.cache.get('717061688498847801')
         const avatar = member.user.displayAvatarURL({
             dynamic: true
