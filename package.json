@@ -4,7 +4,8 @@
   "description": "Um bot para auxiliar o servidor de suporte da Menhera",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "server": "node ./menhera-API/server.js"
   },
   "author": "Luxanna",
   "license": "ISC",
