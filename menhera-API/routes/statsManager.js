@@ -30,7 +30,7 @@ router.post('/commands', (req, res) => {
 
 router.post('/commands/clear', (req, res) => {
     MenheraStats.clearCommands()
-    res.send(200);
+    res.sendStatus(200);
 })
 
 
