@@ -5,10 +5,12 @@ module.exports = class NotifyCommand extends Command {
             name: "notify",
             category: "util",
             cooldown: 5,
-            OnlyDevs: true
+            OnlyDevs: false
         })
     }
     async run(message, args) {
+
+        if(message.guild.id !== "717061688460967988") return message.channel.send("Comando disponível somente no servidor de suporte da Menhera")
 
         const role = await this.client.guilds.cache.get('717061688460967988').roles.cache.get('755593580285788280')
        
