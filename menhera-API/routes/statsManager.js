@@ -3,7 +3,6 @@ const MenheraStats = require("../util/variables");
 const router = express.Router()
 
 router.get('/commands', (req, res) => {
-    MenheraStats._commands += 1
     const comandos = MenheraStats.getCommands()
     res.json({ "lenght": comandos.lenght, "commands": comandos.commands })
 })
