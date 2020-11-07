@@ -1,7 +1,5 @@
-module.exports = class Variaveis {
-
+class Variaveis {
     //Eu queria usar TypeScript para poder proteger o _commands, mas tive problemas depois de compilado, então fodase
-
     constructor() {
         this._commands = []
     }
@@ -18,3 +16,7 @@ module.exports = class Variaveis {
         this._commands = []
     }
 }
+
+const variaveis = new Variaveis()
+
+module.exports = variaveis

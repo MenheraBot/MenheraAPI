@@ -1,9 +1,9 @@
 const express = require("express");
-const file = require("../util/variables");
-const MenheraStats = new file();
+const MenheraStats = require("../util/variables");
 const router = express.Router()
 
 router.get('/commands', (req, res) => {
+    MenheraStats._commands += 1
     const comandos = MenheraStats.getCommands()
     res.json({ "lenght": comandos.lenght, "commands": comandos.commands })
 })
@@ -24,7 +24,7 @@ router.post('/commands', (req, res) => {
         res.sendStatus(200);
 
     } catch (err) {
-        res.status(400).send({ "error": err })
+        res.status(400).send({ "message": err })
     }
 })
 
@@ -32,6 +32,5 @@ router.post('/commands/clear', (req, res) => {
     MenheraStats.clearCommands()
     res.sendStatus(200);
 })
-
 
 module.exports = router;
