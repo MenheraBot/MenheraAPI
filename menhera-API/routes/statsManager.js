@@ -1,33 +1,44 @@
 const express = require("express");
+const { api_TOKEN } = require("../../config.json")
 const MenheraStats = require("../util/variables");
 const router = express.Router()
 
 router.get('/commands', (req, res) => {
+
     const comandos = MenheraStats.getCommands()
+    if(req.query.cmds === "true") return res.json({"lenght": comandos.lenght})
+
     res.json({ "lenght": comandos.lenght, "commands": comandos.commands })
 })
 
 router.post('/commands', (req, res) => {
+    const token = req.headers.token
 
-    try {
-        const authorName = req.body.authorName
-        const authorId = req.body.authorId
-        const guildName = req.body.guildName
-        const guildId = req.body.guildId
-        const commandName = req.body.commandName
-        const data = req.body.data
+    if (!token || token !== api_TOKEN) return res.status(403).send({message: "Only the Menhera Client can acess that!"})
 
-        if (authorName === undefined || authorId === undefined || guildName === undefined || guildId === undefined || commandName === undefined || data === undefined) throw "O conteúdo do request é inválido!"
+        try {
+            const authorName = req.body.authorName
+            const authorId = req.body.authorId
+            const guildName = req.body.guildName
+            const guildId = req.body.guildId
+            const commandName = req.body.commandName
+            const data = req.body.data
 
-        MenheraStats.setCommands(authorName, authorId, guildName, guildId, commandName, data)
-        res.sendStatus(200);
+            if (authorName === undefined || authorId === undefined || guildName === undefined || guildId === undefined || commandName === undefined || data === undefined) throw "O conteúdo do request é inválido!"
 
-    } catch (err) {
-        res.status(400).send({ "message": err })
-    }
+            MenheraStats.setCommands(authorName, authorId, guildName, guildId, commandName, data)
+            res.sendStatus(200);
+
+        } catch (err) {
+            res.status(400).send({ "message": err })
+        }
 })
 
 router.post('/commands/clear', (req, res) => {
+    const token = req.headers.token
+
+    if (!token || token !== api_TOKEN) return res.status(403).send({message: "Only the Menhera Client can acess that!"})
+
     MenheraStats.clearCommands()
     res.sendStatus(200);
 })
