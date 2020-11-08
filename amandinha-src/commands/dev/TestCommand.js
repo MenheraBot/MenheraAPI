@@ -1,5 +1,4 @@
 const Command = require("../../structures/command")
-const test = require("../../structures/TopFamilyChecks")
 module.exports = class TestCommand extends Command {
     constructor(client) {
         super(client, {
@@ -9,8 +8,8 @@ module.exports = class TestCommand extends Command {
             OnlyDevs: true
         })
     }
-
+    
     async run(message, args) {
-     test.run(this.client)
+    // test.run(this.client)
     }
 }
