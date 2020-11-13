@@ -16,7 +16,7 @@ router.post('/', (req, res) => {
 
     if (!token || token !== api_TOKEN) return res.status(403).send({message: "Only the Menhera Client can acess that!"})
 
-     Menhera.setLogs((body))
+     Menhera.setLogs(body)
      res.sendStatus(200);
 })
 
