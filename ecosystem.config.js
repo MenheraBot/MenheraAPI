@@ -11,7 +11,7 @@ module.exports = {
     args: "start"
   }, {
     name: "Menhera Dashboard",
-    cwd: "./packages/Amandinha",
+    cwd: "./packages/Dashboard",
     script: "npm",
     args: "start"
   }],
