@@ -13,6 +13,6 @@ module.exports = {
     name: "Menhera Dashboard",
     cwd: "./packages/Amandinha",
     script: "npm",
-    args: "run deploy"
+    args: "start"
   }],
 };
