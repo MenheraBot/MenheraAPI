@@ -5,7 +5,7 @@ const { exec } = require('child_process');
 
 router.post('/', (req, res, next) => {
     try {
-        const command = `cd ../../../../main; git fetch --all; git reset --hard origin/master;`;
+        const command = `cd ../../../main; git fetch; git pull origin master`;
 
         exec(command, (error, stdout, stderr) => {
             if (error) {
