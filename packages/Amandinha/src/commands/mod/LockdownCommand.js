@@ -18,7 +18,7 @@ module.exports = class LockDownCommand extends Command {
 
         if (args[0] === "on") owo = false
 
-        const ignored = new Set([
+        const ignored = [
             "730904048475046069",
             "765427597101760573",
             "730903350169698314",
@@ -41,10 +41,10 @@ module.exports = class LockDownCommand extends Command {
             "773973549386825759",
             "773967693094322216",
             "773965371405107220"
-        ])
+        ]
 
         message.guild.channels.cache.forEach(ch => {
-            if (!ignored.has(ch.id)) {
+            if (!ignored.includes(ch.id)) {
                 ch.updateOverwrite(message.guild.roles.everyone, {
                     SEND_MESSAGES: owo
                 }).then(g => {
