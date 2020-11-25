@@ -1,16 +1,10 @@
 {
-  "name": "@ysnoopydogy/eslint-config",
+  "name": "@menhera-tools/eslint-config",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {},
+  "main": ".eslintrc.js",
+  "license": "MIT",
   "devDependencies": {
+    "eslint": "^7.14.0",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "eslint-config-airbnb-base": "^14.2.1",

@@ -1,5 +1,5 @@
 {
-  "name": "menheradashboard",
+  "name": "@menhera-tools/dashboard",
   "version": "1.0.0",
   "description": "Dashboard para a API da Menhera",
   "main": "src/index.js",
