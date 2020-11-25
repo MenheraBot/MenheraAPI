@@ -4,9 +4,7 @@ import APIError from '../util/APIError'
 import MenheraActivity from '../util/menheraActivity'
 export default class ActivityController {
   public static random(_req: Request, res: Response): Response {
-    return res.json({
-      activity: MenheraActivity.getInstance().getRandomActivity()
-    })
+    return res.send(MenheraActivity.getInstance().getRandomActivity())
   }
 
   public static all(_req: Request, res: Response): Response {
