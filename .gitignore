@@ -1,5 +1,4 @@
 node_modules/
-.vscode/
 config.json
 package-lock.json
-*.sql
+.env
