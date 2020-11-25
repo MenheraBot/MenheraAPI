@@ -1,11 +1,12 @@
 {
-  "name": "api",
+  "name": "@menhera-tools/api",
   "version": "1.0.0",
   "description": "Uma API para a Menhera",
   "main": "dist/server.ts",
   "scripts": {
     "start": "node .",
     "build": "tsc",
+    "lint:fix": "eslint --fix --ext ts src",
     "dev": "tsnd --ignore node_modules --transpile-only --no-notify --respawn -r dotenv/config src/server.ts"
   },
   "keywords": [],
@@ -18,8 +19,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "pg": "^8.5.1",
-    "request": "^2.88.2",
-    "typescript": "^4.1.2"
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.8",
