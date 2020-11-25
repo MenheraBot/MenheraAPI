@@ -1,10 +1,8 @@
-type ActivityType = 'PLAYING' | 'LISTENING' | 'WATCHING' | 'STREAMING'
-interface Activity {
-    name: string;
-    type: ActivityType
-  }
+import { Activity, ActivityType } from './interfaces'
 
 export default class Activities {
+  private constructor() { }
+
   private static instance?: Activities
 
   private defaultActivities: Array<Activity> = [
@@ -20,7 +18,7 @@ export default class Activities {
     { name: '🎲 | Registre-se um aventureiro com m!register, e vá para aventuras na dungeon com m!dungeon', type: 'PLAYING' },
   ];
 
-  private activities: Array<Activity> = this.defaultActivities;
+  private activities: Array<Activity> = [...this.defaultActivities];
 
   public getAllActivities(): Array<Activity> {
     return this.activities;
@@ -35,12 +33,13 @@ export default class Activities {
     this.activities.push({ name, type });
   }
 
-  public clearActivities(): void{
+  public clearActivities(): void {
     this.activities = [];
   }
 
-  public resetActivities(): void{
-    this.activities = this.defaultActivities;
+  public resetActivities(): Activity[] {
+    this.activities = [...this.defaultActivities];
+    return this.activities
   }
 
   static getInstance (): Activities {
