@@ -2,9 +2,10 @@
   "name": "api",
   "version": "1.0.0",
   "description": "Uma API para a Menhera",
-  "main": "server.ts",
+  "main": "dist/server.ts",
   "scripts": {
-    "start": "node server.ts",
+    "start": "node .",
+    "build": "tsc",
     "dev": "tsnd --ignore node_modules --transpile-only --no-notify --respawn -r dotenv/config src/server.ts"
   },
   "keywords": [],
