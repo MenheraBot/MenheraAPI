@@ -21,7 +21,7 @@
 
 ## 📦 | Packages
 
- Este repositório está dividido em 3 pacotes
+Este repositório está dividido em 3 pacotes
 
 - [Amandinha](#--Amandinha)
 - [Menhera API](#--Menhera-API)
@@ -40,6 +40,7 @@ Ela possui comandos de administração como `ban`, `lock` e `lockdown`, funciona
 ## 📡 | Menhera API
 
 A api da Menhera tem o propósito de gerenciar:
+
 - Atividades da Menhera;
 - Webhooks de Status;
 - Autodeploy para o servidor de produção;
@@ -64,9 +65,9 @@ Distribuído sob a licença MIT. Consulte `LICENSE` para obter mais informaçõe
 ## 📧 | Contato
 
 Discord: **Luxanna#0507**
-Twitter: **[@__MenheraBot](https://twitter.com/__MenheraBot)**
+Twitter: **[@\_\_MenheraBot](https://twitter.com/__MenheraBot)**
 
-___
+---
 
 MenheraBot foi criada com ❤️ por Luxanna.
 
