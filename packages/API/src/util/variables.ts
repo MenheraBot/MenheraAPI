@@ -1,31 +1,34 @@
+import { ICommands } from './interfaces';
+
 class Variaveis {
-    
-    constructor() {
-        this._commands = []
-        this._logs = []
-    }
+    private commands:Array<ICommands> = [];
+
+    private logs = [];
 
     getCommands() {
-        return { lenght: this._commands.length, commands: this._commands }
+      return { lenght: this.commands.length, commands: this.commands };
     }
 
-    setCommands(authorName, authorId, guildName, guildId, commandName, data) {
-        this._commands.push({ authorName, authorId, guildName, guildId, commandName, data })
+    setCommands(authorName: string, authorId: string, guildName: string,
+      guildId: string, commandName: string, data: string):void {
+      this.commands.push({
+        authorName, authorId, guildName, guildId, commandName, data,
+      });
     }
 
-    clearCommands() {
-        this._commands = []
+    clearCommands():void {
+      this.commands = [];
     }
 
-    getLogs() {
-        return this._logs;
+    getLogs():Array<object> {
+      return this.logs;
     }
 
-    setLogs(log) {
-        this._logs.push(log)
+    setLogs(log:object):void {
+      this.logs.push(log);
     }
 }
 
-const variaveis = new Variaveis()
+const variaveis = new Variaveis();
 
-module.exports = variaveis
+export default variaveis;

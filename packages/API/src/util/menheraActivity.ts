@@ -1,8 +1,6 @@
-import { Activity, ActivityType } from './interfaces'
+import { Activity, ActivityType } from './interfaces';
 
 export default class Activities {
-  private constructor() { }
-
   private static instance?: Activities
 
   private defaultActivities: Array<Activity> = [
@@ -39,14 +37,14 @@ export default class Activities {
 
   public resetActivities(): Activity[] {
     this.activities = [...this.defaultActivities];
-    return this.activities
+    return this.activities;
   }
 
-  static getInstance (): Activities {
+  static getInstance(): Activities {
     if (!this.instance) {
-      this.instance = new Activities()
+      this.instance = new Activities();
     }
 
-    return this.instance
+    return this.instance;
   }
 }

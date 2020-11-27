@@ -7,5 +7,5 @@ export default (req: Request, res: Response, next: NextFunction) => {
     return res.status(401).send({ message: 'Only the Menhera Client can access that!' });
   }
 
-  next();
+  return next();
 };

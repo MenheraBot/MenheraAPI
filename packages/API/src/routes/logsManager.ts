@@ -1,5 +1,6 @@
-const express = require('express');
-const MenheraLogs = require('../util/variables');
+import express from 'express';
+import MenheraLogs from '../util/variables';
+import isAuthorized from '../middlewares/isAuthorized';
 
 const router = express.Router();
 
@@ -8,15 +9,12 @@ router.get('/', (req, res) => {
 
   res.send(logs);
 });
+// oimoru po po
+router.post('/', isAuthorized, (req, res) => {
+  const body = req.body.info;
 
-router.post('/', (req, res) => {
-  const { token } = req.headers;
-  /*  const body = req.body.info; */
-
-  if (!token || token !== process.env.API_TOKEN) return res.status(403).send({ message: 'Only the Menhera Client can acess that!' });
-
-  /*  Menhera.setLogs(body); */
+  MenheraLogs.setLogs(body);
   return res.sendStatus(200);
 });
 
-module.exports = router;
+export default router;

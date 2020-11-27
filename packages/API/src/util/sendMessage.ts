@@ -1,32 +1,27 @@
-// IWIDWUDHAD
-// TA IMPORTANDO O DJS SO CAUSA DO BUILDER DELE DAUHWUADHAUD
-const { MessageEmbed } = require("discord.js")
-const request = require("request")
-const { webhook_token_status, webhook_ID_status, webhook_ID_github, webhook_token_github } = require("../config.json")
+import { MessageEmbed } from 'discord.js';
+import request from 'request';
 
-module.exports.status = async (embed) => {
-    request.post(`https://discord.com/api/webhooks/${webhook_ID_status}/${webhook_token_status}`, {
-        json: {
-            embeds: [embed]
-        }
-    })
+export async function status(embed: MessageEmbed) {
+  request.post(`https://discord.com/api/webhooks/${process.env.WEBHOOK_ID_STATUS}/${process.env.WEBHOOK_TOKEN_STATUS}`, {
+    json: {
+      embeds: [embed],
+    },
+  });
 }
 
-module.exports.github = async (status, message) => {
+export async function github(stats: number, message: string) {
+  const embed = new MessageEmbed()
+    .setTitle(stats)
+    .setDescription(message)
+    .setThumbnail('https://i.imgur.com/t94XkgG.png')
+    .setColor('#17ec39')
+    .setTimestamp();
 
-    let embed = new MessageEmbed()
-        .setTitle(status)
-        .setDescription(message)
-        .setThumbnail('https://i.imgur.com/t94XkgG.png')
-        .setColor('#17ec39')
-        .setTimestamp()
+  if (stats > 399) embed.setColor('#ff0000').setThumbnail('https://cdn140.picsart.com/283880390029211.png?type=webp&to=min&r=640');
 
-    if (status > 399) embed.setColor('#ff0000').setThumbnail('https://cdn140.picsart.com/283880390029211.png?type=webp&to=min&r=640')
-
-    request.post(`https://discord.com/api/webhooks/${webhook_ID_github}/${webhook_token_github}`, {
-        json: {
-            embeds: [embed]
-        }
-    })
-
+  request.post(`https://discord.com/api/webhooks/${process.env.WEBHOOK_ID_GITHUB}/${process.env.WEBHOOK_TOKEN_GITHUB}`, {
+    json: {
+      embeds: [embed],
+    },
+  });
 }

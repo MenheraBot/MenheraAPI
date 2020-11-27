@@ -1,44 +1,33 @@
 import express from 'express';
 import { MessageEmbed } from 'discord.js';
-import make_request from '../util/sendMessage';
+import { status } from '../util/sendMessage';
+import isAuthorized from '../middlewares/isAuthorized';
 
 const router = express.Router();
 
-router.post('/ready', (req, res) => {
-  const { token } = req.headers;
-
-  if (!token || token !== api_TOKEN) return res.status(403).send({ message: 'Only the Menhera Client can acess that!' });
-
+router.post('/ready', isAuthorized, (req, res) => {
   const embed = new MessageEmbed()
     .setTitle('Menhera is ON')
     .setDescription('Menhera voltou de férias, e já está online respondendo comandos!')
     .setColor('#1cf313')
     .setTimestamp();
 
-  make_request.status(embed);
-  res.sendStatus(200);
+  status(embed);
+  return res.sendStatus(200);
 });
 
-router.post('/down', (req, res) => {
-  const { token } = req.headers;
-
-  if (!token || token !== api_TOKEN) return res.status(403).send({ message: 'Only the Menhera Client can acess that!' });
-
+router.post('/down', isAuthorized, (req, res) => {
   const embed = new MessageEmbed()
     .setTitle('DOWN!')
     .setDescription('ESSA NÃO!!!\nMenhera foi de base!')
     .setColor('#fd0000')
     .setTimestamp();
 
-  make_request.status(embed);
-  res.sendStatus(200);
+  status(embed);
+  return res.sendStatus(200);
 });
 
-router.post('/shard/ready', (req, res) => {
-  const { token } = req.headers;
-
-  if (!token || token !== api_TOKEN) return res.status(403).send({ message: 'Only the Menhera Client can acess that!' });
-
+router.post('/shard/ready', isAuthorized, (req, res) => {
   const { shard } = req.body;
 
   const embed = new MessageEmbed()
@@ -47,15 +36,11 @@ router.post('/shard/ready', (req, res) => {
     .setColor('#df96e6')
     .setTimestamp();
 
-  make_request.status(embed);
-  res.sendStatus(200);
+  status(embed);
+  return res.sendStatus(200);
 });
 
-router.post('/shard/disconnect', (req, res) => {
-  const { token } = req.headers;
-
-  if (!token || token !== api_TOKEN) return res.status(403).send({ message: 'Only the Menhera Client can acess that!' });
-
+router.post('/shard/disconnect', isAuthorized, (req, res) => {
   const { shard } = req.body;
 
   const embed = new MessageEmbed()
@@ -64,15 +49,11 @@ router.post('/shard/disconnect', (req, res) => {
     .setColor('#91a8a8')
     .setTimestamp();
 
-  make_request.status(embed);
-  res.sendStatus(200);
+  status(embed);
+  return res.sendStatus(200);
 });
 
-router.post('/shard/reconnecting', (req, res) => {
-  const { token } = req.headers;
-
-  if (!token || token !== api_TOKEN) return res.status(403).send({ message: 'Only the Menhera Client can acess that!' });
-
+router.post('/shard/reconnecting', isAuthorized, (req, res) => {
   const { shard } = req.body;
 
   const embed = new MessageEmbed()
@@ -81,8 +62,8 @@ router.post('/shard/reconnecting', (req, res) => {
     .setColor('#91a8a8')
     .setTimestamp();
 
-  make_request.status(embed);
-  res.sendStatus(200);
+  status(embed);
+  return res.sendStatus(200);
 });
 
-module.exports = router;
+export default router;
