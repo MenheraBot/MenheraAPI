@@ -35,7 +35,7 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=4096
 
       - name: '[API] Build'
-        run: yarn api build
+        run: yarn api build:test
         env:
           CI: true
 
