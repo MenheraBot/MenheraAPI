@@ -2,7 +2,7 @@
   "name": "@menhera-tools/api",
   "version": "1.0.0",
   "description": "Uma API para a Menhera",
-  "main": "dist/server.ts",
+  "main": "dist/server.js",
   "scripts": {
     "start": "node .",
     "build": "tsc",
