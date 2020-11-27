@@ -12,7 +12,7 @@ module.exports = {
   }, {
     name: 'Menhera Dashboard',
     cwd: './packages/Dashboard',
-    script: 'npm',
+    script: '',
     args: 'start',
   }],
 };

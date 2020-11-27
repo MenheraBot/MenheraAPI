@@ -5,5 +5,6 @@ module.exports = {
   ignorePatterns: [
     'packages/**/node_modules/*',
     'packages/**/dist/*',
+    'packages/**/*.js',
   ],
 };

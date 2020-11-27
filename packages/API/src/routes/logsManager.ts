@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
   res.send(logs);
 });
-// oimoru po po
+
 router.post('/', isAuthorized, (req, res) => {
   const body = req.body.info;
 

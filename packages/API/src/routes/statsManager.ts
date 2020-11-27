@@ -18,8 +18,7 @@ router.post('/commands', isAuthorized, (req, res) => {
       authorName, authorId, guildName, guildId, commandName, data,
     } = req.body;
 
-    if (authorName === undefined || authorId === undefined || guildName === undefined
-       || guildId === undefined || commandName === undefined || data === undefined) throw new APIError('O request é inválido', 400);
+    if (!authorName || !authorId || !guildName || !guildId || !commandName || !data) throw new APIError('O request é inválido', 400);
 
     MenheraStats.setCommands(authorName, authorId, guildName, guildId, commandName, data);
     res.sendStatus(200);

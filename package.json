@@ -7,6 +7,7 @@
     "api": "yarn workspace @menhera-tools/api",
     "bot": "yarn workspace @menhera-tools/amandinha",
     "lint": "yarn workspace @menhera-tools/eslint-config",
+    "logger": "yarn workspace @menhera-tools/logger",
     "dashboard": "yarn workspace @menhera-tools/dashboard"
   },
   "repository": {

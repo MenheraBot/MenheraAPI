@@ -4,7 +4,7 @@
   "description": "Uma API para a Menhera",
   "main": "dist/server.js",
   "scripts": {
-    "start": "node .",
+    "start": "node -r dotenv/config .",
     "build": "tsc",
     "build:test": "tsc --noEmit",
     "lint:fix": "eslint --fix --ext ts src",
