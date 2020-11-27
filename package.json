@@ -7,7 +7,8 @@
     "api": "yarn workspace @menhera-tools/api",
     "bot": "yarn workspace @menhera-tools/amandinha",
     "lint": "yarn workspace @menhera-tools/eslint-config",
-    "dashboard": "yarn workspace @menhera-tools/dashboard"
+    "dashboard": "yarn workspace @menhera-tools/dashboard",
+    "exec-wk": "yarn workspace @menhera-tools/execute-webhook"
   },
   "repository": {
     "type": "git",
