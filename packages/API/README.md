@@ -7,7 +7,7 @@
   <h3 align="center"> Menhera API </h3>
 
   <p align="center">
-    Menhera API é uma REST API feita com [Express](https://expressjs.com/pt-br/) em TypeScript
+    Menhera API é uma REST API feita com <a href="https://expressjs.com/pt-br/">Express</a> em TypeScript
     <br />
   </p>
 </p>
