@@ -14,15 +14,11 @@ export default class ActivityController {
 
   public static clear(_req: Request, res: Response): Response {
     MenheraActivity.getInstance().clearActivities();
-    return res
-      .status(200)
-      .json({ ok: true });
+    return res.status(200).json({ ok: true });
   }
 
   public static reset(req: Request, res: Response): Response {
-    return res
-      .status(200)
-      .json(MenheraActivity.getInstance().resetActivities());
+    return res.status(200).json(MenheraActivity.getInstance().resetActivities());
   }
 
   public static add(req: Request, res: Response): Response {

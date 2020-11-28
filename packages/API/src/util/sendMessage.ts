@@ -16,20 +16,22 @@ export async function github(stats: number, message: string): Promise<void> {
     : 'https://cdn140.picsart.com/283880390029211.png?type=webp&to=min&r=640';
 
   await executeWebhook(process.env.WEBHOOK_ID_GITHUB, process.env.WEBHOOK_TOKEN_GITHUB, {
-    embeds: [{
-      title: String(stats),
-      description: message,
-      color,
-      timestamp: new Date(),
-      thumbnail: { url: thumbnail },
-    }],
+    embeds: [
+      {
+        title: String(stats),
+        description: message,
+        color,
+        timestamp: new Date(),
+        thumbnail: { url: thumbnail },
+      },
+    ],
   });
 }
 
-export function responseWebhook(res: Response, promise: Promise<any>): Promise<Response> {
+export function responseWebhook(res: Response, promise: Promise<unknown>): Promise<Response> {
   return promise
     .then(() => res.sendStatus(201))
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
       return res.status(502).json({ message: 'Could not send webhook' });
     });
