@@ -1,4 +1,4 @@
-const { Pool } = require('pg');
+import { Pool } from 'pg';
 /* const { db_user, db_host, db_database, db_password, db_port } = require("../config.json") */
 
 const pool = new Pool({
