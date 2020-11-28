@@ -30,7 +30,7 @@ Este repositório está dividido em diversos pacotes
 - [Logger](#--Logger)
 - [Menhera Dashboard](#--Menhera-Dashboard)
 
-## 🤖 | Amandinha
+## [🤖 | Amandinha](/packages/Amandinha)
 
 Amandinha é um bot privado para auxiliar no [servidor de suporte](https://discord.gg/fZMdQbA) da Menhera.
 Ela possui comandos de administração como `ban`, `lock` e `lockdown`, funcionalidades para gerenciar as famílias do Mundo de Boleham.
@@ -53,7 +53,7 @@ A api da Menhera tem o propósito de gerenciar:
 
 - [express](https://expressjs.com/pt-br/)
 
-## 👷 | Eslint Config
+## [👷 | Eslint Config](packages/eslint-config)
 
 Os arquivos de configuração do lint para a padronização dos arquivos de todos os packages
 
@@ -61,7 +61,7 @@ Os arquivos de configuração do lint para a padronização dos arquivos de todo
 
 - [eslint](https://eslint.org/)
 
-## 🌐 | Execute Webhook
+## [🌐 | Execute Webhook](/packages/execute-webhook)
 
 Pacote com os types dos webhooks do servidor de suporte da Menhera. Feito por [Tsugami](https://github.com/Tsugami)
 
@@ -69,7 +69,7 @@ Pacote com os types dos webhooks do servidor de suporte da Menhera. Feito por [T
 
 - [axios](https://www.npmjs.com/package/axios)
 
-## 📟 | Logger
+## [📟 | Logger](/packages/logger)
 
 Um pacote para melhorar os logs das aplicações de todos os outros pacotes
 
@@ -77,7 +77,7 @@ Um pacote para melhorar os logs das aplicações de todos os outros pacotes
 
 - [chalk](https://www.npmjs.com/package/chalk)
 
-## 💻 | Menhera Dashboard
+## [💻 | Menhera Dashboard](/packages/MenheraDashboard)
 
 Dashboard visual para gerenciamento das atividades da Menhera
 
