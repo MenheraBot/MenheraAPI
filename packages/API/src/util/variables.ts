@@ -3,8 +3,6 @@ import { ICommands } from './interfaces';
 class Variaveis {
     private commands:Array<ICommands> = [];
 
-    private logs = [];
-
     getCommands() {
       return { lenght: this.commands.length, commands: this.commands };
     }
@@ -18,14 +16,6 @@ class Variaveis {
 
     clearCommands():void {
       this.commands = [];
-    }
-
-    getLogs():Array<object> {
-      return this.logs;
-    }
-
-    setLogs(log:object):void {
-      this.logs.push(log);
     }
 }
 

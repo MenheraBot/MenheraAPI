@@ -1,12 +1,12 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import { exec } from 'child_process';
+import path from 'path';
 import { github } from '../util/sendMessage';
 
-const router = express.Router();
-
-router.post('/', (req, res) => {
+export default async (_req: Request, res: Response): Promise<void> => {
   try {
-    const command = 'cd ../../../main; git fetch; git pull origin master';
+    const menheraPath = path.resolve(__dirname, '..', '..', '..', '..', '..', 'main');
+    const command = `cd ${menheraPath}; git fetch; git pull origin master`;
 
     exec(command, (error) => {
       if (error) {
@@ -23,6 +23,4 @@ router.post('/', (req, res) => {
     res.sendStatus(500);
     github(500, err.message);
   }
-});
-
-export default router;
+};
