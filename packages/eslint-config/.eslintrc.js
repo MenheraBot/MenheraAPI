@@ -5,6 +5,7 @@ module.exports = {
   },
   extends: [
     'airbnb-base',
+    'plugin:@typescript-eslint/recommended'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -17,6 +18,13 @@ module.exports = {
   rules: {
     'import/extensions': ['error', 'never'],
     'import/no-extraneous-dependencies': 'off',
+    "@typescript-eslint/type-annotation-spacing": [
+      "error",
+      {
+        "after": true,
+        "before": false
+      }
+    ]
   },
 
   settings: {
