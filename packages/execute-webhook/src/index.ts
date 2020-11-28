@@ -51,15 +51,15 @@ export interface WebhookOptions {
 }
 
 export default async function executeWebhook(
-  webhookID: string, webhookToken: string, options: WebhookOptions,
-) {
+  webhookID: string,
+  webhookToken: string,
+  options: WebhookOptions
+): Promise<unknown> {
   const DISCORD_API_URL = 'https://discord.com/api';
   const url = `${DISCORD_API_URL}/webhooks/${webhookID}/${webhookToken}`;
-  return axios(
-    {
-      url,
-      method: 'POST',
-      data: options,
-    },
-  );
+  return axios({
+    url,
+    method: 'POST',
+    data: options,
+  });
 }

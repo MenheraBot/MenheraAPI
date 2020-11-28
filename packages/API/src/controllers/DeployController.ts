@@ -8,7 +8,7 @@ export default async (_req: Request, res: Response): Promise<void> => {
     const menheraPath = path.resolve(__dirname, '..', '..', '..', '..', '..', 'main');
     const command = `cd ${menheraPath}; git fetch; git pull origin master`;
 
-    exec(command, (error) => {
+    exec(command, error => {
       if (error) {
         console.log('[API SERVER ERROR]');
         res.send(`error: ${error.message}`).status(500);

@@ -1,7 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import APIError from '../util/APIError';
 
-export default (error: Error, _req: Request, res: Response, next: NextFunction) => {
+export default (
+  error: Error,
+  _req: Request,
+  res: Response,
+  next: NextFunction
+): Response | void => {
   if (!error) {
     return next();
   }
