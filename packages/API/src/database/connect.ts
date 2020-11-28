@@ -1,4 +1,5 @@
 import { Pool } from 'pg';
+import logger from '@menhera-tools/logger';
 /* const { db_user, db_host, db_database, db_password, db_port } = require("../config.json") */
 
 const pool = new Pool({
@@ -10,14 +11,14 @@ const pool = new Pool({
 });
 
 pool.on('connect', () => {
-  console.log('Nova conexão estabelecida');
+  logger.info('Nova conexão estabelecida');
 });
 
 pool.on('error', () => {
-  console.log('ERRO DURANTE UMA CONEXÂO');
+  logger.info('ERRO DURANTE UMA CONEXÂO');
 });
 
-console.log(pool.idleCount);
+logger.info(pool.idleCount);
 
 /*
 
@@ -37,7 +38,7 @@ const insertPhotoText = 'INSERT INTO logs(command, user_id, guild, data) VALUES 
         } finally {
             client.release()
         }
-    })().catch(e => console.error(e.stack))
+    })().catch(e => logger.error(e.stack))
 
  */
 export default pool;

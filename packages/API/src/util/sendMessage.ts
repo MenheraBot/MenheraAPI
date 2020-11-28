@@ -1,5 +1,6 @@
 import executeWebhook, { EmbedOptions } from '@menhera-tools/execute-webhook';
 import { Response } from 'express';
+import logger from '@menhera-tools/logger';
 import { Colors } from './interfaces';
 
 export async function status(embed: EmbedOptions): Promise<void> {
@@ -32,7 +33,7 @@ export function responseWebhook(res: Response, promise: Promise<unknown>): Promi
   return promise
     .then(() => res.sendStatus(201))
     .catch(error => {
-      console.error(error);
+      logger.error(error);
       return res.status(502).json({ message: 'Could not send webhook' });
     });
 }
