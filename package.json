@@ -9,7 +9,8 @@
     "lint": "yarn workspace @menhera-tools/eslint-config",
     "dashboard": "yarn workspace @menhera-tools/dashboard",
     "logger": "yarn workspace @menhera-tools/logger",
-    "exec-wk": "yarn workspace @menhera-tools/execute-webhook"
+    "exec-wk": "yarn workspace @menhera-tools/execute-webhook",
+    "run:lint": "eslint --fix ."
   },
   "repository": {
     "type": "git",
