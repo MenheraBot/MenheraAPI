@@ -1,6 +1,18 @@
-# Menhera API
+<br />
+<p align="center">
+  <a href="https://github.com/ySnoopyDogy/Menhera-Tools">
+    <img src="https://i.imgur.com/jjgBki0.png" alt="Logo" width="160" height="160">
+  </a>
 
-## Rotas
+  <h3 align="center"> Menhera API </h3>
+
+  <p align="center">
+    Menhera API é uma REST API feita com [Express](https://expressjs.com/pt-br/) em TypeScript
+    <br />
+  </p>
+</p>
+
+## 🔀 | Rotas
 
 | Tipo   | Endpoint                  | Descrição                                                    |
 | ------ | ------------------------- | ------------------------------------------------------------ |

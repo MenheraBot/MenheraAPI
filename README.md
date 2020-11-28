@@ -90,7 +90,7 @@ Dashboard visual para gerenciamento das atividades da Menhera
 | [<img src="https://avatars1.githubusercontent.com/u/59155752?s=400&u=8e971f52c061732abb996aa9618ea2fafba5c0ae&v=4" width=115><br><sub>@ySnoopyDogy</sub>](https://github.com/ySnoopyDogy) | [<img src="https://avatars2.githubusercontent.com/u/27602189?s=400&u=7954c97ada727d3a059d9b769f5a296ea599083b&v=4" width=115><br><sub>@Tsugami</sub>](https://github.com/Tsugami) |
 | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
-## 📜 | Licença
+## ⚖️ | Licença
 
 Distribuído sob a licença MIT. Consulte `LICENSE` para obter mais informações.
 
