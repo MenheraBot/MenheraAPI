@@ -4,7 +4,7 @@ class Variaveis {
     private commands:Array<ICommands> = [];
 
     getCommands() {
-      return { lenght: this.commands.length, commands: this.commands };
+      return { length: this.commands.length, commands: this.commands };
     }
 
     setCommands(authorName: string, authorId: string, guildName: string,
