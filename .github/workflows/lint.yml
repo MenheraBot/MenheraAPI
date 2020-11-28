@@ -42,11 +42,6 @@ jobs:
         env:
           CI: true
 
-      - name: '[API] Run lint'
-        run: yarn api lint:fix
-        env:
-          CI: true
-
       - name: 'Run linter'
         run: yarn run:lint
         env:
