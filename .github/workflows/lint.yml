@@ -37,6 +37,11 @@ jobs:
         run: yarn exec-wk build
         env:
           CI: true
+      - name: '[LOGGER] build'
+        run: yarn logger build
+        env:
+          CI: true
+          
       - name: '[API] Build'
         run: yarn api build:test
         env:
