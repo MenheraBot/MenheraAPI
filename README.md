@@ -40,7 +40,7 @@ Ela possui comandos de administração como `ban`, `lock` e `lockdown`, funciona
 - [discord.js](https://discord.js.org/#/)
 - [mongoose](https://mongoosejs.com/)
 
-## 📡 | Menhera API
+## [📡 | Menhera API](https://github.com/ySnoopyDogy/Menhera-Tools/tree/Dev/packages/API)
 
 A api da Menhera tem o propósito de gerenciar:
 
