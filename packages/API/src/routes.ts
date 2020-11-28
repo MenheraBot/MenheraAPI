@@ -16,7 +16,7 @@ router.put('/api/activity', isAuthorized, ActivityController.reset);
 router.delete('/api/activity', isAuthorized, ActivityController.clear);
 
 router.get('/api/commands', StatsController.getCommands);
-router.post('/apí/commands', isAuthorized, StatsController.postCommand);
+router.post('/api/commands', isAuthorized, StatsController.postCommand);
 router.post('/api/commands/clear', isAuthorized, StatsController.clearCommands);
 
 router.post('/api/ready', isAuthorized, BotController.ready);
