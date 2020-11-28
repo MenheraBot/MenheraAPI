@@ -97,7 +97,7 @@ Distribuído sob a licença MIT. Consulte `LICENSE` para obter mais informaçõe
 ## 📧 | Contato
 
 Discord: **Luxanna#0507**
-Twitter: **[@\_\_MenheraBot](https://twitter.com/__MenheraBot)**"
+Twitter: **[@\_\_MenheraBot](https://twitter.com/__MenheraBot)**
 
 ---
 
