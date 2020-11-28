@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import Http from 'http';
+import logger from '@menhera-tools/logger';
 import routes from './routes';
 
 import NotFound from './middlewares/NotFound';
@@ -20,5 +21,5 @@ app.use(NotFound);
 app.use(ErrorHandler);
 
 server.listen(process.env.PORT, () => {
-  console.log(`[API] Server started on port ${process.env.PORT}`);
+  logger.info(`[API] Server started on port ${process.env.PORT}`);
 });
