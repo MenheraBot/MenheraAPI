@@ -5,6 +5,8 @@
 }
 
 body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #4f646f;
   background: -moz-radial-gradient(
       0% 100%,
       ellipse cover,

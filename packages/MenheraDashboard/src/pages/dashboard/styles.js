@@ -1,11 +1,10 @@
 import styled from 'styled-components';
+import Button from '../../components/Button';
 
 export const Container = styled.div`
   display: grid;
   justify-content: center;
   margin: 25px 0;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #4f646f;
   @media (max-width: 800px) {
     display: flex;
     width: 100%;
@@ -18,29 +17,12 @@ export const Manager = styled.div`
 
 export const Input = styled.input`
   font-size: 30px;
-  color: #4f646f;
   background-color: #f0f0f0;
 `;
 
 export const Buttons = styled.div`
   display: flex;
   width: 100%;
-`;
-
-export const Button = styled.button`
-  flex: 1;
-  height: 50px;
-  border-radius: 5px;
-  font-size: 1.1rem;
-  font-family: monospace;
-  font-weight: bold;
-  color: #4f646f;
-  text-align: center;
-  background-color: #f0f0f0;
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const Select = styled.select`
@@ -65,4 +47,5 @@ export const Form = styled.form`
     grid-area: add-button;
   }
 `;
+
 export const Option = styled.div``;

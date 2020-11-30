@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useHistory } from 'react';
+import React, { useState, useEffect } from 'react';
 import ActivityTable from '../../components/activities/table';
-import { Container, Button, Buttons, Manager, Form, Input, Select as SelectStyled } from './styles';
-import { getActivities, addActivity, resetActivities, clearActivities, isAuthError } from '../../apis/api';
+import { Container, Buttons, Manager, Form, Input, Select as SelectStyled } from './styles';
+import { getActivities, addActivity, resetActivities, clearActivities } from '../../apis/api';
 import { MdAdd, MdRefresh } from 'react-icons/md';
 import { HiOutlineTrash } from 'react-icons/hi';
+import Button from '../../components/Button';
 
 function ActivitySelect({ handle }) {
   const options = ['PLAYING', 'WATCHING', 'STREAMING', 'LISTENING'];
