@@ -1,7 +1,10 @@
-body {
-  margin: auto;
+* {
+  margin: 0;
   padding: 0;
-  background: #092756;
+  box-sizing: border-box;
+}
+
+body {
   background: -moz-radial-gradient(
       0% 100%,
       ellipse cover,

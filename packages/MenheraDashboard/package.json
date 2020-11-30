@@ -2,7 +2,7 @@
   "name": "@menhera-tools/dashboard",
   "version": "1.0.0",
   "description": "Dashboard para a API da Menhera",
-  "main": "src/index.js",
+  "main": "src/index.jsx",
   "scripts": {
     "start": "serve -s build -l 3000",
     "build": "react-scripts build",

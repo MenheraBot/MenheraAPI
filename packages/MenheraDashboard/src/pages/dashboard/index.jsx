@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useHistory } from 'react';
 import ActivityTable from '../../components/activities/table';
 import { Container, Button, Buttons, Manager, Form, Input, Select as SelectStyled } from './styles';
-import { getActivities, addActivity, resetActivities, clearActivities } from '../../apis/api';
+import { getActivities, addActivity, resetActivities, clearActivities, isAuthError } from '../../apis/api';
 import { MdAdd, MdRefresh } from 'react-icons/md';
 import { HiOutlineTrash } from 'react-icons/hi';
-import './body.css';
 
 function ActivitySelect({ handle }) {
   const options = ['PLAYING', 'WATCHING', 'STREAMING', 'LISTENING'];
@@ -59,8 +58,12 @@ export default () => {
   }
 
   async function onClickResetButton() {
-    const reset = await resetActivities();
+    try {
+    const reset = await resetActivities()
     setActivities(reset);
+    } catch (error) {
+      console.log('Whoops! Houve um erro.', error.message || error)
+    }
   }
 
   return (

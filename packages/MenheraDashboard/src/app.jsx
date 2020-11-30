@@ -1,16 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import DashboardPage from './pages/dashboard/index';
-import globalStyle from './styles/globalStyle';
+import './styles/global.css';
 
 const App = () => (
-  <globalStyle>
-    <Router>
+  <Router>
       <Switch>
         <Route exact path="/" component={DashboardPage} />
       </Switch>
-    </Router>
-  </globalStyle>
+  </Router>
 );
 
 export default App;
