@@ -6,6 +6,11 @@ export const Container = styled.div`
   margin: 25px 0;
   font-family: Arial, Helvetica, sans-serif;
   color: #4f646f;
+  @media (max-width: 800px) {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
 `
 export const Manager = styled.div`
   display: block;

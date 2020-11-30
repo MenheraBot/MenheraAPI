@@ -25,8 +25,12 @@ export const TBody = styled.tbody`
 
 export const Table = styled.table`
   border-collapse: collapse;
+  width: 800px;
   box-shadow: 3px 3px 5px 6px #333;
   ${Td}, ${Th} {
     padding: 12px 15px;
+  }
+  @media (max-width: 800px) {
+    width: 100%
   }
 `
