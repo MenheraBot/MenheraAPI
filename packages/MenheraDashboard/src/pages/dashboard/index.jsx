@@ -43,12 +43,13 @@ export default () => {
   }
 
   async function addNewActivity (event) {
-    event.preventDefault();
+    event.preventDefault()
     if (!activityName) {
       return
     }
     await addActivity(activityName, activityType)
     setActivities(activities.concat({ name: activityName, type: activityType }))
+    setActivityName('')
   }
 
   async function onClickCleanButton() {
@@ -58,7 +59,6 @@ export default () => {
 
   async function onClickResetButton() {
     const reset = await resetActivities()
-    console.log(reset)
     setActivities(reset)
   }
 
@@ -66,7 +66,7 @@ export default () => {
     <Container>
       <Manager/>
         <Form>
-          <Input onChange={onChangeInput} />
+          <Input value={activityName} onChange={onChangeInput} />
           <ActivitySelect handle={onChangeSelect} />
           <Button onClick={addNewActivity}><MdAdd />Adicionar</Button>
         </Form>
