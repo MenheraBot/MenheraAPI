@@ -1,27 +1,27 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-export const Td = styled.td``
-export const Th = styled.th``
+export const Td = styled.td``;
+export const Th = styled.th``;
 
 export const Tr = styled.tr`
   border-bottom: 1px solid #dddddd;
-`
+`;
 
 export const THead = styled.thead`
   background-color: #212529;
-  color: #DEE7E7;
-`
+  color: #dee7e7;
+`;
 
 export const TBody = styled.tbody`
-  background-color: #DEE7E7;
+  background-color: #dee7e7;
   ${Tr}:nth-of-type(even) {
-    background-color: #F4FAFF;
+    background-color: #f4faff;
   }
 
   ${Tr}:last-of-type {
     border-bottom: 2px solid #212529;
   }
-`
+`;
 
 export const Table = styled.table`
   border-collapse: collapse;
@@ -31,6 +31,6 @@ export const Table = styled.table`
     padding: 12px 15px;
   }
   @media (max-width: 800px) {
-    width: 100%
+    width: 100%;
   }
-`
+`;

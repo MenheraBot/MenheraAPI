@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: grid;
@@ -11,21 +11,21 @@ export const Container = styled.div`
     width: 100%;
     flex-direction: column;
   }
-`
+`;
 export const Manager = styled.div`
   display: block;
-`
+`;
 
 export const Input = styled.input`
   font-size: 30px;
   color: #4f646f;
   background-color: #f0f0f0;
-`
+`;
 
 export const Buttons = styled.div`
   display: flex;
   width: 100%;
-`
+`;
 
 export const Button = styled.button`
   flex: 1;
@@ -41,20 +41,19 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 export const Select = styled.select`
   background-color: #f0f0f0;
   transition: 1s;
-`
+`;
 export const Form = styled.form`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 50px 1fr;
   grid-template-areas:
-		"add-input add-input add-select"
-		"add-button add-button add-button"
-    ;
+    'add-input add-input add-select'
+    'add-button add-button add-button';
 
   ${Input} {
     grid-area: add-input;
@@ -65,5 +64,5 @@ export const Form = styled.form`
   ${Button} {
     grid-area: add-button;
   }
-`
-export const Option = styled.div``
+`;
+export const Option = styled.div``;

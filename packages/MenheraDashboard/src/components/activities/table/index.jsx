@@ -1,7 +1,7 @@
-import React from 'react'
-import { Table, Th, TBody, THead, Td, Tr } from './styles'
+import React from 'react';
+import { Table, Th, TBody, THead, Td, Tr } from './styles';
 
-export default function AcitivityTable ({ activities }) {
+export default function AcitivityTable({ activities }) {
   return (
     <Table>
       <THead>
@@ -18,6 +18,6 @@ export default function AcitivityTable ({ activities }) {
           </Tr>
         ))}
       </TBody>
-  </Table>
-  )
+    </Table>
+  );
 }
