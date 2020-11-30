@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import ActivityTable from '../../components/activities/table';
-import { Container, Buttons, Manager, Form, Input, Select as SelectStyled } from './styles';
+import {
+  Container,
+  Buttons,
+  Manager,
+  Form,
+  Input,
+  Select,
+  Table,
+  TBody,
+  THead,
+  Tr,
+} from './styles';
 import { getActivities, addActivity, resetActivities, clearActivities } from '../../apis/api';
 import { MdAdd, MdRefresh } from 'react-icons/md';
 import { HiOutlineTrash } from 'react-icons/hi';
 import Button from '../../components/Button';
 
-function ActivitySelect({ handle }) {
-  const options = ['PLAYING', 'WATCHING', 'STREAMING', 'LISTENING'];
-  const emojis = ['🎮', '📺', '📹', '🎧'];
-  return (
-    <SelectStyled onChange={handle}>
-      {options.map((o, i) => (
-        <option key={o} value={o}>
-          {emojis[i]}
-        </option>
-      ))}
-    </SelectStyled>
-  );
-}
+const options = ['PLAYING', 'WATCHING', 'STREAMING', 'LISTENING'];
+const emojis = ['🎮', '📺', '📹', '🎧'];
 
 export default () => {
   const [activities, setActivities] = useState([]);
@@ -59,12 +58,12 @@ export default () => {
   }
 
   async function onClickResetButton() {
-    try {
-    const reset = await resetActivities()
+    // try {
+    const reset = await resetActivities();
     setActivities(reset);
-    } catch (error) {
-      console.log('Whoops! Houve um erro.', error.message || error)
-    }
+    // } catch (error) {
+    //   console.log('Whoops! Houve um erro.', error.message || error);
+    // }
   }
 
   return (
@@ -72,7 +71,13 @@ export default () => {
       <Manager />
       <Form>
         <Input value={activityName} onChange={onChangeInput} />
-        <ActivitySelect handle={onChangeSelect} />
+        <Select onChange={onChangeSelect}>
+          {options.map((o, i) => (
+            <option key={o} value={o}>
+              {emojis[i]}
+            </option>
+          ))}
+        </Select>
         <Button onClick={addNewActivity}>
           <MdAdd />
           Adicionar
@@ -89,7 +94,22 @@ export default () => {
         </Button>
       </Buttons>
       <Manager />
-      <ActivityTable activities={activities} />
+      <Table>
+        <THead>
+          <Tr>
+            <th>Name</th>
+            <th>Type</th>
+          </Tr>
+        </THead>
+        <TBody>
+          {activities?.map(activity => (
+            <Tr key={activity.name}>
+              <td>{activity.name}</td>
+              <td>{activity.type}</td>
+            </Tr>
+          ))}
+        </TBody>
+      </Table>
     </Container>
   );
 };

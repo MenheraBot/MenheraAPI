@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 const Button = styled.button`
   flex: 1;
   height: 50px;
@@ -16,4 +15,4 @@ const Button = styled.button`
   justify-content: center;
 `;
 
-export default Button
+export default Button;
