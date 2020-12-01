@@ -11,10 +11,12 @@ import {
   THead,
   Tr,
 } from './styles';
-import { getActivities, addActivity, resetActivities, clearActivities } from '../../apis/api';
+import { getActivities, addActivity, resetActivities, clearActivities } from '../../services/api';
 import { MdAdd, MdRefresh } from 'react-icons/md';
 import { HiOutlineTrash } from 'react-icons/hi';
 import Button from '../../components/Button';
+import Login from '../../components/Login';
+import { isAuthenticated, logout } from '../../utils/auth';
 
 const options = ['PLAYING', 'WATCHING', 'STREAMING', 'LISTENING'];
 const emojis = ['🎮', '📺', '📹', '🎧'];
@@ -24,17 +26,20 @@ export default () => {
   const [activityType, setActivityType] = useState('PLAYING');
   const [activityName, setActivityName] = useState('');
 
+  function onHandleError (error) {
+    if (error.response.status === 401) logout();
+    console.log('Whoops! Houve um erro.', error.message || error);
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getActivities();
-      setActivities(response?.data.sort() ?? []);
-    };
+    const fetchData = () => getActivities()
+      .then(res => setActivities(res?.data.sort() ?? []))
+      .catch(onHandleError)
 
     fetchData();
   }, []);
 
   function onChangeSelect(event) {
-    console.log(event.target.value);
     setActivityType(event.target.value);
   }
 
@@ -47,27 +52,29 @@ export default () => {
     if (!activityName) {
       return;
     }
-    await addActivity(activityName, activityType);
-    setActivities(activities.concat({ name: activityName, type: activityType }));
-    setActivityName('');
+    return addActivity(activityName, activityType)
+    .then(() => {
+      setActivities(activities.concat({ name: activityName, type: activityType }));
+      setActivityName('');
+    })
+    .catch(onHandleError)
   }
 
-  async function onClickCleanButton() {
-    await clearActivities();
-    setActivities([]);
+  function onClickCleanButton() {
+    return clearActivities()
+    .then(() => setActivities([]))
+    .catch(onHandleError)
   }
 
-  async function onClickResetButton() {
-    // try {
-    const reset = await resetActivities();
-    setActivities(reset);
-    // } catch (error) {
-    //   console.log('Whoops! Houve um erro.', error.message || error);
-    // }
+  function onClickResetButton() {
+    return resetActivities()
+    .then((reset) => setActivities(reset))
+    .catch(onHandleError)
   }
 
   return (
     <Container>
+      {isAuthenticated() ? null : <Login onClick/>}
       <Manager />
       <Form>
         <Input value={activityName} onChange={onChangeInput} />
