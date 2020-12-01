@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import Button from './Button';
 import styled, { keyframes } from 'styled-components';
 import Logo from '../assets/Logo.png';
-import {Context as AuthContext} from '../store/AuthContext';
-import {checkAuth} from '../services/api';
+import { Context as AuthContext } from '../store/AuthContext';
+import { checkAuth } from '../services/api';
 
 const FormAnimation = keyframes`
   from {
@@ -80,7 +80,7 @@ const FailedAuth = styled.div`
   border: 1px solid red;
   margin: 7px;
   text-align: center;
-`
+`;
 
 export default () => {
   const [username, setUsername] = useState('');
@@ -115,7 +115,9 @@ export default () => {
         <LoginInput value={username} onChange={onUsername} required />
         <LoginLabel>Password</LoginLabel>
         <LoginInput value={password} onChange={onPassword} type="password" required />
-        <Button type="button" onClick={onButton}>Sign In</Button>
+        <Button type="button" onClick={onButton}>
+          Sign In
+        </Button>
       </LoginForm>
     </Background>
   );

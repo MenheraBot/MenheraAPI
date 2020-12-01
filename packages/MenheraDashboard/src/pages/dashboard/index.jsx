@@ -16,7 +16,7 @@ import { MdAdd, MdRefresh } from 'react-icons/md';
 import { HiOutlineTrash } from 'react-icons/hi';
 import Button from '../../components/Button';
 import Login from '../../components/Login';
-import {Context as AuthContext} from '../../store/AuthContext';
+import { Context as AuthContext } from '../../store/AuthContext';
 
 const options = ['PLAYING', 'WATCHING', 'STREAMING', 'LISTENING'];
 const emojis = ['🎮', '📺', '📹', '🎧'];
@@ -27,7 +27,7 @@ export default () => {
   const [activityName, setActivityName] = useState('');
   const [auth, setAuth] = useContext(AuthContext);
 
-  const isAuthenticated = () => !!(auth?.username && auth?.password)
+  const isAuthenticated = () => !!(auth?.username && auth?.password);
 
   function onHandleError(error) {
     if (error.response.status === 401) setAuth(null);

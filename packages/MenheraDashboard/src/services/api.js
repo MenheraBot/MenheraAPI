@@ -10,14 +10,14 @@ const api = axios.create({
 });
 
 export const checkAuth = ({ username, password }) => {
-  return api.post('/auth',null, { headers: { username, password } });
+  return api.post('/auth', null, { headers: { username, password } });
 };
 
 const getAuth = () => {
   const username = localStorage.getItem('username');
   const password = localStorage.getItem('password');
-  return { username, password }
-}
+  return { username, password };
+};
 
 export const getActivities = () => {
   return api.get('/activity/all', null, getAuth());

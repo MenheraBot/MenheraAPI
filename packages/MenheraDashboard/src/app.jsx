@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import DashboardPage from './pages/dashboard/index';
-import {StoreProvider} from './store/AuthContext';
+import { StoreProvider } from './store/AuthContext';
 import './styles/global.css';
 
 const App = () => (
