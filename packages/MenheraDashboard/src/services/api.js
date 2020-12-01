@@ -9,33 +9,28 @@ const api = axios.create({
   },
 });
 
+export const checkAuth = ({ username, password }) => {
+  return api.post('/auth',null, { headers: { username, password } });
+};
 
-api.interceptors.request.use(config => {
-  config.headers.username = localStorage.getItem('username')
-  config.headers.password = localStorage.getItem('password');
-  return config;
-},
-  error => Promise.reject(error)
-);
-
-export default api;
+const getAuth = () => {
+  const username = localStorage.getItem('username');
+  const password = localStorage.getItem('password');
+  return { username, password }
+}
 
 export const getActivities = () => {
-  return api.get('/activity/all');
+  return api.get('/activity/all', null, getAuth());
 };
 
 export const clearActivities = () => {
-  return api.delete('/activity');
+  return api.delete('/activity', null, getAuth());
 };
 
 export const resetActivities = () => {
-  return api.put('/activity').then(res => res.data);
+  return api.put('/activity', null, getAuth()).then(res => res.data);
 };
 
 export const addActivity = (name, type) => {
-  return api.post('/activity', { name, type });
-};
-
-export const checkAuth = ({ username, password }) => {
-  return api.post('/auth',null, { headers: { username, password } });
+  return api.post('/activity', { name, type }, getAuth());
 };
