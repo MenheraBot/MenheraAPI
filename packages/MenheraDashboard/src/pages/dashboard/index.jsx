@@ -30,9 +30,8 @@ export default () => {
   const isAuthenticated = () => !!(auth?.username && auth?.password)
 
   function onHandleError(error) {
-    console.log(error)
     if (error.response.status === 401) setAuth(null);
-    console.log('Whoops! Houve um erro.', error.message || error);
+    console.error('Whoops! Houve um erro.', error?.message ?? error);
   }
 
   useEffect(() => {
@@ -82,7 +81,7 @@ export default () => {
       {isAuthenticated() ? null : <Login onClick />}
       <Manager />
       <Form>
-        <Input value={activityName} onChange={onChangeInput} />
+        <Input value={activityName} onChange={onChangeInput} required />
         <Select onChange={onChangeSelect}>
           {options.map((o, i) => (
             <option key={o} value={o}>

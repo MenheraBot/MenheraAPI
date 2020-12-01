@@ -3,6 +3,7 @@ import Button from './Button';
 import styled, { keyframes } from 'styled-components';
 import Logo from '../assets/Logo.png';
 import {Context as AuthContext} from '../store/AuthContext';
+import {checkAuth} from '../services/api';
 
 const FormAnimation = keyframes`
   from {
@@ -48,8 +49,12 @@ const LoginForm = styled.form`
   border-radius: 10px;
   ${Button} {
     width: 100%;
+    height: 59px;
     background-color: #333333;
     color: #fff;
+    &:hover {
+      color: #7159c1;
+    }
   }
 `;
 
@@ -63,31 +68,49 @@ const LoginInput = styled.input`
 `;
 const LoginLabel = styled.label`
   font-size: 14px;
-  padding: 7px;
+  padding: 7px 0;
   color: darkslateblue;
 `;
+
+const FailedAuth = styled.div`
+  border-radius: 2px;
+  animation: ${FormAnimation} 0.2s;
+  width: 100%;
+  color: red;
+  border: 1px solid red;
+  margin: 7px;
+  text-align: center;
+`
 
 export default () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [, setAuth] = useContext(AuthContext)
+  const [, setAuth] = useContext(AuthContext);
+  const [failedAuth, setFailedAuth] = useState(false);
   function onUsername(event) {
+    setFailedAuth(false);
     setUsername(event.target.value);
   }
 
   function onPassword(event) {
-    console.log(event.target.value);
+    setFailedAuth(false);
     setPassword(event.target.value);
   }
 
-  function onButton() {
-    setAuth({ username, password });
+  async function onButton() {
+    try {
+      await checkAuth({ username, password });
+      setAuth({ username, password });
+    } catch {
+      setFailedAuth(true);
+    }
   }
 
   return (
     <Background>
       <LoginForm>
         <Img />
+        {failedAuth ? <FailedAuth>Username or password invalid.</FailedAuth> : null}
         <LoginLabel>Username</LoginLabel>
         <LoginInput value={username} onChange={onUsername} required />
         <LoginLabel>Password</LoginLabel>

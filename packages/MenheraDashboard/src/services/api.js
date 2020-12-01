@@ -3,7 +3,7 @@ import axios from 'axios';
 // TEMPORARIO
 const token = '111';
 const api = axios.create({
-  baseURL: `http://localhost:3333/api`,
+  baseURL: process.env.API_URL || `http://localhost:3333/api`,
   headers: {
     token,
   },
@@ -36,7 +36,6 @@ export const addActivity = (name, type) => {
   return api.post('/activity', { name, type });
 };
 
-export const isAuthError = error => {
-  console.log(error.message);
-  return [];
+export const checkAuth = ({ username, password }) => {
+  return api.post('/auth',null, { headers: { username, password } });
 };
