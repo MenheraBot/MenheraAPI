@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Container,
   Buttons,
@@ -16,7 +16,7 @@ import { MdAdd, MdRefresh } from 'react-icons/md';
 import { HiOutlineTrash } from 'react-icons/hi';
 import Button from '../../components/Button';
 import Login from '../../components/Login';
-import { isAuthenticated, logout } from '../../utils/auth';
+import {Context as AuthContext} from '../../store/AuthContext';
 
 const options = ['PLAYING', 'WATCHING', 'STREAMING', 'LISTENING'];
 const emojis = ['🎮', '📺', '📹', '🎧'];
@@ -25,16 +25,21 @@ export default () => {
   const [activities, setActivities] = useState([]);
   const [activityType, setActivityType] = useState('PLAYING');
   const [activityName, setActivityName] = useState('');
+  const [auth, setAuth] = useContext(AuthContext);
 
-  function onHandleError (error) {
-    if (error.response.status === 401) logout();
+  const isAuthenticated = () => !!(auth?.username && auth?.password)
+
+  function onHandleError(error) {
+    console.log(error)
+    if (error.response.status === 401) setAuth(null);
     console.log('Whoops! Houve um erro.', error.message || error);
   }
 
   useEffect(() => {
-    const fetchData = () => getActivities()
-      .then(res => setActivities(res?.data.sort() ?? []))
-      .catch(onHandleError)
+    const fetchData = () =>
+      getActivities()
+        .then(res => setActivities(res?.data.sort() ?? []))
+        .catch(onHandleError);
 
     fetchData();
   }, []);
@@ -53,28 +58,28 @@ export default () => {
       return;
     }
     return addActivity(activityName, activityType)
-    .then(() => {
-      setActivities(activities.concat({ name: activityName, type: activityType }));
-      setActivityName('');
-    })
-    .catch(onHandleError)
+      .then(() => {
+        setActivities(activities.concat({ name: activityName, type: activityType }));
+        setActivityName('');
+      })
+      .catch(onHandleError);
   }
 
   function onClickCleanButton() {
     return clearActivities()
-    .then(() => setActivities([]))
-    .catch(onHandleError)
+      .then(() => setActivities([]))
+      .catch(onHandleError);
   }
 
   function onClickResetButton() {
     return resetActivities()
-    .then((reset) => setActivities(reset))
-    .catch(onHandleError)
+      .then(reset => setActivities(reset))
+      .catch(onHandleError);
   }
 
   return (
     <Container>
-      {isAuthenticated() ? null : <Login onClick/>}
+      {isAuthenticated() ? null : <Login onClick />}
       <Manager />
       <Form>
         <Input value={activityName} onChange={onChangeInput} />

@@ -30,7 +30,7 @@ export const Select = styled.select`
   transition: 1s;
   &:hover {
     cursor: pointer;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
   }
 `;
 

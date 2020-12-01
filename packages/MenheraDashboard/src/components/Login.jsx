@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from './Button';
 import styled, { keyframes } from 'styled-components';
 import Logo from '../assets/Logo.png';
-import { login } from '../utils/auth';
+import {Context as AuthContext} from '../store/AuthContext';
 
 const FormAnimation = keyframes`
   from {
@@ -13,10 +13,10 @@ const FormAnimation = keyframes`
     opacity: 1;
     transform: translateY(0)
   }
-`
+`;
 
 const Img = styled.img.attrs({
-  src: `${Logo}`
+  src: Logo,
 })`
   width: 100px;
   height: 100px;
@@ -33,7 +33,7 @@ const Background = styled.section`
   justify-content: center;
   align-items: center;
   transition: 400ms;
-`
+`;
 
 const LoginForm = styled.form`
   font-family: monospace;
@@ -67,33 +67,32 @@ const LoginLabel = styled.label`
   color: darkslateblue;
 `;
 
-
 export default () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  function onUsername (event) {
-    setUsername(event.target.value)
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [, setAuth] = useContext(AuthContext)
+  function onUsername(event) {
+    setUsername(event.target.value);
   }
 
-  function onPassword (event) {
-    console.log(event.target.value)
-    setPassword(event.target.value)
+  function onPassword(event) {
+    console.log(event.target.value);
+    setPassword(event.target.value);
   }
 
-  function onButton () {
-    login(username, password)
+  function onButton() {
+    setAuth({ username, password });
   }
 
   return (
     <Background>
       <LoginForm>
-        <Img/>
+        <Img />
         <LoginLabel>Username</LoginLabel>
-        <LoginInput value={username} onChange={onUsername} required/>
+        <LoginInput value={username} onChange={onUsername} required />
         <LoginLabel>Password</LoginLabel>
-        <LoginInput value={password} onChange={onPassword} type='password' required/>
-        <Button onClick={onButton}>Sign In</Button>
+        <LoginInput value={password} onChange={onPassword} type="password" required />
+        <Button type="button" onClick={onButton}>Sign In</Button>
       </LoginForm>
     </Background>
   );

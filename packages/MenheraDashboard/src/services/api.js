@@ -9,6 +9,15 @@ const api = axios.create({
   },
 });
 
+
+api.interceptors.request.use(config => {
+  config.headers.username = localStorage.getItem('username')
+  config.headers.password = localStorage.getItem('password');
+  return config;
+},
+  error => Promise.reject(error)
+);
+
 export default api;
 
 export const getActivities = () => {

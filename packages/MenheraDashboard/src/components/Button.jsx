@@ -15,7 +15,7 @@ const Button = styled.button`
   justify-content: center;
   &:hover {
     cursor: pointer;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
   }
 `;
 
