@@ -28,7 +28,12 @@ export const Buttons = styled.div`
 export const Select = styled.select`
   background-color: #f0f0f0;
   transition: 1s;
+  &:hover {
+    cursor: pointer;
+    background-color: #FFFFFF;
+  }
 `;
+
 export const Form = styled.form`
   display: grid;
   grid-template-columns: 1fr;
@@ -44,6 +49,7 @@ export const Form = styled.form`
     grid-area: add-select;
   }
   ${Button} {
+    width: 100%;
     grid-area: add-button;
   }
 `;
