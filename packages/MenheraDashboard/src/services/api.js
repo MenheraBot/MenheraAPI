@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // TEMPORARIO
-const token = '111';
+const token = process.env.TOKEN;
 const api = axios.create({
   baseURL: process.env.API_URL || `http://localhost:3333/api`,
   headers: {
