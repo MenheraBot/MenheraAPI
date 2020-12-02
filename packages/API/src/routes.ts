@@ -4,6 +4,7 @@ import BotController from './controllers/BotController';
 import ShardController from './controllers/ShardController';
 import DeployControler from './controllers/DeployController';
 import StatsController from './controllers/StatsController';
+import AuthController from './controllers/AuthController';
 
 import isAuthorized from './middlewares/isAuthorized';
 
@@ -28,4 +29,5 @@ router.post('/api/shard/ready', isAuthorized, ShardController.ready);
 router.post('/api/shard/disconnect', isAuthorized, ShardController.disconnect);
 router.post('/api/shard/reconnecting', isAuthorized, ShardController.reconnecting);
 
+router.post('/api/auth', isAuthorized, AuthController.check);
 export default router;
