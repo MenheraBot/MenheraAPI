@@ -1,0 +1,39 @@
+{
+  "name": "menhera-tools",
+  "version": "1.0.0",
+  "description": "Um repositório com ferramentas para auxiliar a MenheraBot",
+  "private": true,
+  "scripts": {
+    "build": "lerna exec --parallel yarn build",
+    "api": "yarn workspace @menhera-tools/api",
+    "bot": "yarn workspace @menhera-tools/amandinha",
+    "lint": "yarn workspace @menhera-tools/eslint-config",
+    "dashboard": "yarn workspace @menhera-tools/dashboard",
+    "logger": "yarn workspace @menhera-tools/logger",
+    "exec-wk": "yarn workspace @menhera-tools/execute-webhook",
+    "run:lint": "eslint --fix ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ySnoopyDogy/Menhera-Tools.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ySnoopyDogy/Menhera-Tools/issues"
+  },
+  "homepage": "https://github.com/ySnoopyDogy/Menhera-Tools#readme",
+  "dependencies": {
+    "typescript": "^4.1.2"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "@menhera-tools/eslint-config": "*",
+    "lerna": "^3.22.1"
+  }
+}

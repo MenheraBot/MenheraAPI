@@ -1,5 +1,6 @@
 node_modules/
-.vscode/
 config.json
-package-lock.json
-*.sql
+.env
+packages/**/dist
+yarn-error.log
+build/

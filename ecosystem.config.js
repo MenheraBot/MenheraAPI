@@ -1,18 +1,19 @@
 module.exports = {
-  apps: [{
-    name: "Amandinha",
-    cwd: "./packages/Amandinha",
-    script: "npm",
-    args: "start"
-  }, {
-    name: "Menhera API",
-    cwd: "./packages/API",
-    script: "npm",
-    args: "start"
-  }, {
-    name: "Menhera Dashboard",
-    cwd: "./packages/Dashboard",
-    script: "npm",
-    args: "start"
-  }],
+  apps: [
+    {
+      name: 'Amandinha',
+      script: 'yarn',
+      args: 'bot start',
+    },
+    {
+      name: 'Menhera API',
+      script: 'yarn',
+      args: 'api start',
+    },
+    {
+      name: 'Menhera Dashboard',
+      script: 'yarn',
+      args: 'dashboard start',
+    },
+  ],
 };

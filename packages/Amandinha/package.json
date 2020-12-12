@@ -1,10 +1,11 @@
 {
-  "name": "amandinha",
+  "name": "@menhera-tools/amandinha",
   "version": "1.0.0",
   "description": "Um bot para auxiliar no servidor de suporte da Menhera",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "echo owo"
   },
   "keywords": [],
   "author": "",
