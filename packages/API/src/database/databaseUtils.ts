@@ -23,8 +23,19 @@ async function ensureUser(user: string): Promise<number> {
 }
 
 async function incrementUsages(user: number, command: number): Promise<void> {
-  await pool.query('UPDATE users SET uses = uses + 1 WHERE id = $1', [user]);
-  await pool.query('UPDATE cmds SET usages = usages + 1 WHERE id = $1', [command]);
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    await client.query('UPDATE users SET uses = uses + 1 WHERE id = $1', [user]);
+    await client.query('UPDATE cmds SET usages = usages + 1 WHERE id = $1', [command]);
+
+    await client.query('COMMIT');
+  } catch {
+    await client.query('ROLLBACK');
+  } finally {
+    client.release();
+  }
 }
 
 export async function addCommand(
