@@ -1,6 +1,5 @@
 import { Pool } from 'pg';
 import logger from '@menhera-tools/logger';
-/* const { db_user, db_host, db_database, db_password, db_port } = require("../config.json") */
 
 const pool = new Pool({
   user: process.env.DB_USER,
