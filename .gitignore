@@ -4,3 +4,4 @@ config.json
 packages/**/dist
 yarn-error.log
 build/
+*.http
