@@ -36,11 +36,13 @@ export default class FamilyMessage extends Command {
       return;
     }
 
-    channelApolo.send(`${args.join(' ')}\n\n${roleApolo}`);
-    channelLoki.send(`${args.join(' ')}\n\n${roleLoki}`);
-    channelAres.send(`${args.join(' ')}\n\n${roleAres}`);
-    channelSoma.send(`${args.join(' ')}\n\n${roleSoma}`);
-    channelFreya.send(`${args.join(' ')}\n\n${roleFreya}`);
+    const text = args.join(' ');
+
+    channelApolo.send(`${text}\n\n${roleApolo}`);
+    channelLoki.send(`${text}\n\n${roleLoki}`);
+    channelAres.send(`${text}\n\n${roleAres}`);
+    channelSoma.send(`${text}\n\n${roleSoma}`);
+    channelFreya.send(`${text}\n\n${roleFreya}`);
 
     message.react('✅');
   }
