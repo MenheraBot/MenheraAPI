@@ -1,6 +1,7 @@
 import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import WatchClient from '../../client';
 import Command from '../../structures/command';
+import constants from '../../util/constants';
 
 export default class UpdateCommand extends Command {
   constructor(client: WatchClient) {
@@ -12,8 +13,8 @@ export default class UpdateCommand extends Command {
   }
 
   async run(message: Message): Promise<void> {
-    const canal = this.client.channels.cache.get('757292554445127722') as TextChannel;
-    const role = message.guild.roles.cache.get('758706770675105802');
+    const canal = this.client.channels.cache.get(constants.channels.update) as TextChannel;
+    const role = message.guild.roles.cache.get(constants.roles.status);
 
     const embed = new MessageEmbed()
       .setTitle('🟡 | ATUALIZAÇÃO')

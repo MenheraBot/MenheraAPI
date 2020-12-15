@@ -6,6 +6,7 @@ import moment from 'moment';
 import WatchClient from '../client';
 import familia from './DatabaseConnection';
 import familyInterface from '../util/interfaces';
+import constants from '../util/constants';
 
 export default async function run(client: WatchClient): Promise<void> {
   const canal = client.channels.cache.get('765427597101760573') as TextChannel;
@@ -16,13 +17,13 @@ export default async function run(client: WatchClient): Promise<void> {
     });
   });
 
-  const server = client.guilds.cache.get('717061688460967988');
+  const server = client.guilds.cache.get(constants.server);
   const roles = [
-    server.roles.cache.get('765069003440914443'),
-    server.roles.cache.get('765069063146962995'),
-    server.roles.cache.get('765069110018703371'),
-    server.roles.cache.get('765069167363096616'),
-    server.roles.cache.get('765069139885948928'),
+    server.roles.cache.get(constants.roles.freya),
+    server.roles.cache.get(constants.roles.apolo),
+    server.roles.cache.get(constants.roles.loki),
+    server.roles.cache.get(constants.roles.soma),
+    server.roles.cache.get(constants.roles.ares),
   ];
 
   moment.locale('pt-br');
@@ -77,7 +78,9 @@ export default async function run(client: WatchClient): Promise<void> {
           cor = roles[4].hexColor;
           break;
         default:
-          Logger.error('Sei lá');
+          Logger.error(
+            'Eu duvido muito que isso aqui seja atingido, mas se sim... ERROR STACK ON ARCHIVE TOP FAMILY CHECKS NA LINE EIGTHY ONE COLUNA SLA A HUNDRED IN THE SWITCH CASE ALI'
+          );
       }
 
       let txt = '';

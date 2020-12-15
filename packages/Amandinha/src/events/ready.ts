@@ -4,6 +4,7 @@ import WatchClient from '../client';
 import TopFamilyChecks from '../structures/TopFamilyChecks';
 import database from '../structures/DatabaseConnection';
 import Event from '../structures/event';
+import constants from '../util/constants';
 
 export default class ReadyEvent extends Event {
   constructor(client: WatchClient) {
@@ -32,13 +33,13 @@ export default class ReadyEvent extends Event {
 
     setInterval(async () => {
       TopFamilyChecks(this.client);
-      const server = this.client.guilds.cache.get('717061688460967988');
+      const server = this.client.guilds.cache.get(constants.server);
 
-      const roleApolo = server.roles.cache.get('765069063146962995');
-      const roleLoki = server.roles.cache.get('765069110018703371');
-      const roleAres = server.roles.cache.get('765069139885948928');
-      const roleSoma = server.roles.cache.get('765069167363096616');
-      const roleFreya = server.roles.cache.get('765069003440914443');
+      const roleApolo = server.roles.cache.get(constants.roles.apolo);
+      const roleLoki = server.roles.cache.get(constants.roles.loki);
+      const roleAres = server.roles.cache.get(constants.roles.ares);
+      const roleSoma = server.roles.cache.get(constants.roles.soma);
+      const roleFreya = server.roles.cache.get(constants.roles.freya);
 
       const apolo = await database.findById('Apolo');
       const loki = await database.findById('Loki');

@@ -2,6 +2,7 @@ import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import WatchClient from '../client';
 import database from '../structures/DatabaseConnection';
 import Event from '../structures/event';
+import constants from '../util/constants';
 
 export default class GuildMemberAdd extends Event {
   constructor(client: WatchClient) {
@@ -9,8 +10,8 @@ export default class GuildMemberAdd extends Event {
   }
 
   async run(member: GuildMember): Promise<void> {
-    if (member.guild.id !== '717061688460967988') return;
-    const canal = this.client.channels.cache.get('717061688498847801') as TextChannel;
+    if (member.guild.id !== constants.server) return;
+    const canal = this.client.channels.cache.get(constants.channels.welcome) as TextChannel;
     const avatar = member.user.displayAvatarURL({
       dynamic: true,
     });
@@ -25,13 +26,13 @@ export default class GuildMemberAdd extends Event {
       .setImage('https://i.imgur.com/p3IUT0Y.png');
     canal.send(member, embed);
 
-    const server = this.client.guilds.cache.get('717061688460967988');
+    const server = this.client.guilds.cache.get(constants.server);
 
-    const roleApolo = server.roles.cache.get('765069063146962995');
-    const roleLoki = server.roles.cache.get('765069110018703371');
-    const roleAres = server.roles.cache.get('765069139885948928');
-    const roleSoma = server.roles.cache.get('765069167363096616');
-    const roleFreya = server.roles.cache.get('765069003440914443');
+    const roleApolo = server.roles.cache.get(constants.roles.apolo);
+    const roleLoki = server.roles.cache.get(constants.roles.loki);
+    const roleAres = server.roles.cache.get(constants.roles.ares);
+    const roleSoma = server.roles.cache.get(constants.roles.soma);
+    const roleFreya = server.roles.cache.get(constants.roles.freya);
     const apolo = await database.findById('Apolo');
     const loki = await database.familia.findById('Loki');
     const ares = await database.familia.findById('Ares');

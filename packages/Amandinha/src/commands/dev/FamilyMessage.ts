@@ -1,6 +1,7 @@
 import { Message, TextChannel } from 'discord.js';
 import WatchClient from '../../client';
 import Command from '../../structures/command';
+import constants from '../../util/constants';
 
 export default class FamilyMessage extends Command {
   constructor(client: WatchClient) {
@@ -16,19 +17,19 @@ export default class FamilyMessage extends Command {
   async run(message: Message, args: Array<string>): Promise<void> {
     message.channel.send('Ta la minha linda');
 
-    const server = this.client.guilds.cache.get('717061688460967988');
+    const server = this.client.guilds.cache.get(constants.server);
 
-    const roleApolo = server.roles.cache.get('765069063146962995');
-    const roleLoki = server.roles.cache.get('765069110018703371');
-    const roleAres = server.roles.cache.get('765069139885948928');
-    const roleSoma = server.roles.cache.get('765069167363096616');
-    const roleFreya = server.roles.cache.get('765069003440914443');
+    const roleApolo = server.roles.cache.get(constants.roles.apolo);
+    const roleLoki = server.roles.cache.get(constants.roles.loki);
+    const roleAres = server.roles.cache.get(constants.roles.ares);
+    const roleSoma = server.roles.cache.get(constants.roles.soma);
+    const roleFreya = server.roles.cache.get(constants.roles.freya);
 
-    const channelApolo = server.channels.cache.get('766437591540563988') as TextChannel;
-    const channelLoki = server.channels.cache.get('766437565224976415') as TextChannel;
-    const channelAres = server.channels.cache.get('766437546158718976') as TextChannel;
-    const channelSoma = server.channels.cache.get('766437527216193567') as TextChannel;
-    const channelFreya = server.channels.cache.get('766437575983366154') as TextChannel;
+    const channelApolo = server.channels.cache.get(constants.channels.apolo) as TextChannel;
+    const channelLoki = server.channels.cache.get(constants.channels.loki) as TextChannel;
+    const channelAres = server.channels.cache.get(constants.channels.ares) as TextChannel;
+    const channelSoma = server.channels.cache.get(constants.channels.soma) as TextChannel;
+    const channelFreya = server.channels.cache.get(constants.channels.freya) as TextChannel;
 
     if (!args[0]) {
       message.channel.send('Só faltou lansar o texto');

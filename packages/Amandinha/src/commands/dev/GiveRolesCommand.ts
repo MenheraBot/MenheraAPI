@@ -3,6 +3,8 @@ import WatchClient from '../../client';
 import Command from '../../structures/command';
 import database from '../../structures/DatabaseConnection';
 
+import constants from '../../util/constants';
+
 export default class GiveRoleCommand extends Command {
   constructor(client: WatchClient) {
     super(client, 'giverole', {
@@ -17,13 +19,13 @@ export default class GiveRoleCommand extends Command {
   async run(message: Message): Promise<void> {
     message.channel.send('TA DI BOA BOY');
 
-    const server = this.client.guilds.cache.get('717061688460967988'); // FOI UWUUWUWUWU, ja volto
+    const server = this.client.guilds.cache.get(constants.server); // FOI UWUUWUWUWU, ja volto
 
-    const roleApolo = server.roles.cache.get('765069063146962995');
-    const roleLoki = server.roles.cache.get('765069110018703371');
-    const roleAres = server.roles.cache.get('765069139885948928');
-    const roleSoma = server.roles.cache.get('765069167363096616');
-    const roleFreya = server.roles.cache.get('765069003440914443');
+    const roleApolo = server.roles.cache.get(constants.roles.apolo);
+    const roleLoki = server.roles.cache.get(constants.roles.loki);
+    const roleAres = server.roles.cache.get(constants.roles.ares);
+    const roleSoma = server.roles.cache.get(constants.roles.soma);
+    const roleFreya = server.roles.cache.get(constants.roles.freya);
 
     const apolo = await database.findById('Apolo');
     const loki = await database.findById('Loki');

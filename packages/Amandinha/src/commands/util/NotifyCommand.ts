@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import WatchClient from '../../client';
 import Command from '../../structures/command';
+import constants from '../../util/constants';
 
 export default class NotifyCommand extends Command {
   constructor(client: WatchClient) {
@@ -10,12 +11,12 @@ export default class NotifyCommand extends Command {
   }
 
   async run(message: Message): Promise<Message> {
-    if (message.guild.id !== '717061688460967988')
+    if (message.guild.id !== constants.server)
       return message.channel.send('Comando disponível somente no servidor de suporte da Menhera');
 
-    const role = await this.client.guilds.cache
-      .get('717061688460967988')
-      .roles.cache.get('755593580285788280');
+    const role = this.client.guilds.cache
+      .get(constants.server)
+      .roles.cache.get(constants.roles.notify);
 
     if (message.member.roles.cache.has(role.id)) {
       message.member.roles.remove(role, 'Comando Notify');
