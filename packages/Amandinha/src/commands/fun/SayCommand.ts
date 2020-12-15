@@ -7,7 +7,7 @@ export default class SayCommand extends Command {
   constructor(client: WatchClient) {
     super(client, 'say', {
       ClientPermissions: ['MANAGE_MESSAGES'],
-      category: 'diversão',
+      category: 'fun',
     });
   }
 

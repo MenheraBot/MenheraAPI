@@ -11,7 +11,7 @@ export default class NsfwCommand extends Command {
     super(client, 'nsfw', {
       aliases: ['hentão', 'hentai'],
       ClientPermissions: ['EMBED_LINKS'],
-      category: 'diversão',
+      category: 'fun',
     });
   }
 
