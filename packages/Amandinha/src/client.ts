@@ -15,7 +15,7 @@ export default class WatchClient extends Client {
 
   public aliases: Collection<string, string> = new Collection();
 
-  public events: EventManager = new EventManager(this);
+  public Events: EventManager = new EventManager(this);
 
   constructor(option: ClientOptions = {}) {
     super(option);
@@ -33,7 +33,7 @@ export default class WatchClient extends Client {
   }
 
   async loadEvent(event: Event): Promise<void> {
-    this.events.add(event);
+    this.Events.add(event);
   }
 
   loadCommands(directory: string): unknown {
