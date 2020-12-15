@@ -33,15 +33,22 @@ jobs:
         env:
           CI: true
           NODE_OPTIONS: --max-old-space-size=4096
+          
       - name: '[Execute-Webhook] Build'
         run: yarn exec-wk build
         env:
           CI: true
-      - name: '[LOGGER] build'
+
+      - name: '[LOGGER] Build'
         run: yarn logger build
         env:
           CI: true
-          
+
+      - name: '[BOT] Build'
+        run: yarn bot build:test
+        env:
+          CI: true
+
       - name: '[API] Build'
         run: yarn api build:test
         env:

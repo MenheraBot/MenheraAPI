@@ -2,22 +2,29 @@
   "name": "@menhera-tools/amandinha",
   "version": "1.0.0",
   "description": "Um bot para auxiliar no servidor de suporte da Menhera",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node index.js",
-    "build": "echo owo"
+    "build": "tsc",
+    "start": "node -r dotenv/config .",
+    "build:test": "tsc --noEmit",
+    "dev": "tsnd --ignore node_modules --transpile-only --no-notify --respawn -r dotenv/config src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "canvas": "^2.6.1",
+    "@menhera-tools/logger": "*",
     "discord.js": "^12.4.1",
+    "dotenv": "^8.2.0",
     "fs-extra": "^9.0.1",
-    "jimp": "^0.16.1",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
     "mongoose": "^5.10.15",
     "nekos.life": "^2.0.7"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.5",
+    "@types/moment-duration-format": "^2.2.2",
+    "@types/node": "^14.14.13"
   }
 }
