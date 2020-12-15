@@ -5,6 +5,7 @@ import ShardController from './controllers/ShardController';
 import DeployControler from './controllers/DeployController';
 import StatsController from './controllers/StatsController';
 import AuthController from './controllers/AuthController';
+import UsagesController from './controllers/UsagesController';
 
 import isAuthorized from './middlewares/isAuthorized';
 
@@ -15,6 +16,11 @@ router.get('/api/activity/all', ActivityController.all);
 router.post('/api/activity', isAuthorized, ActivityController.add);
 router.put('/api/activity', isAuthorized, ActivityController.reset);
 router.delete('/api/activity', isAuthorized, ActivityController.clear);
+
+router.get('/api/usages/most', isAuthorized, UsagesController.mostUsersAndCommands);
+router.get('/api/usages/user', isAuthorized, UsagesController.getUserInfo);
+router.get('/api/usages/top/user', isAuthorized, UsagesController.topUsers);
+router.get('/api/usages/top/command', isAuthorized, UsagesController.topCommands);
 
 router.get('/api/commands', StatsController.getCommands);
 router.post('/api/commands', isAuthorized, StatsController.postCommand);

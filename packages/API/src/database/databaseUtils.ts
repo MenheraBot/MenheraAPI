@@ -1,5 +1,20 @@
 import pool from './pool';
 
+interface commandInterface {
+  name: string;
+  usages: number;
+}
+
+interface userInterface {
+  id: string;
+  uses: number;
+}
+
+interface usagesInterface {
+  command: commandInterface;
+  user: userInterface;
+}
+
 export async function ensureCommand(commandName: string): Promise<number> {
   const command = await pool.query('SELECT (id) FROM cmds WHERE name = $1', [commandName]);
 
@@ -23,19 +38,30 @@ async function ensureUser(user: string): Promise<number> {
 }
 
 async function incrementUsages(user: number, command: number): Promise<void> {
-  const client = await pool.connect();
-  try {
-    await client.query('BEGIN');
+  await pool.query('UPDATE users SET uses = uses + 1 WHERE id = $1', [user]);
+  await pool.query('UPDATE cmds SET usages = usages + 1 WHERE id = $1', [command]);
+}
 
-    await client.query('UPDATE users SET uses = uses + 1 WHERE id = $1', [user]);
-    await client.query('UPDATE cmds SET usages = usages + 1 WHERE id = $1', [command]);
+export async function getMostUserAndCommand(): Promise<usagesInterface> {
+  const mostCommandUsed = await pool.query(
+    'SELECT name, usages FROM cmds ORDER BY usages DESC LIMIT 1'
+  );
+  const mostUserCommand = await pool.query('SELECT * FROM users ORDER BY uses DESC LIMIT 1');
+  const result = {
+    command: mostCommandUsed.rows[0],
+    user: mostUserCommand.rows[0],
+  };
+  return result;
+}
 
-    await client.query('COMMIT');
-  } catch {
-    await client.query('ROLLBACK');
-  } finally {
-    client.release();
-  }
+export async function getTopCommands(): Promise<Array<commandInterface>> {
+  const result = await pool.query('SELECT name, usages FROM cmds ORDER BY usages DESC LIMIT 10');
+  return result.rows;
+}
+
+export async function getTopUsers(): Promise<Array<userInterface>> {
+  const result = await pool.query('SELECT id, uses FROM users ORDER BY uses DESC LIMIT 10');
+  return result.rows;
 }
 
 export async function addCommand(
