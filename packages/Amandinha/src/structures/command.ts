@@ -2,8 +2,10 @@ import { Message, PermissionString } from 'discord.js';
 // eslint-disable-next-line import/no-cycle
 import WatchClient from '../client';
 
+type CategoryTypes = 'util' | 'dev' | 'mod' | 'fun';
+
 interface CommandConfig {
-  category: string;
+  category: CategoryTypes;
   aliases: Array<string>;
   UserPermission: Array<PermissionString>;
   ClientPermissions: Array<PermissionString>;

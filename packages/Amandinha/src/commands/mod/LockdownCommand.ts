@@ -7,7 +7,7 @@ import constants from '../../util/constants';
 export default class LockdownCommand extends Command {
   constructor(client: WatchClient) {
     super(client, 'lockdown', {
-      category: 'Moderação',
+      category: 'mod',
       ClientPermissions: ['MANAGE_CHANNELS', 'MANAGE_ROLES'],
       UserPermission: ['ADMINISTRATOR'],
       OnlyDevs: true,
@@ -17,9 +17,7 @@ export default class LockdownCommand extends Command {
   async run(message: Message, args: Array<string>): Promise<MessageReaction | Message> {
     if (!args[0]) return message.channel.send('Escolha entre `on` e `off`');
 
-    let owo = null;
-
-    if (args[0] === 'on') owo = false;
+    const owo = args[0] === 'on' ? false : null;
 
     message.guild.channels.cache.forEach(ch => {
       if (!constants.ignoredChannelsToLockDown.includes(ch.id)) {
