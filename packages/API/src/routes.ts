@@ -30,14 +30,14 @@ router.post('/api/commands/clear', isAuthorized, StatsController.clearCommands);
 router.post('/api/down', isAuthorized, BotController.down);
 router.post('/api/ready', isAuthorized, BotController.ready);
 
-router.post('/api/shard/ready', isAuthorized, ShardController.ready);
 router.post('/api/shard/disconnect', isAuthorized, ShardController.disconnect);
+router.post('/api/shard/ready', isAuthorized, ShardController.ready);
 router.post('/api/shard/reconnecting', isAuthorized, ShardController.reconnecting);
 
 router.get('/api/usages/most', isAuthorized, UsagesController.mostUsersAndCommands);
-router.get('/api/usages/user', isAuthorized, UsagesController.getUserInfo);
-router.get('/api/usages/top/user', isAuthorized, UsagesController.topUsers);
 router.get('/api/usages/top/command', isAuthorized, UsagesController.topCommands);
+router.get('/api/usages/top/user', isAuthorized, UsagesController.topUsers);
+router.get('/api/usages/user', isAuthorized, UsagesController.getUserInfo);
 
 router.post(process.env.SUPER_SECRET_ROUTE, DeployControler);
 
