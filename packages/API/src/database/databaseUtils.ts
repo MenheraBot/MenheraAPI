@@ -1,8 +1,16 @@
+/* eslint-disable camelcase */
 import pool from './pool';
 
 interface commandInterface {
   name: string;
   usages: number;
+}
+
+interface CoinflipStats {
+  cf_wins: number;
+  cf_loses: number;
+  cf_win_money: number;
+  cf_lose_money: number;
 }
 
 interface userInterface {
@@ -27,7 +35,7 @@ export async function ensureCommand(commandName: string): Promise<number> {
   return command.rows[0].id;
 }
 
-async function ensureUser(user: string): Promise<number> {
+async function ensureUser(user: string): Promise<string> {
   const hasUser = await pool.query('SELECT id FROM users WHERE id = $1', [user]);
 
   if (hasUser.rowCount === 0) {
@@ -37,7 +45,7 @@ async function ensureUser(user: string): Promise<number> {
   return hasUser.rows[0].id;
 }
 
-async function incrementUsages(user: number, command: number): Promise<void> {
+async function incrementUsages(user: string, command: number): Promise<void> {
   await pool.query('UPDATE users SET uses = uses + 1 WHERE id = $1', [user]);
   await pool.query('UPDATE cmds SET usages = usages + 1 WHERE id = $1', [command]);
 }
@@ -78,4 +86,46 @@ export async function addCommand(
     data,
   ]);
   incrementUsages(userIdInDatabase, commandId);
+}
+
+export async function getCoinflipStats(userId: string): Promise<CoinflipStats> {
+  const userIdInDatabase = await ensureUser(userId);
+  const result = await pool.query(
+    'SELECT cf_wins, cf_loses, cf_win_money, cf_lose_money FROM users WHERE id = $1',
+    [userIdInDatabase]
+  );
+  return result.rows[0];
+}
+
+async function updateCoinflipUserStats(
+  winnerId: string,
+  loserId: string,
+  value: number
+): Promise<void> {
+  await pool.query(
+    'UPDATE users SET cf_wins = cf_wins + 1, cf_win_money = cf_win_money + $1 WHERE id = $2',
+    [value, winnerId]
+  );
+  await pool.query(
+    'UPDATE users SET cf_loses = cf_loses + 1, cf_lose_money = cf_lose_money + $1 WHERE id = $2',
+    [value, loserId]
+  );
+}
+
+export async function postCoinflip(
+  winnerId: string,
+  loserId: string,
+  betValue: number,
+  date: number
+): Promise<boolean> {
+  const winnerIdInDatabase = await ensureUser(winnerId);
+  const loserIdInDatabase = await ensureUser(loserId);
+  await updateCoinflipUserStats(winnerIdInDatabase, loserIdInDatabase, betValue);
+
+  const result = await pool.query(
+    'INSERT INTO coinflip (winner, loser, value, date) VALUES ($1, $2, $3, $4) RETURNING id',
+    [winnerIdInDatabase, loserIdInDatabase, betValue, date]
+  );
+  if (result.rows[0].id) return true;
+  return false;
 }
