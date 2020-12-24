@@ -1,4 +1,5 @@
 import axios from 'axios';
+require('dotenv').config();
 
 const token = process.env.TOKEN;
 const api = axios.create({
