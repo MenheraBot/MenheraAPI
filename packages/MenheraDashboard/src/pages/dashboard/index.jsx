@@ -30,7 +30,7 @@ export default () => {
   const isAuthenticated = () => !!(auth?.username && auth?.password);
 
   function onHandleError(error) {
-    if (error) setAuth(null);
+    if (error?.response.status === 401) setAuth(null);
     console.error('Whoops! Houve um erro.', error?.message ?? error);
   }
 
