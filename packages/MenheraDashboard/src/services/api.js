@@ -1,9 +1,9 @@
 import axios from 'axios';
-require('dotenv').config();
+import config from '../config.json';
 
-const token = process.env.TOKEN;
+const token = config.TOKEN;
 const api = axios.create({
-  baseURL: process.env.API_URL || `http://localhost:25156/api`,
+  baseURL: config.API_URL || `http://localhost:25156/api`,
   headers: {
     token,
   },
