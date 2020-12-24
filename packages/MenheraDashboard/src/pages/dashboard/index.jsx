@@ -30,7 +30,7 @@ export default () => {
   const isAuthenticated = () => !!(auth?.username && auth?.password);
 
   function onHandleError(error) {
-    if (error.response.status === 401) setAuth(null);
+    if (error) setAuth(null);
     console.error('Whoops! Houve um erro.', error?.message ?? error);
   }
 
@@ -38,7 +38,7 @@ export default () => {
     const fetchData = () =>
       getActivities()
         .then(res => setActivities(res?.data.sort() ?? []))
-        .catch(onHandleError);
+        .catch(e => onHandleError(e));
 
     fetchData();
   }, []);
@@ -61,7 +61,7 @@ export default () => {
         setActivities(activities.concat({ name: activityName, type: activityType }));
         setActivityName('');
       })
-      .catch(onHandleError);
+      .catch(e => onHandleError(e));
   }
 
   function onClickCleanButton() {
@@ -73,7 +73,7 @@ export default () => {
   function onClickResetButton() {
     return resetActivities()
       .then(reset => setActivities(reset))
-      .catch(onHandleError);
+      .catch(e => onHandleError(e));
   }
 
   return (
