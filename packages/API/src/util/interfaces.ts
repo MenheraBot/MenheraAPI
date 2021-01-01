@@ -12,6 +12,7 @@ export interface ICommands {
   guildId: string;
   commandName: string;
   data: string;
+  args: string;
 }
 
 export const Colors = {

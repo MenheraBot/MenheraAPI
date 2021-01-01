@@ -12,13 +12,13 @@ export default class StatsController {
   }
 
   public static async postCommand(req: Request, res: Response): Promise<Response> {
-    const { authorName, authorId, guildName, guildId, commandName, data } = req.body;
+    const { authorName, authorId, guildName, guildId, commandName, data, args } = req.body;
 
     if (!authorName || !authorId || !guildName || !guildId || !commandName || !data)
       throw new APIError('O request é inválido', 400);
 
-    MenheraStats.setCommands(authorName, authorId, guildName, guildId, commandName, data);
-    await database(authorId, guildId, commandName, data);
+    MenheraStats.setCommands(authorName, authorId, guildName, guildId, commandName, data, args);
+    await database(authorId, guildId, commandName, data, args);
     return res.sendStatus(200);
   }
 

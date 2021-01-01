@@ -13,7 +13,8 @@ class Variaveis {
     guildName: string,
     guildId: string,
     commandName: string,
-    data: string
+    data: string,
+    args: string
   ): void {
     this.commands.push({
       authorName,
@@ -22,6 +23,7 @@ class Variaveis {
       guildId,
       commandName,
       data,
+      args,
     });
   }
 

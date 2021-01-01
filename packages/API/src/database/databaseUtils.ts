@@ -76,15 +76,14 @@ export async function addCommand(
   userId: string,
   guildId: string,
   commandId: number,
-  data: number
+  data: number,
+  args: string
 ): Promise<void> {
   const userIdInDatabase = await ensureUser(userId);
-  await pool.query('INSERT INTO uses (user_id, cmd_id, guild_id, date) VALUES ($1,$2,$3,$4)', [
-    userIdInDatabase,
-    commandId,
-    guildId,
-    data,
-  ]);
+  await pool.query(
+    'INSERT INTO uses (user_id, cmd_id, guild_id, date, args) VALUES ($1,$2,$3,$4, $5)',
+    [userIdInDatabase, commandId, guildId, data, args]
+  );
   incrementUsages(userIdInDatabase, commandId);
 }
 
