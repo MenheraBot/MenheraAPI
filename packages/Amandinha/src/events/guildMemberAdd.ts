@@ -34,10 +34,10 @@ export default class GuildMemberAdd extends Event {
     const roleSoma = server.roles.cache.get(constants.roles.soma);
     const roleFreya = server.roles.cache.get(constants.roles.freya);
     const apolo = await database.findById('Apolo');
-    const loki = await database.familia.findById('Loki');
-    const ares = await database.familia.findById('Ares');
-    const soma = await database.familia.findById('Soma');
-    const freya = await database.familia.findById('Freya');
+    const loki = await database.findById('Loki');
+    const ares = await database.findById('Ares');
+    const soma = await database.findById('Soma');
+    const freya = await database.findById('Freya');
 
     if (apolo.members.includes(member.id.toString())) member.roles.add(roleApolo);
     if (loki.members.includes(member.id.toString())) member.roles.add(roleLoki);

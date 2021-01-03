@@ -1,5 +1,6 @@
+/* eslint-disable no-new */
 /* eslint-disable consistent-return */
-import { Message, MessageEmbed } from 'discord.js';
+import { Message } from 'discord.js';
 import WatchClient from '../client';
 import Event from '../structures/event';
 
@@ -49,28 +50,9 @@ export default class MessageReceive extends Event {
       new Promise(res => {
         message.channel.startTyping();
         res(comando.run(message, args));
-      })
-        .then(() => message.channel.stopTyping())
-        .catch(err => {
-          message.channel.stopTyping();
-          const errorMessage =
-            err.stack.length > 1800 ? `${err.stack.slice(0, 1800)}...` : err.stack;
-          const embed = new MessageEmbed();
-          embed.setColor('#ff0015');
-          embed.setTitle(`Erro!`);
-          embed.setDescription(`\`\`\`js\n${errorMessage}\`\`\``);
-
-          message.channel.send(embed);
-        });
-    } catch (err) {
-      message.channel.stopTyping();
-      const errorMessage = err.stack.length > 1800 ? `${err.stack.slice(0, 1800)}...` : err.stack;
-      const embed = new MessageEmbed();
-      embed.setColor('#ff0015');
-      embed.setTitle(`Erro!`);
-      embed.setDescription(`\`\`\`js\n${errorMessage}\`\`\``);
-
-      message.channel.send(embed);
+      });
+    } catch {
+      // Do nothing
     }
   }
 }
