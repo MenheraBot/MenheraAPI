@@ -47,10 +47,7 @@ export default class MessageReceive extends Event {
     }
 
     try {
-      new Promise(res => {
-        message.channel.startTyping();
-        res(comando.run(message, args));
-      });
+      new Promise(res => res(comando.run(message, args)));
     } catch {
       // Do nothing
     }
