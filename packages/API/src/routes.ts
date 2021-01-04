@@ -36,6 +36,7 @@ router.post('/api/shard/ready', isAuthorized, ShardController.ready);
 router.post('/api/shard/reconnecting', isAuthorized, ShardController.reconnecting);
 
 router.get('/api/site/commands', SiteCommandsController.getCommands);
+router.post('/api/site/commands', isAuthorized, SiteCommandsController.postExistingCommands);
 
 router.get('/api/usages/most', isAuthorized, UsagesController.mostUsersAndCommands);
 router.get('/api/usages/top/command', isAuthorized, UsagesController.topCommands);
