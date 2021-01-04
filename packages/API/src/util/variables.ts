@@ -3,10 +3,10 @@ import { ICommands, IExistingCommands } from './interfaces';
 class Variaveis {
   private commands: Array<ICommands> = [];
 
-  private ExistingCommands: Array<IExistingCommands>;
+  private ExistingCommands: Array<IExistingCommands> = [];
 
-  public postExistingCommands(commandsArray: Array<IExistingCommands>): void {
-    this.ExistingCommands = commandsArray;
+  public postExistingCommands(command: IExistingCommands): void {
+    this.ExistingCommands.push(command);
   }
 
   public getExistingCommands(): Array<IExistingCommands> {
