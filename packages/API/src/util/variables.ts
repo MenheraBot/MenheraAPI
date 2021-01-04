@@ -1,13 +1,23 @@
-import { ICommands } from './interfaces';
+import { ICommands, IExistingCommands } from './interfaces';
 
 class Variaveis {
   private commands: Array<ICommands> = [];
 
-  getCommands() {
+  private ExistingCommands: Array<IExistingCommands>;
+
+  public postExistingCommands(commandsArray: Array<IExistingCommands>): void {
+    this.ExistingCommands = commandsArray;
+  }
+
+  public getExistingCommands(): Array<IExistingCommands> {
+    return this.ExistingCommands;
+  }
+
+  public getCommands() {
     return { length: this.commands.length, commands: this.commands };
   }
 
-  setCommands(
+  public setCommands(
     authorName: string,
     authorId: string,
     guildName: string,
@@ -27,7 +37,7 @@ class Variaveis {
     });
   }
 
-  clearCommands(): void {
+  public clearCommands(): void {
     this.commands = [];
   }
 }

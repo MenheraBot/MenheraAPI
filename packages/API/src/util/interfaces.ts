@@ -15,6 +15,12 @@ export interface ICommands {
   args: string;
 }
 
+export interface IExistingCommands {
+  name: string;
+  description: string;
+  category: string;
+}
+
 export const Colors = {
   Red: 0xfd0000,
   Green: 0x1cf313,

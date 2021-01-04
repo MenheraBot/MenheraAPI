@@ -7,6 +7,7 @@ import StatsController from './controllers/StatsController';
 import AuthController from './controllers/AuthController';
 import UsagesController from './controllers/UsagesController';
 import CoinflipController from './controllers/CoinflipController';
+import SiteCommandsController from './controllers/SiteCommandsController';
 
 import isAuthorized from './middlewares/isAuthorized';
 
@@ -33,6 +34,8 @@ router.post('/api/ready', isAuthorized, BotController.ready);
 router.post('/api/shard/disconnect', isAuthorized, ShardController.disconnect);
 router.post('/api/shard/ready', isAuthorized, ShardController.ready);
 router.post('/api/shard/reconnecting', isAuthorized, ShardController.reconnecting);
+
+router.get('/api/site/commands', SiteCommandsController.getCommands);
 
 router.get('/api/usages/most', isAuthorized, UsagesController.mostUsersAndCommands);
 router.get('/api/usages/top/command', isAuthorized, UsagesController.topCommands);
