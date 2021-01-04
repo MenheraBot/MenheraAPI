@@ -32,6 +32,9 @@
 | POST   | `/api/shard/disconnect`   | Envia um webhook mostrando que um shard está se reconectando             |
 | POST   | `/api/shard/ready`        | Envia um webhook mostrando que um shard está online                      |
 | POST   | `/api/shard/reconnecting` | Envia um webhook mostrando que um shard está se reconectando             |
+| GET    | `/api/site/commands`      | Retorna os comandos existentes da Menhera                                |
+| POST   | `/api/site/commands`      | Posta um novo comando                                                    |
+| DELETE | `/api/site/commands`      | Zera os comandos existentes                                              |
 | GET    | `/api/usages/most`        | Retorna o comando que mais foi usado, e o usuário que mais usou comandos |
 | GET    | `/api/usages/top/command` | Retorna o top 10 comandos mais usados                                    |
 | GET    | `/api/usages/top/user`    | Retorna o top 10 usuários que mais usaram comandos                       |

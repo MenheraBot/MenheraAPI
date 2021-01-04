@@ -9,6 +9,11 @@ class Variaveis {
     this.ExistingCommands.push(command);
   }
 
+  public async clearExistingCommands(): Promise<boolean> {
+    this.ExistingCommands = [];
+    return true;
+  }
+
   public getExistingCommands(): Array<IExistingCommands> {
     return this.ExistingCommands;
   }

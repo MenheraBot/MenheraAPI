@@ -12,4 +12,9 @@ export default class SiteCommandsController {
     variaveis.postExistingCommands(command);
     return res.sendStatus(201);
   }
+
+  public static async clearExistingCommands(req: Request, res: Response): Promise<Response> {
+    await variaveis.clearExistingCommands();
+    return res.sendStatus(200);
+  }
 }

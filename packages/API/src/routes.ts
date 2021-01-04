@@ -37,6 +37,7 @@ router.post('/api/shard/reconnecting', isAuthorized, ShardController.reconnectin
 
 router.get('/api/site/commands', SiteCommandsController.getCommands);
 router.post('/api/site/commands', isAuthorized, SiteCommandsController.postExistingCommands);
+router.delete('/api/site/commands', isAuthorized, SiteCommandsController.clearExistingCommands);
 
 router.get('/api/usages/most', isAuthorized, UsagesController.mostUsersAndCommands);
 router.get('/api/usages/top/command', isAuthorized, UsagesController.topCommands);
