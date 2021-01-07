@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "start": "echo uwu"
   },
   "dependencies": {
     "axios": "^0.21.0"

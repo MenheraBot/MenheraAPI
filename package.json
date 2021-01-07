@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "lerna exec --parallel yarn build",
+    "start": "lerna exec --parallel yarn run start",
     "api": "yarn workspace @menhera-tools/api",
     "bot": "yarn workspace @menhera-tools/amandinha",
     "lint": "yarn workspace @menhera-tools/eslint-config",

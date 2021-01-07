@@ -5,7 +5,8 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "start": "echo nhaw"
   },
   "dependencies": {
     "chalk": "^4.1.0",
