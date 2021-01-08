@@ -11,7 +11,7 @@ export default class MessageReceive extends Event {
 
   async run(message: Message): Promise<Message> {
     if (message.channel.type === 'dm') return;
-    if (message.author.bot) return;
+    if (message.author?.bot) return;
 
     if (!message.content.startsWith(process.env.PREFIX)) return;
     const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
