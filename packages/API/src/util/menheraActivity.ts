@@ -46,8 +46,7 @@ export default class Activities {
 
   public getRandomActivity(shardId: number): Activity {
     const randomActivity = this.activities[Math.floor(Math.random() * this.activities.length)];
-    randomActivity.name = `${randomActivity.name} | Shard ${shardId}`
-    return randomActivity;
+    return {name: `${randomActivity.name} | Shard ${shardId}`, type: randomActivity.type}
   }
 
   public addActivity(name: string, type: ActivityType): void {
