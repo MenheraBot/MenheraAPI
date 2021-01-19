@@ -5,8 +5,8 @@ import MenheraActivity from '../util/menheraActivity';
 
 export default class ActivityController {
   public static random(req: Request, res: Response): Response {
-    const { shard } = req.body;
-    if (!shard) return res.sendStatus(400)
+    let { shard } = req.body;
+    if (!shard) shard = 0
     return res.send(MenheraActivity.getInstance().getRandomActivity(shard));
   }
 
