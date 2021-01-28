@@ -29,6 +29,7 @@
 | POST   | `/api/commands/clear`     | Limpa todas execuções                                                    |
 | POST   | `/api/down`               | Envia um webhook mostrando que a Menhera caiu                            |
 | POST   | `/api/ready`              | Envia um webhook mostrando que a Menehra está online                     |
+| POST   | `/api/rpg`                | Cria um novo log de uma batalha do Rpg                                   |
 | POST   | `/api/shard/disconnect`   | Envia um webhook mostrando que um shard está se reconectando             |
 | POST   | `/api/shard/ready`        | Envia um webhook mostrando que um shard está online                      |
 | POST   | `/api/shard/reconnecting` | Envia um webhook mostrando que um shard está se reconectando             |

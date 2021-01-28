@@ -8,6 +8,7 @@ import AuthController from './controllers/AuthController';
 import UsagesController from './controllers/UsagesController';
 import CoinflipController from './controllers/CoinflipController';
 import SiteCommandsController from './controllers/SiteCommandsController';
+import RpgController from './controllers/RpgController';
 
 import isAuthorized from './middlewares/isAuthorized';
 
@@ -30,6 +31,8 @@ router.post('/api/commands/clear', isAuthorized, StatsController.clearCommands);
 
 router.post('/api/down', isAuthorized, BotController.down);
 router.post('/api/ready', isAuthorized, BotController.ready);
+
+router.post('/api/rpg', isAuthorized, RpgController.postBattle)
 
 router.post('/api/shard/disconnect', isAuthorized, ShardController.disconnect);
 router.post('/api/shard/ready', isAuthorized, ShardController.ready);

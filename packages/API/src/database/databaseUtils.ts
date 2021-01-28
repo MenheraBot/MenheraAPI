@@ -96,6 +96,11 @@ export async function getCoinflipStats(userId: string): Promise<CoinflipStats> {
   return result.rows[0];
 }
 
+export async function postRpgResult(userId: string, userClass: string, userLevel: number, dungeonLevel: number, death: boolean):Promise<void> {
+const userIdInDatabase = await ensureUser(userId);
+await pool.query('INSERT INTO rpg (user_id, user_class, user_level, dungeon_level, death) VALUES ($1, $2, $3, $4, $5)', [userIdInDatabase, userClass, userLevel, dungeonLevel, death])
+}
+
 async function updateCoinflipUserStats(
   winnerId: string,
   loserId: string,
