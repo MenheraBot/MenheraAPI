@@ -3,11 +3,11 @@ import { postRpgResult } from '../database/databaseUtils'
 
 export default class RpgController {
   public static async postBattle(req: Request, res: Response): Promise<Response> {
-    const {userId, userClass, userLevel, dungeonLevel, death} = req.body;
+    const {userId, userClass, userLevel, dungeonLevel, death, date} = req.body;
 
-    if (!userId || !userClass || !userLevel || !dungeonLevel || !death) return res.sendStatus(400);
+    if (!userId || !userClass || !userLevel || !dungeonLevel || !death || !date) return res.sendStatus(400);
 
-    await postRpgResult(userId, userClass, userLevel, dungeonLevel, death);
+    await postRpgResult(userId, userClass, userLevel, dungeonLevel, death, date);
 
     return res.sendStatus(201);
   }
