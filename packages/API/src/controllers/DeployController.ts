@@ -4,7 +4,8 @@ import path from 'path';
 import logger from '@menhera-tools/logger';
 import { github } from '../util/sendMessage';
 
-export default async (_req: Request, res: Response): Promise<void> => {
+export default async (req: Request, res: Response): Promise<void> => {
+  logger.info(req.body);
   try {
     const menheraPath = path.resolve(__dirname, '..', '..', '..', '..', '..', 'main');
     const command = `cd ${menheraPath}; git fetch; git pull origin master`;

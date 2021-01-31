@@ -13,8 +13,8 @@ export async function github(stats: number, message: string): Promise<void> {
   const isError = stats > 399;
   const color = isError ? Colors.Red : Colors.Green;
   const thumbnail = isError
-    ? 'https://i.imgur.com/t94XkgG.png'
-    : 'https://cdn140.picsart.com/283880390029211.png?type=webp&to=min&r=640';
+    ? 'https://cdn140.picsart.com/283880390029211.png?type=webp&to=min&r=640'
+    : 'https://i.imgur.com/t94XkgG.png';
 
   await executeWebhook(process.env.WEBHOOK_ID_GITHUB, process.env.WEBHOOK_TOKEN_GITHUB, {
     embeds: [
