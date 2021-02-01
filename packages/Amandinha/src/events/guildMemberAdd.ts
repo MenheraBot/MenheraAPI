@@ -1,6 +1,5 @@
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import WatchClient from '../client';
-import database from '../structures/DatabaseConnection';
 import Event from '../structures/event';
 import constants from '../util/constants';
 
@@ -25,24 +24,5 @@ export default class GuildMemberAdd extends Event {
       .setFooter(`UserID: ${member.id}`)
       .setImage('https://i.imgur.com/p3IUT0Y.png');
     canal.send(member, embed);
-
-    const server = this.client.guilds.cache.get(constants.server);
-
-    const roleApolo = server.roles.cache.get(constants.roles.apolo);
-    const roleLoki = server.roles.cache.get(constants.roles.loki);
-    const roleAres = server.roles.cache.get(constants.roles.ares);
-    const roleSoma = server.roles.cache.get(constants.roles.soma);
-    const roleFreya = server.roles.cache.get(constants.roles.freya);
-    const apolo = await database.findById('Apolo');
-    const loki = await database.findById('Loki');
-    const ares = await database.findById('Ares');
-    const soma = await database.findById('Soma');
-    const freya = await database.findById('Freya');
-
-    if (apolo.members.includes(member.id.toString())) member.roles.add(roleApolo);
-    if (loki.members.includes(member.id.toString())) member.roles.add(roleLoki);
-    if (ares.members.includes(member.id.toString())) member.roles.add(roleAres);
-    if (soma.members.includes(member.id.toString())) member.roles.add(roleSoma);
-    if (freya.members.includes(member.id.toString())) member.roles.add(roleFreya);
   }
 }
