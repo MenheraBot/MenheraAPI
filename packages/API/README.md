@@ -21,6 +21,7 @@
 | POST   | `/api/activity`           | Adiciona uma nova atividade                                              |
 | PUT    | `/api/activity`           | Reseta todas as atividades para as padrões                               |
 | DELETE | `/api/activity`           | Deleta todas as atividades                                               |
+| GET    | `/api/assets/:type`       | Retorna um Url aleatório de um asset                                     |
 | POST   | `/api/auth`               | Retorna se o usuário é autenticado                                       |
 | GET    | `/api/coinflip`           | Retorna as informações dos coinflips de um usuário                       |
 | POST   | `/api/coinflip`           | Atualiza os dados de um jogador de coinflip                              |
