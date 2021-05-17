@@ -9,6 +9,6 @@ const pool = new Pool({
   port: 5432,
 });
 
-pool.on('error', err => logger.error(err.message));
+pool.on('error', err => logger.error(`DATABASE | ${err.message}`));
 
 export default pool;
