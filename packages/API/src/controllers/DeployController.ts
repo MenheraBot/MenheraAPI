@@ -7,7 +7,7 @@ import { github } from '../util/sendMessage';
 export default async (req: Request, res: Response): Promise<void> => {
   try {
     const menheraPath = path.resolve(__dirname, '..', '..', '..', '..', '..', 'main');
-    const command = `cd ${menheraPath}; git fetch; git pull origin master`;
+    const command = `cd ${menheraPath}; git fetch; git pull origin master; npm install; npm run build`;
 
     exec(command, error => {
       if (error) {
