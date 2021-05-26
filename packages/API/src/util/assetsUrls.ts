@@ -411,6 +411,7 @@ const urls = {
     'https://i.imgur.com/CIf7bPo.png',
     'https://i.imgur.com/kDblkFS.png',
     'https://i.imgur.com/lIsVFLd.png',
+    'https://i.imgur.com/pVrKPtz.png',
   ],
   humor: [
     'https://i.imgur.com/2sI0NNt.jpg',
