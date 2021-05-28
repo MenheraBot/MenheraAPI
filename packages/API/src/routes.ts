@@ -3,7 +3,6 @@ import ActivityController from './controllers/ActivityController';
 import AssetsController from './controllers/AssetsController';
 import BotController from './controllers/BotController';
 import ShardController from './controllers/ShardController';
-import DeployControler from './controllers/DeployController';
 import StatsController from './controllers/StatsController';
 import AuthController from './controllers/AuthController';
 import UsagesController from './controllers/UsagesController';
@@ -49,7 +48,5 @@ router.get('/api/usages/most', isAuthorized, UsagesController.mostUsersAndComman
 router.get('/api/usages/top/command', isAuthorized, UsagesController.topCommands);
 router.get('/api/usages/top/user', isAuthorized, UsagesController.topUsers);
 router.get('/api/usages/user', isAuthorized, UsagesController.getUserInfo);
-
-router.post(process.env.SUPER_SECRET_ROUTE, DeployControler);
 
 export default router;
