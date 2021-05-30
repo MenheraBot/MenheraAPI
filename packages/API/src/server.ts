@@ -3,11 +3,15 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import Http from 'http';
 import logger from '@menhera-tools/logger';
+import { config } from 'dotenv';
+import path from 'path';
 import routes from './routes';
 import './database/MongoDB';
 
 import NotFound from './middlewares/NotFound';
 import ErrorHandler from './middlewares/ErrorHandler';
+
+config({ path: path.resolve(path.join(__dirname, '..', '.env')) });
 
 const app = express();
 const server = Http.createServer(app);

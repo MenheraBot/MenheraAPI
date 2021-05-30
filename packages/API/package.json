@@ -8,7 +8,8 @@
     "build": "tsc",
     "build:test": "tsc --noEmit",
     "lint:fix": "eslint --fix --ext ts src",
-    "dev": "tsnd --ignore node_modules --transpile-only --no-notify --respawn -r dotenv/config src/server.ts"
+    "dev": "tsnd --ignore node_modules --transpile-only --no-notify --respawn -r dotenv/config src/server.ts",
+    "pm2": "pm2 start dist/server.js --name='API'"
   },
   "keywords": [],
   "author": "",
