@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import bodyParser from 'body-parser';
 import Http from 'http';
 import logger from '@menhera-tools/logger';
 import { config } from 'dotenv';
@@ -17,8 +16,8 @@ const app = express();
 const server = Http.createServer(app);
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
 

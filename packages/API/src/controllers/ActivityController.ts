@@ -6,7 +6,7 @@ import MenheraActivity from '../util/menheraActivity';
 export default class ActivityController {
   public static random(req: Request, res: Response): Response {
     let { shard } = req.body;
-    if (!shard) shard = 0
+    if (!shard) shard = 0;
     return res.send(MenheraActivity.getInstance().getRandomActivity(shard));
   }
 
@@ -19,7 +19,7 @@ export default class ActivityController {
     return res.status(200).json({ ok: true });
   }
 
-  public static reset(req: Request, res: Response): Response {
+  public static reset(_req: Request, res: Response): Response {
     return res.status(200).json(MenheraActivity.getInstance().resetActivities());
   }
 

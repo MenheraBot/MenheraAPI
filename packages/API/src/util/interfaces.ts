@@ -5,22 +5,6 @@ export interface Activity {
   type: ActivityType;
 }
 
-export interface ICommands {
-  authorName: string;
-  authorId: string;
-  guildName: string;
-  guildId: string;
-  commandName: string;
-  data: string;
-  args: string;
-}
-
-export interface IExistingCommands {
-  name: string;
-  description: string;
-  category: string;
-}
-
 export const Colors = {
   Red: 0xfd0000,
   Green: 0x1cf313,

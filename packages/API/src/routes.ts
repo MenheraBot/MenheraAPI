@@ -1,16 +1,14 @@
 import { Router } from 'express';
 import ActivityController from './controllers/ActivityController';
 import AssetsController from './controllers/AssetsController';
-import BotController from './controllers/BotController';
-import ShardController from './controllers/ShardController';
 import StatsController from './controllers/StatsController';
 import AuthController from './controllers/AuthController';
 import UsagesController from './controllers/UsagesController';
 import CoinflipController from './controllers/CoinflipController';
-import SiteCommandsController from './controllers/SiteCommandsController';
 import RpgController from './controllers/RpgController';
 
 import isAuthorized from './middlewares/isAuthorized';
+import StatusController from './controllers/StatusController';
 
 const router = Router();
 
@@ -27,22 +25,11 @@ router.post('/api/auth', isAuthorized, AuthController.check);
 router.get('/api/coinflip', isAuthorized, CoinflipController.getUserInfo);
 router.post('/api/coinflip', isAuthorized, CoinflipController.postCoinflip);
 
-router.get('/api/commands', StatsController.getCommands);
 router.post('/api/commands', isAuthorized, StatsController.postCommand);
-router.post('/api/commands/clear', isAuthorized, StatsController.clearCommands);
-
-router.post('/api/down', isAuthorized, BotController.down);
-router.post('/api/ready', isAuthorized, BotController.ready);
 
 router.post('/api/rpg', isAuthorized, RpgController.postBattle);
 
-router.post('/api/shard/disconnect', isAuthorized, ShardController.disconnect);
-router.post('/api/shard/ready', isAuthorized, ShardController.ready);
-router.post('/api/shard/reconnecting', isAuthorized, ShardController.reconnecting);
-
-router.get('/api/site/commands', SiteCommandsController.getCommands);
-router.post('/api/site/commands', isAuthorized, SiteCommandsController.postExistingCommands);
-router.delete('/api/site/commands', isAuthorized, SiteCommandsController.clearExistingCommands);
+router.all('/api/status', StatusController.status);
 
 router.get('/api/usages/most', isAuthorized, UsagesController.mostUsersAndCommands);
 router.get('/api/usages/top/command', isAuthorized, UsagesController.topCommands);
