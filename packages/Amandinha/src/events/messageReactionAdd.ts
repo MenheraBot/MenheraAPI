@@ -10,7 +10,8 @@ export default class MessageReactionAdd extends Event {
 
   async run(reaction: MessageReaction, user: GuildMember): Promise<void> {
     const { message } = reaction;
-    if (message.channel.id !== constants.channels.suggestQueue) return;
+    const channelsToLookUp = [constants.channels.suggestQueue, constants.channels.suggestInQueue];
+    if (!channelsToLookUp.includes(message.channel.id)) return;
     if (user.id !== process.env.OWNER_ID) return;
 
     const Handler = async () => {
@@ -28,7 +29,7 @@ export default class MessageReactionAdd extends Event {
           .setTimestamp(new Date(oldEmbed.timestamp))
           .setAuthor(oldEmbed.author.name, oldEmbed.author.iconURL);
         confirmedChannel.send(newEmbed);
-        message.delete({ timeout: 2500 }).catch();
+        message.delete().catch();
       }
       if (reaction.emoji.name === '❌') {
         const negatedChannel = this.client.channels.cache.get(
@@ -44,7 +45,24 @@ export default class MessageReactionAdd extends Event {
           .setTimestamp(new Date(oldEmbed.timestamp))
           .setAuthor(oldEmbed.author.name, oldEmbed.author.iconURL);
         negatedChannel.send(newEmbed);
-        message.delete({ timeout: 2500 }).catch();
+        message.delete().catch();
+      }
+      if (reaction.emoji.name === '🟡') {
+        const queueChannel = this.client.channels.cache.get(
+          constants.channels.suggestInQueue
+        ) as TextChannel;
+
+        const oldEmbed = message.embeds[0];
+        const newEmbed = new MessageEmbed()
+          .setDescription(oldEmbed.description)
+          .setColor('#ffed4b')
+          .setThumbnail(oldEmbed.thumbnail.url)
+          .setTitle('Lux está fazendo esta sujestão!')
+          .setFooter(oldEmbed.footer.text)
+          .setTimestamp(new Date(oldEmbed.timestamp))
+          .setAuthor(oldEmbed.author.name, oldEmbed.author.iconURL);
+        queueChannel.send(newEmbed);
+        message.delete().catch();
       }
     };
 

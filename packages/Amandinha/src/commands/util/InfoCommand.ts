@@ -2,6 +2,7 @@ import { Message, MessageEmbed } from 'discord.js';
 import moment from 'moment';
 import WatchClient from '../../client';
 import Command from '../../structures/command';
+import CommandContext from '../../structures/CommandContext';
 
 import('moment-duration-format');
 
@@ -12,7 +13,7 @@ export default class InfoCommand extends Command {
     });
   }
 
-  async run(message: Message): Promise<Message> {
+  async run(ctx: CommandContext): Promise<Message> {
     const embed = new MessageEmbed()
       .setTitle('BotInfo')
       .setColor('#f47fff')
@@ -20,7 +21,7 @@ export default class InfoCommand extends Command {
         {
           name: 'Ping',
           value: `**Host:** \`${Math.round(this.client.ws.ping)}\`ms\n**API:** \`${
-            Date.now() - message.createdTimestamp
+            Date.now() - ctx.message.createdTimestamp
           }\`ms`,
           inline: false,
         },
@@ -36,6 +37,6 @@ export default class InfoCommand extends Command {
         },
       ]);
 
-    return message.channel.send(embed);
+    return ctx.sendEmbed(embed, true);
   }
 }

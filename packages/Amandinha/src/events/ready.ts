@@ -21,11 +21,8 @@ export default class ReadyEvent extends Event {
       },
     ];
 
-    setInterval(() => {
-      const randomStatus = status[Math.floor(Math.random() * status.length)];
-      this.client.user.setPresence({
-        activity: randomStatus,
-      });
-    }, 1000 * 60);
+    this.client.user.setPresence({
+      activities: status,
+    });
   }
 }

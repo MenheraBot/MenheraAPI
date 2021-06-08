@@ -2,6 +2,7 @@ import { Message, MessageEmbed, User } from 'discord.js';
 import moment from 'moment';
 import WatchClient from '../../client';
 import Command from '../../structures/command';
+import CommandContext from '../../structures/CommandContext';
 
 export default class UserInfoCommand extends Command {
   constructor(client: WatchClient) {
@@ -10,25 +11,25 @@ export default class UserInfoCommand extends Command {
     });
   }
 
-  async run(message: Message, args: Array<string>): Promise<Message> {
+  async run(ctx: CommandContext): Promise<Message> {
     moment.locale('pt-br');
 
     let member: User;
-    if (args[0]) {
+    if (ctx.args[0]) {
       try {
-        member = await this.client.users.fetch(args[0].replace(/[<@!>]/g, ''));
+        member = await this.client.users.fetch(ctx.args[0].replace(/[<@!>]/g, ''));
       } catch {
-        return message.channel.send('Usuário inexistente');
+        return ctx.reply('Usuário inexistente');
       }
-    } else member = message.author;
+    } else member = ctx.message.author;
 
     const status = `${member.presence.status}`
       .replace('dnd', '🔴 | Não Perturbe')
       .replace('idle', '🟡 | Ausente')
       .replace('offline', '⚪ | Offline')
       .replace('online', '🟢 | Online');
-    const color = message.guild.member(member)
-      ? message.guild.member(member).displayHexColor
+    const color = ctx.message.guild.members.cache.get(member.id)
+      ? ctx.message.guild.members.cache.get(member.id).displayHexColor
       : '#000000';
     const avatar = member.displayAvatarURL({ dynamic: true, format: 'png' });
 
@@ -39,21 +40,21 @@ export default class UserInfoCommand extends Command {
       .addField(':computer: ID do Discord', `\`${member.id}\``, true)
       .addField(
         ':trophy: Cargo mais Alto',
-        message.guild.member(member)
-          ? message.guild.member(member).roles.highest
+        ctx.message.guild.members.cache.get(member.id)
+          ? ctx.message.guild.members.cache.get(member.id).roles.highest.toString()
           : '`USER NOT IN GUILD`',
         true
       )
       .addField('Status', status, true)
       .addField(
         ':star2: Entrou dia',
-        message.guild.member(member)
-          ? moment(message.guild.member(member).joinedAt).format('DD/MM/YYYY')
+        ctx.message.guild.members.cache.get(member.id)
+          ? moment(ctx.message.guild.members.cache.get(member.id).joinedAt).format('DD/MM/YYYY')
           : '`USER NOT IN GUILD`',
         true
       )
       .addField(':date: Conta criada dia', moment(member.createdAt).format('DD/MM/YYYY'), true);
 
-    return message.channel.send(embed);
+    return ctx.sendEmbed(embed, true);
   }
 }

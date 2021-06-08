@@ -1,7 +1,8 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
+import util from 'util';
 import WatchClient from '../../client';
 import Command from '../../structures/command';
-import util from 'util';
+import CommandContext from '../../structures/CommandContext';
 
 export default class EvalCommand extends Command {
   constructor(client: WatchClient) {
@@ -12,15 +13,15 @@ export default class EvalCommand extends Command {
     });
   }
 
-  async run(message: Message, args: string[]): Promise<void> {
+  async run(ctx: CommandContext): Promise<void> {
     try {
       // eslint-disable-next-line no-eval
-      let evaled = await eval(args.join(' '));
+      let evaled = await eval(ctx.args.join(' '));
       evaled = util.inspect(evaled, { depth: 1 });
       evaled = evaled.replace(new RegExp(`${this.client.token}`, 'g'), undefined);
 
       if (evaled.length > 1800) evaled = `${evaled.slice(0, 1800)}...`;
-      message.channel.send(evaled, { code: 'js' });
+      ctx.sendR({ content: evaled, code: 'js', reply: { messageReference: ctx.message } });
     } catch (err) {
       const errorMessage = err.stack.length > 1800 ? `${err.stack.slice(0, 1800)}...` : err.stack;
       const embed = new MessageEmbed();
@@ -28,7 +29,7 @@ export default class EvalCommand extends Command {
       embed.setTitle('<:negacao:759603958317711371> | Erro');
       embed.setDescription(`\`\`\`js\n${errorMessage}\`\`\``);
 
-      message.channel.send(embed);
+      ctx.sendEmbed(embed, true);
     }
   }
 }

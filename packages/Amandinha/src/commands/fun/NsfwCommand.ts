@@ -3,6 +3,7 @@ import RomeroBrito from 'nekos.life';
 import { Message, MessageEmbed } from 'discord.js';
 import Command from '../../structures/command';
 import WatchClient from '../../client';
+import CommandContext from '../../structures/CommandContext';
 
 const { nsfw } = new RomeroBrito();
 
@@ -15,9 +16,9 @@ export default class NsfwCommand extends Command {
     });
   }
 
-  async run(message: Message, args: Array<string>): Promise<Message> {
-    if (message.channel.type === 'text' && !message.channel.nsfw)
-      return message.channel.send(`Este comando é restrito à canais NSFW`);
+  async run(ctx: CommandContext): Promise<Message> {
+    if (ctx.message.channel.type === 'text' && !ctx.message.channel.nsfw)
+      return ctx.reply(`Este comando é restrito à canais NSFW`);
 
     const options = [
       'anal',
@@ -61,10 +62,10 @@ export default class NsfwCommand extends Command {
       'loli',
     ];
 
-    if (!args[0]) return message.channel.send(`Opções disponíveis: \`${options.join('`, `')}\``);
+    if (!ctx.args[0]) return ctx.reply(`Opções disponíveis: \`${options.join('`, `')}\``);
     let link: string;
 
-    switch (args[0].toLowerCase()) {
+    switch (ctx.args[0].toLowerCase()) {
       case 'anal':
         link = (await nsfw.anal()).url;
         break;
@@ -183,10 +184,10 @@ export default class NsfwCommand extends Command {
         link = 'https://i.imgur.com/7jfZLgw.png';
         break;
       default:
-        return message.channel.send(`Opções disponíveis: \`${options.join('`, `')}\``);
+        return ctx.reply(`Opções disponíveis: \`${options.join('`, `')}\``);
     }
 
     const embed = new MessageEmbed().setImage(link);
-    return message.channel.send(embed);
+    return ctx.sendEmbed(embed, true);
   }
 }

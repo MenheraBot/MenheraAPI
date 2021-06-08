@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@menhera-tools/logger": "*",
-    "discord.js": "^12.4.1",
+    "discord.js": "^13.0.0-dev.e980948de55e91e59c9e3293ac76bc645a058a53",
     "dotenv": "^8.2.0",
     "fs-extra": "^9.0.1",
     "moment": "^2.29.1",

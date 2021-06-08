@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable no-shadow */
-import { Client, Collection, ClientOptions } from 'discord.js';
+import { Client, Collection } from 'discord.js';
 import FileUtil from './util/FileUtis';
 // eslint-disable-next-line import/no-cycle
 import Command from './structures/command';
@@ -16,10 +16,6 @@ export default class WatchClient extends Client {
   public aliases: Collection<string, string> = new Collection();
 
   public Events: EventManager = new EventManager(this);
-
-  constructor(option: ClientOptions = {}) {
-    super(option);
-  }
 
   async login(token: string): Promise<string> {
     return super.login(token);

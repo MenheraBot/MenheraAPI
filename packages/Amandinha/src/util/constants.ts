@@ -1,7 +1,7 @@
 const constants = {
   server: '717061688460967988',
   roles: {
-    status: '757292554445127722',
+    status: '758706770675105802',
     notify: '755593580285788280',
   },
   channels: {
@@ -10,6 +10,7 @@ const constants = {
     suggestQueue: '723765136648830996',
     suggestAccepted: '767924240552296458',
     suggestDenied: '767924268100354098',
+    suggestInQueue: '851858636661981205',
   },
   ignoredChannelsToLockDown: [
     '730904048475046069',

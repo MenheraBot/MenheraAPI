@@ -1,6 +1,8 @@
-import { Message, PermissionString } from 'discord.js';
+/* eslint-disable import/no-cycle */
+import { PermissionString } from 'discord.js';
 // eslint-disable-next-line import/no-cycle
 import WatchClient from '../client';
+import CommandContext from './CommandContext';
 
 type CategoryTypes = 'util' | 'dev' | 'mod' | 'fun';
 
@@ -20,7 +22,7 @@ export default abstract class Command {
 
   public name: string;
 
-  public abstract run(message: Message, args: Array<string>): unknown;
+  public abstract run(ctx: CommandContext): unknown;
 
   public dir!: string;
 
