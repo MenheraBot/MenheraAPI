@@ -10,8 +10,6 @@ import RpgController from './controllers/RpgController';
 import isAuthorized from './middlewares/isAuthorized';
 import StatusController from './controllers/StatusController';
 
-const { status } = new StatusController();
-
 const router = Router();
 
 router.get('/api/activity', ActivityController.random);
@@ -31,7 +29,7 @@ router.post('/api/commands', isAuthorized, StatsController.postCommand);
 
 router.post('/api/rpg', isAuthorized, RpgController.postBattle);
 
-router.all('/api/status', status);
+router.all('/api/status', StatusController.status);
 
 router.get('/api/usages/most', isAuthorized, UsagesController.mostUsersAndCommands);
 router.get('/api/usages/top/command', isAuthorized, UsagesController.topCommands);

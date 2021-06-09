@@ -6,8 +6,33 @@ export interface Activity {
 }
 
 export const Colors = {
-  Red: 0xfd0000,
-  Green: 0x1cf313,
-  Cascade: 0x91a8a8,
-  Lavender: 0xdf96e6,
+  OPERATIONAL: 0x30f030,
+  UNDERMAINTENANCE: 0x70a6ff,
+  DEGRADEDPERFORMANCE: 0xf0ee62,
+  PARTIALOUTAGE: 0xfaf742,
+  MINOROUTAGE: 0xf39d0b,
+  MAJOROUTAGE: 0xff3000,
+  INVESTIGATING: 0xdba153,
+  IDENTIFIED: 0xfff5a1,
+  MONITORING: 0x33e6d7,
+  RESOLVED: 0x33e671,
+  NOTSTARTEDYET: 0x5f5f5f,
+  INPROGRESS: 0x2369f5,
+  COMPLETED: 0x57d321,
+};
+
+export const Titles = {
+  OPERATIONAL: 'Operacional',
+  UNDERMAINTENANCE: 'Em Manutenção',
+  DEGRADEDPERFORMANCE: 'Desempenho Degradado',
+  PARTIALOUTAGE: 'Interrupção Parcial',
+  MINOROUTAGE: 'Interrupção Mínima',
+  MAJOROUTAGE: 'Interrupção Máxima',
+  INVESTIGATING: 'Investigando',
+  IDENTIFIED: 'Identificado',
+  MONITORING: 'Monitorando',
+  RESOLVED: 'Resolvido',
+  NOTSTARTEDYET: 'Manutenção Programada',
+  INPROGRESS: 'Manutenção em Andamento',
+  COMPLETED: 'Manutenção Completa',
 };
