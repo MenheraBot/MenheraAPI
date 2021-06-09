@@ -1,6 +1,7 @@
 import { EmbedOptions } from '@menhera-tools/execute-webhook';
 import { Request, Response } from 'express';
 import moment from 'moment';
+import util from 'util';
 import SendStatus from '../util/statusMessage';
 import { Colors, Titles } from '../util/constants';
 
@@ -9,6 +10,7 @@ export default class StatusController {
   public static async status(req: Request, res: Response): Promise<Response> {
     const { body } = req;
 
+    console.log(util.inspect(body, false, null, true));
     if (body.component) StatusController.SendComponent(body);
     if (body.incident) StatusController.SendIncident(body);
     if (body.maintenance) StatusController.SendMaintenance(body);
