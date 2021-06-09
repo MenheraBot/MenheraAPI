@@ -3,6 +3,7 @@ const constants = {
   roles: {
     status: '758706770675105802',
     notify: '755593580285788280',
+    beta: '852196704211042336',
   },
   channels: {
     update: '757292554445127722',
