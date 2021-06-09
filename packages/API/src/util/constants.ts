@@ -5,6 +5,8 @@ export interface Activity {
   type: ActivityType;
 }
 
+export const StatusRole = '<@&758706770675105802>';
+
 export const Colors = {
   OPERATIONAL: 0x30f030,
   UNDERMAINTENANCE: 0x70a6ff,

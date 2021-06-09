@@ -2,7 +2,7 @@ import { EmbedOptions } from '@menhera-tools/execute-webhook';
 import { Request, Response } from 'express';
 import moment from 'moment';
 import SendStatus from '../util/statusMessage';
-import { Colors, Titles } from '../util/interfaces';
+import { Colors, Titles } from '../util/constants';
 
 moment.locale('pt-br');
 export default class StatusController {

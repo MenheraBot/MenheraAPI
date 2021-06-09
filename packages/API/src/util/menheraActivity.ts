@@ -1,4 +1,4 @@
-import { Activity, ActivityType } from './interfaces';
+import { Activity, ActivityType } from './constants';
 
 export default class Activities {
   private static instance?: Activities;
