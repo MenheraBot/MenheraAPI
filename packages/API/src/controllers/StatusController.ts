@@ -45,8 +45,8 @@ export default class StatusController {
     const embed: EmbedOptions = {
       color: Colors[body.incident.status],
       title: body.incident.name,
-      description: `${Titles[body.incident.status]}\n${body.incident_updates[
-        body.incident_updates.length - 1
+      description: `${Titles[body.incident.status]}\n${body.incident.incident_updates[
+        body.incident.incident_updates.length - 1
       ].body
         .slice(0, -4)
         .slice(3)}`,
@@ -62,8 +62,8 @@ export default class StatusController {
     const embed: EmbedOptions = {
       color: Colors[body.maintenance.status],
       title: body.maintenance.name,
-      description: `${Titles[body.maintenance.status]}\n${body.maintenance_updates[
-        body.maintenance_updates.length - 1
+      description: `${Titles[body.maintenance.status]}\n${body.maintenance.maintenance_updates[
+        body.maintenance.maintenance_updates.length - 1
       ].body
         .slice(0, -4)
         .slice(3)}`,
