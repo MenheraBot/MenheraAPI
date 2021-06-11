@@ -1,8 +1,8 @@
 import { EmbedOptions } from '@menhera-tools/execute-webhook';
 import { Request, Response } from 'express';
 import moment from 'moment';
-import SendStatus from '../util/statusMessage';
 import { Colors, Titles } from '../util/constants';
+import Queue from '../util/WebhookQueue';
 
 moment.locale('pt-br');
 export default class StatusController {
@@ -36,7 +36,7 @@ export default class StatusController {
         },
       ],
     };
-    SendStatus(embed);
+    Queue(embed);
   }
 
   public static async SendIncident(body): Promise<void> {
@@ -55,7 +55,7 @@ export default class StatusController {
         text: moment.utc(Date.now()).format('L [às] LTS'),
       },
     };
-    SendStatus(embed);
+    Queue(embed);
   }
 
   public static async SendMaintenance(body): Promise<void> {
@@ -72,6 +72,6 @@ export default class StatusController {
         text: moment.utc(Date.now()).format('L [às] LTS'),
       },
     };
-    SendStatus(embed);
+    Queue(embed);
   }
 }
