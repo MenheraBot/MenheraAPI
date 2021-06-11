@@ -17,6 +17,7 @@ export default class StatusController {
   }
 
   public static async SendComponent(body): Promise<void> {
+    if (body.component_update.old_status === body.component_update.new_status) return;
     const embed: EmbedOptions = {
       color: Colors[body.component.status],
       title: body.component.name,
