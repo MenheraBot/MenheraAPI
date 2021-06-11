@@ -59,7 +59,7 @@ export default class StatusController {
   }
 
   public static async SendMaintenance(body): Promise<void> {
-    const index = body.incident.maintenance_updates.findIndex(
+    const index = body.maintenance.maintenance_updates.findIndex(
       i => i.status === body.maintenance.status
     );
     const embed: EmbedOptions = {
