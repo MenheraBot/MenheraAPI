@@ -32,14 +32,14 @@ async function startCounting() {
       sendWebhook(queue);
       debounce = false;
       queue = [];
-    }, 2000);
+    }, 5000);
   } else {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       sendWebhook(queue);
       debounce = false;
       queue = [];
-    }, 2000);
+    }, 5000);
   }
 }
 
