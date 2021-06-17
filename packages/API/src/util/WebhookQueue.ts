@@ -1,11 +1,11 @@
 import executeWebhook, { EmbedOptions } from '@menhera-tools/execute-webhook';
 import { StatusRole } from './constants';
 
-let queue: EmbedOptions[] = [];
+let queue: Array<EmbedOptions> = [];
 let debounce = false;
-let timeout;
+let timeout: ReturnType<typeof setTimeout>;
 
-async function sendWebhook(arr): Promise<void> {
+async function sendWebhook(arr: Array<EmbedOptions>): Promise<void> {
   if (arr.length <= 10) {
     await executeWebhook(process.env.WEBHOOK_ID_STATUS, process.env.WEBHOOK_TOKEN_STATUS, {
       content: StatusRole,
@@ -32,14 +32,14 @@ async function startCounting() {
       sendWebhook(queue);
       debounce = false;
       queue = [];
-    }, 10000);
+    }, 2000);
   } else {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       sendWebhook(queue);
       debounce = false;
       queue = [];
-    }, 10000);
+    }, 2000);
   }
 }
 
