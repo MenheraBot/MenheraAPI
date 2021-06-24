@@ -1,4 +1,4 @@
-import { GuildMember, MessageEmbed, MessageReaction, TextChannel } from 'discord.js';
+import { GuildMember, Message, MessageEmbed, MessageReaction, TextChannel } from 'discord.js';
 import WatchClient from '../client';
 import Event from '../structures/event';
 import constants from '../util/constants';
@@ -35,17 +35,34 @@ export default class MessageReactionAdd extends Event {
         const negatedChannel = this.client.channels.cache.get(
           constants.channels.suggestDenied
         ) as TextChannel;
-        const oldEmbed = message.embeds[0];
-        const newEmbed = new MessageEmbed()
-          .setDescription(oldEmbed.description)
-          .setColor('#fc0505')
-          .setThumbnail(oldEmbed.thumbnail.url)
-          .setTitle('Sugestão negada!')
-          .setFooter(oldEmbed.footer.text)
-          .setTimestamp(new Date(oldEmbed.timestamp))
-          .setAuthor(oldEmbed.author.name, oldEmbed.author.iconURL);
-        negatedChannel.send(newEmbed);
-        message.delete().catch();
+
+        const msg = await reaction.message.channel.send('Qual o motivo para recusar essa reação?');
+
+        let motivo: string;
+        let msgSent: Message;
+
+        const col = msg.channel.createMessageCollector(usr => usr.author.id === user.id, {
+          max: 1,
+        });
+        col.on('collect', nsg => {
+          motivo = nsg.content;
+          msgSent = nsg;
+
+          msg.delete();
+          msgSent.delete();
+
+          const oldEmbed = message.embeds[0];
+          const newEmbed = new MessageEmbed()
+            .setDescription(oldEmbed.description)
+            .addField('MOTIVO:', motivo)
+            .setColor('#fc0505')
+            .setThumbnail(oldEmbed.thumbnail.url)
+            .setFooter(oldEmbed.footer.text)
+            .setTimestamp(new Date(oldEmbed.timestamp))
+            .setAuthor(`A ${oldEmbed.author.name} Foi Negada`, oldEmbed.author.iconURL);
+          negatedChannel.send(newEmbed);
+          message.delete().catch();
+        });
       }
       if (reaction.emoji.name === '🟡') {
         const queueChannel = this.client.channels.cache.get(
