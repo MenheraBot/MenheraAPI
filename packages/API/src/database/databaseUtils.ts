@@ -126,7 +126,7 @@ export async function postRpgResult(
     [userIdInDatabase, userClass, userLevel, dungeonLevel, death, date]
   );
 }
-export async function postBlackJack(
+export async function postBlackJackGame(
   userId: string,
   didWin: boolean,
   betValue: number

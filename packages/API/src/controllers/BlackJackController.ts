@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getBlackJackStats, postBlackJack } from '../database/databaseUtils';
+import { getBlackJackStats, postBlackJackGame } from '../database/databaseUtils';
 
 export default class BlackJackController {
   public static async getUserInfo(req: Request, res: Response): Promise<Response> {
@@ -34,7 +34,7 @@ export default class BlackJackController {
 
     if (!userId || !betValue || didWin === undefined) return res.sendStatus(400);
 
-    await postBlackJack(userId, didWin, betValue);
+    await postBlackJackGame(userId, didWin, betValue);
 
     return res.sendStatus(201);
   }
