@@ -13,6 +13,13 @@ interface CoinflipStats {
   cf_lose_money: number;
 }
 
+interface BlackJackStats {
+  bj_wins: number;
+  bj_loses: number;
+  bj_win_money: number;
+  bj_lose_money: number;
+}
+
 interface userInterface {
   id: string;
   uses: number;
@@ -96,6 +103,15 @@ export async function getCoinflipStats(userId: string): Promise<CoinflipStats> {
   return result.rows[0];
 }
 
+export async function getBlackJackStats(userId: string): Promise<BlackJackStats> {
+  const userIdInDatabase = await ensureUser(userId);
+  const result = await pool.query(
+    'SELECT bj_wins, bj_loses, bj_win_money, bj_lose_money FROM users WHERE id = $1',
+    [userIdInDatabase]
+  );
+  return result.rows[0];
+}
+
 export async function postRpgResult(
   userId: string,
   userClass: string,
@@ -109,6 +125,24 @@ export async function postRpgResult(
     'INSERT INTO rpg (user_id, user_class, user_level, dungeon_level, death, date) VALUES ($1, $2, $3, $4, $5, $6)',
     [userIdInDatabase, userClass, userLevel, dungeonLevel, death, date]
   );
+}
+export async function postBlackJack(
+  userId: string,
+  didWin: boolean,
+  betValue: number
+): Promise<void> {
+  const userIdInDatabase = await ensureUser(userId);
+
+  if (didWin)
+    await pool.query(
+      'UPDATE users SET bj_wins = bj_wins + 1, bj_win_money = bj_win_money + $1 WHERE id = $2',
+      [betValue, userIdInDatabase]
+    );
+  else
+    await pool.query(
+      'UPDATE users SET bj_loses = bj_loses + 1, bj_lose_money = bj_lose_money + $1 WHERE id = $2',
+      [betValue, userIdInDatabase]
+    );
 }
 
 async function updateCoinflipUserStats(

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import ActivityController from './controllers/ActivityController';
 import AssetsController from './controllers/AssetsController';
+import BlackJackController from './controllers/BlackJackController';
 import StatsController from './controllers/StatsController';
 import AuthController from './controllers/AuthController';
 import UsagesController from './controllers/UsagesController';
@@ -12,28 +13,31 @@ import StatusController from './controllers/StatusController';
 
 const router = Router();
 
-router.get('/api/activity', ActivityController.random);
-router.get('/api/activity/all', ActivityController.all);
-router.post('/api/activity', isAuthorized, ActivityController.add);
-router.put('/api/activity', isAuthorized, ActivityController.reset);
-router.delete('/api/activity', isAuthorized, ActivityController.clear);
+router.get('/activity', ActivityController.random);
+router.get('/activity/all', ActivityController.all);
+router.post('/activity', isAuthorized, ActivityController.add);
+router.put('/activity', isAuthorized, ActivityController.reset);
+router.delete('/activity', isAuthorized, ActivityController.clear);
 
-router.get('/api/assets/:type', AssetsController.getImageUrl);
+router.get('/assets/:type', AssetsController.getImageUrl);
 
-router.post('/api/auth', isAuthorized, AuthController.check);
+router.post('/auth', isAuthorized, AuthController.check);
 
-router.get('/api/coinflip', isAuthorized, CoinflipController.getUserInfo);
-router.post('/api/coinflip', isAuthorized, CoinflipController.postCoinflip);
+router.get('/blackjack', isAuthorized, BlackJackController.getUserInfo);
+router.post('/blackjack', isAuthorized, BlackJackController.postBlackJack);
 
-router.post('/api/commands', isAuthorized, StatsController.postCommand);
+router.get('/coinflip', isAuthorized, CoinflipController.getUserInfo);
+router.post('/coinflip', isAuthorized, CoinflipController.postCoinflip);
 
-router.post('/api/rpg', isAuthorized, RpgController.postBattle);
+router.post('/commands', isAuthorized, StatsController.postCommand);
 
-router.all('/api/status', StatusController.status);
+router.post('/rpg', isAuthorized, RpgController.postBattle);
 
-router.get('/api/usages/most', isAuthorized, UsagesController.mostUsersAndCommands);
-router.get('/api/usages/top/command', isAuthorized, UsagesController.topCommands);
-router.get('/api/usages/top/user', isAuthorized, UsagesController.topUsers);
-router.get('/api/usages/user', isAuthorized, UsagesController.getUserInfo);
+router.all('/status', StatusController.status);
+
+router.get('/usages/most', isAuthorized, UsagesController.mostUsersAndCommands);
+router.get('/usages/top/command', isAuthorized, UsagesController.topCommands);
+router.get('/usages/top/user', isAuthorized, UsagesController.topUsers);
+router.get('/usages/user', isAuthorized, UsagesController.getUserInfo);
 
 export default router;
