@@ -43,10 +43,6 @@ httpServer.listen(80, () => {
   logger.info('[API] HTTP Server running on port 80');
 });
 
-httpServer.listen(25156, () => {
-  logger.info('[API] HTTP Server running on port 25156');
-});
-
 if (!error) {
   const httpsServer = Https.createServer(credentials, app);
   httpsServer.listen(443, () => {
