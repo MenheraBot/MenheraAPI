@@ -16,18 +16,18 @@ config({ path: path.resolve(path.join(__dirname, '..', '.env')) });
 
 const app = express();
 
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/vps.menherabot.xyz/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/vps.menherabot.xyz/cert.pem', 'utf8');
-const ca = fs.readFileSync('/etc/letsencrypt/live/vps.menherabot.xyz/chain.pem', 'utf8');
+let error = false;
+let credentials;
 
-const credentials = {
-  key: privateKey,
-  cert: certificate,
-  ca,
-};
+try {
+  credentials.key = fs.readFileSync('/etc/letsencrypt/live/vps.menherabot.xyz/privkey.pem', 'utf8');
+  credentials.cert = fs.readFileSync('/etc/letsencrypt/live/vps.menherabot.xyz/cert.pem', 'utf8');
+  credentials.ca = fs.readFileSync('/etc/letsencrypt/live/vps.menherabot.xyz/chain.pem', 'utf8');
+} catch {
+  error = true;
+}
 
 const httpServer = Http.createServer(app);
-const httpsServer = Https.createServer(credentials, app);
 
 app.use(express.static(__dirname, { dotfiles: 'allow' }));
 app.use(cors());
@@ -43,6 +43,13 @@ httpServer.listen(80, () => {
   logger.info('[API] HTTP Server running on port 80');
 });
 
-httpsServer.listen(443, () => {
-  logger.info('[API] HTTPS Server running on port 443');
+httpServer.listen(25156, () => {
+  logger.info('[API] HTTP Server running on port 25156');
 });
+
+if (!error) {
+  const httpsServer = Https.createServer(credentials, app);
+  httpsServer.listen(443, () => {
+    logger.info('[API] HTTPS Server running on port 443');
+  });
+}
