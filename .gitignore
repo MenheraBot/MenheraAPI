@@ -5,3 +5,4 @@ packages/**/dist
 yarn-error.log
 build/
 *.http
+.well-know
