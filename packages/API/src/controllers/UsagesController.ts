@@ -36,7 +36,7 @@ export default class UsagesController {
       [userId]
     );
 
-    return res.send({ cmds: commandsExecuted.rows[0], array: allCommands.rows[0] });
+    return res.send({ cmds: commandsExecuted.rows[0], array: allCommands.rows });
   }
 
   static async topCommands(_req: Request, res: Response): Promise<Response> {
