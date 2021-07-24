@@ -17,7 +17,7 @@ export default class UserInfoCommand extends Command {
     let member: User;
     if (ctx.args[0]) {
       try {
-        member = await this.client.users.fetch(ctx.args[0].replace(/[<@!>]/g, ''));
+        member = await this.client.users.fetch(ctx.args[0].replace(/[<@!>]/g, '') as `${bigint}`);
       } catch {
         return ctx.reply('Usuário inexistente');
       }

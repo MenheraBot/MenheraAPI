@@ -9,6 +9,6 @@ export default class MessageUpdate extends Event {
 
   run(oldMessage: Message, newMessage: Message): void {
     if (oldMessage.content === newMessage.content) return;
-    this.client.emit('message', newMessage);
+    this.client.emit('messageCreate', newMessage);
   }
 }

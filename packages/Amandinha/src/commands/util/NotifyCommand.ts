@@ -19,8 +19,8 @@ export default class NotifyCommand extends Command {
 
     if (!wantStatus) {
       const role = this.client.guilds.cache
-        .get(constants.server)
-        .roles.cache.get(constants.roles.notify);
+        .get(constants.server as `${bigint}`)
+        .roles.cache.get(constants.roles.notify as `${bigint}`);
 
       if (ctx.message.member.roles.cache.has(role.id)) {
         ctx.message.member.roles.remove(role, 'Comando Notify');
@@ -32,8 +32,8 @@ export default class NotifyCommand extends Command {
       return ctx.reply('Feitoria! Você será notificado das atualizações da Menhera');
     }
     const role = this.client.guilds.cache
-      .get(constants.server)
-      .roles.cache.get(constants.roles.status);
+      .get(constants.server as `${bigint}`)
+      .roles.cache.get(constants.roles.status as `${bigint}`);
 
     if (ctx.message.member.roles.cache.has(role.id)) {
       ctx.message.member.roles.remove(role, 'Comando Notify');

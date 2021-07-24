@@ -7,7 +7,7 @@ import Event from '../structures/event';
 
 export default class MessageReceive extends Event {
   constructor(client: WatchClient) {
-    super(client, 'message');
+    super(client, 'messageCreate');
   }
 
   async run(message: Message): Promise<Message> {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
 import WatchClient from '../client';
@@ -12,6 +13,7 @@ export default class EventManager {
 
   add(event: Event): void {
     event.run = event.run.bind(event);
+    // @ts-ignore
     this.client.on(event.name, event.run);
   }
 }

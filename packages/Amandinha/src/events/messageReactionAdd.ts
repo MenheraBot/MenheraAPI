@@ -17,7 +17,7 @@ export default class MessageReactionAdd extends Event {
     const Handler = async () => {
       if (reaction.emoji.name === '✅') {
         const confirmedChannel = this.client.channels.cache.get(
-          constants.channels.suggestAccepted
+          constants.channels.suggestAccepted as `${bigint}`
         ) as TextChannel;
         const oldEmbed = message.embeds[0];
         const newEmbed = new MessageEmbed()
@@ -33,7 +33,7 @@ export default class MessageReactionAdd extends Event {
       }
       if (reaction.emoji.name === '❌') {
         const negatedChannel = this.client.channels.cache.get(
-          constants.channels.suggestDenied
+          constants.channels.suggestDenied as `${bigint}`
         ) as TextChannel;
 
         const msg = await reaction.message.channel.send('Qual o motivo para recusar essa reação?');
@@ -66,7 +66,7 @@ export default class MessageReactionAdd extends Event {
       }
       if (reaction.emoji.name === '🟡') {
         const queueChannel = this.client.channels.cache.get(
-          constants.channels.suggestInQueue
+          constants.channels.suggestInQueue as `${bigint}`
         ) as TextChannel;
 
         const oldEmbed = message.embeds[0];

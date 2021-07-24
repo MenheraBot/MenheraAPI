@@ -16,8 +16,8 @@ export default class NotifyCommand extends Command {
       return ctx.reply('Comando disponível somente no servidor de suporte da Menhera');
 
     const role = this.client.guilds.cache
-      .get(constants.server)
-      .roles.cache.get(constants.roles.beta);
+      .get(constants.server as `${bigint}`)
+      .roles.cache.get(constants.roles.beta as `${bigint}`);
 
     if (ctx.message.member.roles.cache.has(role.id)) {
       ctx.message.member.roles.remove(role, 'Comando Beta');
