@@ -24,7 +24,6 @@ export default class FileUtil {
       FileUtil.readdirRecursive(directory).map(async filepath => {
         const fullpath = path.resolve(filepath);
         const Module = (await import(fullpath)).default;
-        // @ts-ignore
         callback(new Module(client), filepath);
       })
     );

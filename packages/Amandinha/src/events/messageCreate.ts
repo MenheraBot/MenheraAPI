@@ -14,7 +14,7 @@ export default class MessageReceive extends Event {
     if (message.channel.type === 'DM') return;
     if (message.author?.bot) return;
 
-    if (!message?.content.startsWith(process.env.PREFIX)) return;
+    if (!message.content.startsWith(process.env.PREFIX)) return;
     const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     const comando =

@@ -28,7 +28,7 @@ export default class MessageReactionAdd extends Event {
           .setFooter(oldEmbed.footer.text)
           .setTimestamp(new Date(oldEmbed.timestamp))
           .setAuthor(oldEmbed.author.name, oldEmbed.author.iconURL);
-        confirmedChannel.send(newEmbed);
+        confirmedChannel.send({ embeds: [newEmbed] });
         message.delete().catch();
       }
       if (reaction.emoji.name === '❌') {
@@ -41,8 +41,8 @@ export default class MessageReactionAdd extends Event {
         let motivo: string;
         let msgSent: Message;
 
-        const col = msg.channel.createMessageCollector(usr => usr.author.id === user.id, {
-          max: 1,
+        const col = msg.channel.createMessageCollector({
+          filter: usr => usr.author.id === user.id,
         });
         col.on('collect', nsg => {
           motivo = nsg.content;
@@ -60,7 +60,7 @@ export default class MessageReactionAdd extends Event {
             .setFooter(oldEmbed.footer.text)
             .setTimestamp(new Date(oldEmbed.timestamp))
             .setAuthor(`A ${oldEmbed.author.name} Foi Negada`, oldEmbed.author.iconURL);
-          negatedChannel.send(newEmbed);
+          negatedChannel.send({ embeds: [newEmbed] });
           message.delete().catch();
         });
       }
@@ -78,7 +78,7 @@ export default class MessageReactionAdd extends Event {
           .setFooter(oldEmbed.footer.text)
           .setTimestamp(new Date(oldEmbed.timestamp))
           .setAuthor(oldEmbed.author.name, oldEmbed.author.iconURL);
-        queueChannel.send(newEmbed);
+        queueChannel.send({ embeds: [newEmbed] });
         message.delete().catch();
       }
     };

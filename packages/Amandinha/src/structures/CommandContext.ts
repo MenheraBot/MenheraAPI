@@ -18,22 +18,19 @@ export default class CommandContext {
   async sendEmbed(embed: MessageEmbed, reply?: boolean): Promise<Message> {
     if (reply)
       return this.message.channel.send({
-        embed,
+        embeds: [embed],
         reply: { messageReference: this.message },
       });
-    return this.message.channel.send(embed);
+    return this.message.channel.send({ embeds: [embed] });
   }
 
   async sendR(msg: MessageOptions): Promise<Message | Message[]> {
     return this.message.channel.send(msg);
   }
 
-  async sendC(content: string, options: MessageOptions): Promise<Message | Message[]> {
-    return this.message.channel.send(content, options);
-  }
-
   async reply(text: string): Promise<Message> {
-    return this.message.channel.send(text, {
+    return this.message.channel.send({
+      content: text,
       reply: {
         messageReference: this.message,
       },

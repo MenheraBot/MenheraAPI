@@ -13,7 +13,6 @@ export default class EventManager {
 
   add(event: Event): void {
     event.run = event.run.bind(event);
-    // @ts-ignore
     this.client.on(event.name, event.run);
   }
 }

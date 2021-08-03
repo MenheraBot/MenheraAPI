@@ -38,12 +38,12 @@ export default class InfoCommand extends Command {
       ]);
 
     const Button = new MessageButton()
-      .setCustomID('s')
+      .setCustomId('s')
       .setLabel('Sim')
       .setEmoji('<:eto:782022370231582721>')
       .setStyle('SUCCESS');
 
-    const otherButton = new MessageButton().setCustomID('n').setLabel('Nao').setStyle('DANGER');
+    const otherButton = new MessageButton().setCustomId('n').setLabel('Nao').setStyle('DANGER');
 
     const maisum = new MessageButton()
       .setLabel('Menhera Site FDS')
@@ -52,8 +52,9 @@ export default class InfoCommand extends Command {
 
     const actrow = new MessageActionRow().addComponents(Button, otherButton, maisum);
 
-    const a = (await ctx.sendC('Você quer ver mais?', {
-      embed,
+    const a = (await ctx.sendR({
+      content: 'Você quer ver mais?',
+      embeds: [embed],
       reply: { messageReference: ctx.message },
       components: [actrow],
     })) as Message;
@@ -61,7 +62,8 @@ export default class InfoCommand extends Command {
     const filter = interacion =>
       interacion.message.id === a.id && interacion.user.id === ctx.message.author.id;
 
-    const collector = ctx.message.channel.createMessageComponentInteractionCollector(filter, {
+    const collector = ctx.message.channel.createMessageComponentCollector({
+      filter,
       time: 60000,
       max: 1,
     });

@@ -17,7 +17,7 @@ export default class NsfwCommand extends Command {
   }
 
   async run(ctx: CommandContext): Promise<Message> {
-    if (ctx.message.channel.type === 'text' && !ctx.message.channel.nsfw)
+    if (ctx.message.channel.type === 'GUILD_TEXT' && !ctx.message.channel.nsfw)
       return ctx.reply(`Este comando é restrito à canais NSFW`);
 
     const options = [

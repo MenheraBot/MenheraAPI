@@ -21,7 +21,7 @@ export default class EvalCommand extends Command {
       evaled = evaled.replace(new RegExp(`${this.client.token}`, 'g'), undefined);
 
       if (evaled.length > 1800) evaled = `${evaled.slice(0, 1800)}...`;
-      ctx.sendR({ content: evaled, code: 'js', reply: { messageReference: ctx.message } });
+      ctx.sendR({ content: evaled, reply: { messageReference: ctx.message } });
     } catch (err) {
       const errorMessage = err.stack.length > 1800 ? `${err.stack.slice(0, 1800)}...` : err.stack;
       const embed = new MessageEmbed();
