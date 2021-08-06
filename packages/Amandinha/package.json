@@ -14,12 +14,10 @@
   "license": "ISC",
   "dependencies": {
     "@menhera-tools/logger": "*",
-    "discord.js": "^13.0.0-dev.t1627992462.35fa3b3",
+    "discord.js": "^13.0.0",
     "dotenv": "^8.2.0",
-    "fs-extra": "^9.0.1",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
-    "mongoose": "^5.10.15",
     "nekos.life": "^2.0.7"
   },
   "devDependencies": {
