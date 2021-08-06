@@ -3,7 +3,7 @@ import Client from './client';
 
 const client = new Client({
   partials: ['MESSAGE', 'REACTION'],
-  intents: ['GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'],
+  intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'],
 });
 
 client.loadCommands(`src/commands`);
