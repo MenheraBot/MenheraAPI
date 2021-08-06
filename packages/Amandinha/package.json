@@ -4,8 +4,8 @@
   "description": "Um bot para auxiliar no servidor de suporte da Menhera",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node --experimental-modules -r dotenv/config . ",
+    "build": "rm -rf dist && tsc --project tsconfig.json",
+    "start": "node -r dotenv/config . ",
     "build:test": "tsc --noEmit",
     "dev": "tsnd --ignore node_modules --transpile-only --no-notify --respawn -r dotenv/config src/index.ts"
   },
