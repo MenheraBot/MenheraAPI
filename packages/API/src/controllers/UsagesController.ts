@@ -3,15 +3,6 @@ import { Request, Response } from 'express';
 import { getMostUserAndCommand, getTopCommands, getTopUsers } from '../database/databaseUtils';
 import pool from '../database/pool';
 
-interface commandsList {
-  name: string;
-  count: number;
-}
-
-interface commandName {
-  name: string;
-}
-
 export default class UsagesController {
   static async mostUsersAndCommands(_req: Request, res: Response): Promise<Response> {
     const usages = await getMostUserAndCommand();

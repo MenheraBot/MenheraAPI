@@ -6,17 +6,17 @@ on:
 
 jobs:
   build:
-    name: Perform ESLint check on node v14
+    name: Perform ESLint check on node v16
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Use Node.js v14
+      - name: Use Node.js v16
         uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 16.6.0
 
       - uses: actions/cache@v1
         with:
