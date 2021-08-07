@@ -13,6 +13,7 @@ export default class MessageReceive extends Event {
   async run(message: Message): Promise<Message> {
     if (message.webhookId && message.channelId === '723765136648830996') {
       const embed = message.embeds[0];
+      if (!embed) return;
 
       const firstButton = new MessageButton()
         .setLabel('Aceitar')
