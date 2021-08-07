@@ -1,6 +1,6 @@
 /* eslint-disable no-new */
 /* eslint-disable consistent-return */
-import { Message } from 'discord.js';
+import { Message, MessageButton } from 'discord.js';
 import WatchClient from '../client';
 import CommandContext from '../structures/CommandContext';
 import Event from '../structures/event';
@@ -11,6 +11,33 @@ export default class MessageReceive extends Event {
   }
 
   async run(message: Message): Promise<Message> {
+    if (message.webhookId && message.channelId === '723765136648830996') {
+      const embed = message.embeds[0];
+
+      const firstButton = new MessageButton()
+        .setLabel('Aceitar')
+        .setStyle('SUCCESS')
+        .setCustomId('OK');
+
+      const secondButton = new MessageButton()
+        .setLabel('Negar')
+        .setStyle('DANGER')
+        .setCustomId('NO');
+
+      const thirdButton = new MessageButton()
+        .setLabel('Fila')
+        .setCustomId('FILA')
+        .setEmoji('🟡')
+        .setStyle('PRIMARY');
+
+      message.channel.send({
+        embeds: [embed],
+        components: [{ type: 1, components: [firstButton, secondButton, thirdButton] }],
+      });
+      message.delete();
+      return;
+    }
+
     if (message.channel.type === 'DM') return;
     if (message.author?.bot) return;
 
