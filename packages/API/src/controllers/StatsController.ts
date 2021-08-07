@@ -4,7 +4,6 @@ import database from '../database/manager';
 export default class StatsController {
   public static async postCommand(req: Request, res: Response): Promise<Response> {
     const { authorId, guildId, commandName, data, args } = req.body;
-    console.log(authorId, guildId, commandName, data, args);
     if (!authorId || !guildId || !commandName || !data) {
       return res.sendStatus(400);
     }
