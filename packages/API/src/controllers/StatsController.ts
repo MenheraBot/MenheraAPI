@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
-import APIError from '../util/APIError';
 import database from '../database/manager';
 
 export default class StatsController {
   public static async postCommand(req: Request, res: Response): Promise<Response> {
-    const { authorName, authorId, guildName, guildId, commandName, data, args } = req.body;
-    if (!authorName || !authorId || !guildName || !guildId || !commandName || !data) {
+    const { authorId, guildId, commandName, data, args } = req.body;
+    if (!authorId || !guildId || !commandName || !data) {
       return res.sendStatus(400);
     }
-    await database(authorId, guildId, commandName, data, args);
+    await database(authorId, guildId, commandName, data, args ?? '');
     return res.sendStatus(201);
   }
 }
