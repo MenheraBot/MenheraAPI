@@ -25,9 +25,7 @@ export default class UsagesController {
       userId,
     ]);
 
-    console.log(commandsExecuted)
-
-    if (!commandsExecuted?.rows[0] || commandsExecuted.rows[0]?.count === '0')
+    if (!commandsExecuted?.rows[0] || commandsExecuted.rows[0]?.count == 0)
       return res.status(404).send('Este usuário não exsite em meu banco de dados');
     const allCommands = await pool.query(
       'SELECT cmds.name, COUNT(cmds.name) FROM uses INNER JOIN cmds ON uses.cmd_id = cmds.id WHERE user_id = $1 GROUP BY cmds.name ORDER BY count DESC LIMIT 10',
