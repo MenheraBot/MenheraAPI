@@ -16,7 +16,7 @@ export default class UsagesController {
 
   static async getUserInfo(req: Request, res: Response): Promise<Response> {
     const { userId } = req.body;
-    const commandsExecuted = await pool.query('SELECT COUNT(*) FROM uses WHERE user_id = $1', [
+    const commandsExecuted = await pool.query('SELECT uses AS count FROM users WHERE id = $1', [
       userId,
     ]);
 
