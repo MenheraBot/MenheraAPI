@@ -9,6 +9,11 @@ export default class UsagesController {
     return res.status(200).send(usages);
   }
 
+  static async getAllUsersIdsThatDoNotUseMenheraAnymore(_req: Request, res: Response): Promise<Response> {
+    const { rows } = await pool.query('SELECT id FROM users WHERE uses < 10');
+    return res.status(200).send({ ids: rows });
+  }
+
   static async topUsers(_req: Request, res: Response): Promise<Response> {
     const rows = await getTopUsers();
     return res.status(200).send(rows);

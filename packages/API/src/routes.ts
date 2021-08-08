@@ -13,6 +13,8 @@ import StatusController from './controllers/StatusController';
 
 const router = Router();
 
+router.get('/unknown', isAuthorized, UsagesController.getAllUsersIdsThatDoNotUseMenheraAnymore)
+
 router.get('/activity', ActivityController.random);
 router.get('/activity/all', ActivityController.all);
 router.post('/activity', isAuthorized, ActivityController.add);
