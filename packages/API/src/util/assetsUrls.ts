@@ -139,7 +139,10 @@ const urls = {
     'https://i.imgur.com/eArxfCN.gif',
     'https://i.imgur.com/jVMFrhQ.gif',
     'https://i.imgur.com/qRwoxNX.gif',
+    'https://i.imgur.com/eTAS4hR.gif',
     'https://i.imgur.com/aXp20MT.gif',
+    'https://i.imgur.com/7eJOt0G.gif',
+    'https://i.imgur.com/XX3wZQa.gif',
   ],
   kill: [
     'https://i.imgur.com/teca6na.gif',
@@ -184,6 +187,8 @@ const urls = {
     'https://i.imgur.com/9y34cfo.gif',
     'https://i.imgur.com/9758cJX.gif',
     'https://i.imgur.com/SS7sQpj.gif',
+    'https://i.imgur.com/S5cwe7m.gif',
+    'https://i.imgur.com/4Lnyqlv.gif',
   ],
   laugh: [
     'https://i.imgur.com/Greznmg.gif',
@@ -259,6 +264,7 @@ const urls = {
     'https://i.imgur.com/MVCLgx6.gif',
     'https://i.imgur.com/nXREyNu.gif',
     'https://i.imgur.com/Jb3tVZv.gif',
+    'https://i.imgur.com/PiOLEIG.gif',
   ],
   poke: [
     'https://i.imgur.com/ZWfpRM4.gif',
@@ -321,6 +327,8 @@ const urls = {
     'https://i.imgur.com/m2JUJWB.gif',
     'https://i.imgur.com/ezdhV96.gif',
     'https://i.imgur.com/opU9zt9.gif',
+    'https://i.imgur.com/HTCzh7G.gif',
+    'https://i.imgur.com/3ihBQog.gif',
   ],
   shot: [
     'https://i.imgur.com/4d1oxl9.gif',
@@ -334,6 +342,7 @@ const urls = {
     'https://i.imgur.com/sFmjxAn.gif',
     'https://i.imgur.com/1aU6ban.gif',
     'https://i.imgur.com/0nEZ5ms.gif',
+    'https://i.imgur.com/edQ31PR.gif',
   ],
   shy: [
     'https://i.imgur.com/EQMScvF.gif',
