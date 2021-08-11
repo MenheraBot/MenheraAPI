@@ -41,5 +41,6 @@ router.get('/usages/most', isAuthorized, UsagesController.mostUsersAndCommands);
 router.get('/usages/top/command', isAuthorized, UsagesController.topCommands);
 router.get('/usages/top/user', isAuthorized, UsagesController.topUsers);
 router.get('/usages/user', isAuthorized, UsagesController.getUserInfo);
+router.get('/usages/user/delete', isAuthorized, UsagesController.getUserDeleteCommand)
 
 export default router;

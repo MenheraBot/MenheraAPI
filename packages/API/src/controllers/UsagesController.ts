@@ -39,4 +39,14 @@ export default class UsagesController {
     const rows = await getTopCommands();
     return res.status(200).send(rows);
   }
+
+  static async getUserDeleteCommand(req: Request, res: Response): Promise<Response> {
+    const { userId } = req.body;
+    if(!userId) return res.sendStatus(400) 
+    const commandsExecuted = await pool.query('SELECT count(*) FROM uses WHERE user_id = $1 AND cmd_id = 272', [
+      userId,
+    ]);
+
+    return res.status(200).send(commandsExecuted.rows[0])
+ }
 }
