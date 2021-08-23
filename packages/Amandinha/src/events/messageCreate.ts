@@ -1,6 +1,6 @@
 /* eslint-disable no-new */
 /* eslint-disable consistent-return */
-import { Message, MessageButton } from 'discord.js';
+import { Message, MessageButton, MessageEmbed, TextBasedChannels } from 'discord.js';
 import WatchClient from '../client';
 import CommandContext from '../structures/CommandContext';
 import Event from '../structures/event';
@@ -11,9 +11,21 @@ export default class MessageReceive extends Event {
   }
 
   async run(message: Message): Promise<Message> {
-    if (message.webhookId && message.channelId === '723765136648830996') {
-      const embed = message.embeds[0];
-      if (!embed) return;
+    if (message.channelId === '879207097936543744') {
+      const cor = `#${`000000${Math.random().toString(16).slice(2, 8).toUpperCase()}`.slice(
+        -6
+      )}` as const;
+
+      const embed = new MessageEmbed()
+        .setDescription(`**${message.content}**`)
+        .setColor(cor)
+        .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
+        .setFooter(`ID do usuário: ${message.author.id} | ${message.id}`)
+        .setTimestamp()
+        .setAuthor(
+          `Sugestão de ${message.author.tag}`,
+          message.author.displayAvatarURL({ dynamic: true })
+        );
 
       const firstButton = new MessageButton()
         .setLabel('Aceitar')
@@ -31,11 +43,16 @@ export default class MessageReceive extends Event {
         .setEmoji('🟡')
         .setStyle('PRIMARY');
 
-      message.channel.send({
+      (this.client.channels.cache.get('723765136648830996') as TextBasedChannels).send({
         embeds: [embed],
         components: [{ type: 1, components: [firstButton, secondButton, thirdButton] }],
       });
       message.delete();
+      const sent = await message.channel.send(
+        `Obrigada por me enviar uma sugestão ${message.author.toString()}! Minha dona já possui conhecimento dela, e vai averiguar o mais rápido possível. Beijinhos >.<`
+      );
+
+      setTimeout(() => sent.delete(), 10000);
       return;
     }
 

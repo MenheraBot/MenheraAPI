@@ -16,7 +16,7 @@ export default class StatusController {
     return res.sendStatus(201);
   }
 
-  public static async SendComponent(body): Promise<void> {
+  public static async SendComponent(body: any): Promise<void> {
     const embed: EmbedOptions = {
       color: Colors[body.component.status],
       title: body.component.name,
@@ -34,8 +34,8 @@ export default class StatusController {
     Queue(embed);
   }
 
-  public static async SendIncident(body): Promise<void> {
-    const index = body.incident.incident_updates.findIndex(i => i.status === body.incident.status);
+  public static async SendIncident(body: any): Promise<void> {
+    const index = body.incident.incident_updates.findIndex((i: any) => i.status === body.incident.status);
 
     const embed: EmbedOptions = {
       color: Colors[body.incident.status],
@@ -53,7 +53,7 @@ export default class StatusController {
     Queue(embed);
   }
 
-  public static async SendMaintenance(body): Promise<void> {
+  public static async SendMaintenance(body:any): Promise<void> {
     const index = body.maintenance.maintenance_updates.findIndex(
       i => i.status === body.maintenance.status
     );
