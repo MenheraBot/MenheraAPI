@@ -42,6 +42,12 @@ export default class MessageReceive extends Event {
     if (message.channel.type === 'DM') return;
     if (message.author?.bot) return;
 
+    if (message.content.toLowerCase().startsWith('m!')) {
+      message.channel.send(
+        `Oii ${message.author.toString()}, a Menhera não usa mais comandos de mensagem!\nUse os comandos slash. Eles começam com \`/\`. Ao digitar, uma janela aparecerá com todos comandos existentes, escolha o que você quer, e parte pro abraço >..<`
+      );
+      return;
+    }
     if (!message.content.startsWith(process.env.PREFIX)) return;
     const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
