@@ -11,6 +11,8 @@ export default class MessageReceive extends Event {
   }
 
   async run(message: Message): Promise<Message> {
+    if (message.channel.type === 'DM') return;
+    if (message.author?.bot) return;
     if (message.channelId === '879207097936543744') {
       const cor = `#${`000000${Math.random().toString(16).slice(2, 8).toUpperCase()}`.slice(
         -6
@@ -55,9 +57,6 @@ export default class MessageReceive extends Event {
       setTimeout(() => sent.delete(), 10000);
       return;
     }
-
-    if (message.channel.type === 'DM') return;
-    if (message.author?.bot) return;
 
     if (message.content.toLowerCase().startsWith('m!')) {
       message.channel.send(
