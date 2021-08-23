@@ -17,7 +17,6 @@ export default class StatusController {
   }
 
   public static async SendComponent(body): Promise<void> {
-    if (body.component_update.old_status === body.component_update.new_status) return;
     const embed: EmbedOptions = {
       color: Colors[body.component.status],
       title: body.component.name,
@@ -25,11 +24,6 @@ export default class StatusController {
         text: moment.utc(Date.now()).format('L [às] LTS'),
       },
       fields: [
-        {
-          name: 'Antigo Status ->',
-          value: `\`${Titles[body.component_update.old_status]}\` ->`,
-          inline: true,
-        },
         {
           name: 'Status Atual',
           value: `**${Titles[body.component_update.new_status]}**`,
