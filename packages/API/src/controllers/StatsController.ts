@@ -4,7 +4,6 @@ import database from '../database/manager';
 
 export default class StatsController {
   private static resolveOptions(options: CommandInteractionOption[]): string { 
-    console.log(options)
     const returnValue = (opt: CommandInteractionOption): string => {
       if(opt.value) return `${opt.name}:${opt.value}`
       if(opt.channel) return `${opt.name}:${opt.channel.id}`
