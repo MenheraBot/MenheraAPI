@@ -19,7 +19,7 @@ export default class StatsController {
     if (!authorId || !guildId || !commandName || !data) { 
       return res.sendStatus(400);
     }
-    await database(authorId, guildId, commandName, data, StatsController.resolveOptions(args));
+    await database(authorId, guildId, commandName, data,  args ? StatsController.resolveOptions(args) : '');
     return res.sendStatus(201);
   }
 }
