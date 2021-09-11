@@ -6,7 +6,7 @@ export default class Activities {
   private static getDefaultActivities(): Array<Activity> {
     return [
       {
-        name: '⚠️ | COMANDOS ANTIGOS PARARAM DE FUNCIONAR! DIGITE / PARA USAR OS NOVOS COMANDOS',
+        name: '💖 | Obrigada por me salvarem',
         type: 'PLAYING',
       },
     ];
