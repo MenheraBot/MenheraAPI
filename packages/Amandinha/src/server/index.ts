@@ -2,14 +2,16 @@ import express, { Response } from 'express';
 import cors from 'cors';
 import Http from 'http';
 import logger from '@menhera-tools/logger';
-import routes from './routes';
+import WatchClient from 'client';
 
 import NotFound from './middlewares/NotFound';
 import isAuthorized from './middlewares/isAuthorized';
+import DefaultController from './Controllers/DefaultController';
 
-const startServer = (): void => {
+const startServer = (client: WatchClient): void => {
   const app = express();
   const server = Http.createServer(app);
+  const controller = new DefaultController(client)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const rawBodySaver = (req: any, _res: Response, buf: Buffer, encoding: BufferEncoding) => {
@@ -23,7 +25,7 @@ const startServer = (): void => {
 
   app.use(isAuthorized);
 
-  app.use('/api/v1', routes);
+  app.post('/api/v1', controller.ReceivedAction);
 
   app.use(NotFound);
 

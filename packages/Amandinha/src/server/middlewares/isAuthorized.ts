@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import nacl from 'tweetnacl';
 
 export default (req: Request, res: Response, next: NextFunction): Response | void => {
-  console.log(req.body);
   const PUBLIC_KEY = process.env.API_PUBLIC_KEY as string;
 
   const signature = req.get('X-Signature-Ed25519');
