@@ -1,25 +1,24 @@
+import './api/database/MongoDB';
+
 import express from 'express';
 import cors from 'cors';
-import Http from 'http';
+import http from 'http';
 import logger from '@menhera-tools/logger';
-import { config } from 'dotenv';
-import path from 'path';
-import routes from './routes';
-import './database/MongoDB';
 
-import NotFound from './middlewares/NotFound';
-import ErrorHandler from './middlewares/ErrorHandler';
+import NotFound from './api/middlewares/NotFound';
+import ErrorHandler from './api/middlewares/ErrorHandler';
+import isAuthorized from './api/middlewares/isAuthorized';
 
-config({ path: path.resolve(path.join(__dirname, '..', '.env')) });
+import ApiRoutes from './api/routes';
 
 const app = express();
-const server = Http.createServer(app);
+const server = http.createServer(app);
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', routes);
+app.use('/api', isAuthorized, ApiRoutes);
 
 app.use(NotFound);
 app.use(ErrorHandler);

@@ -1,5 +1,5 @@
-import { ActivityType } from 'discord.js';
 import { Request, Response } from 'express';
+import { ActivityType } from '../util/types';
 import APIError from '../util/APIError';
 import MenheraActivity from '../util/menheraActivity';
 

@@ -1,4 +1,4 @@
-import { Activity, ActivityType } from './constants';
+import { Activity, ActivityType } from './types';
 
 export default class Activities {
   private static instance?: Activities;
