@@ -27,5 +27,5 @@ app.use('/api/v1', routes);
 app.use(NotFound);
 
 server.listen(process.env.PORT, () => {
-  logger.info(`[API] Server started on port ${process.env.PORT}`);
+  logger.info(`[AMANDNINHA INTERACTION SERVER] Server started on port ${process.env.PORT}`);
 });
