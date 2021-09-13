@@ -12,7 +12,7 @@ export default class NotifyCommand extends Command {
   }
 
   async run(ctx: CommandContext): Promise<Message> {
-    if (ctx.message.guild.id !== constants.server)
+    if (ctx.message.guild?.id !== constants.server)
       return ctx.reply('Comando disponível somente no servidor de suporte da Menhera');
 
     const wantStatus = ctx.args[0] === 'status';
@@ -20,26 +20,26 @@ export default class NotifyCommand extends Command {
     if (!wantStatus) {
       const role = this.client.guilds.cache
         .get(constants.server)
-        .roles.cache.get(constants.roles.notify);
+        ?.roles.cache.get(constants.roles.notify);
 
-      if (ctx.message.member.roles.cache.has(role.id)) {
-        ctx.message.member.roles.remove(role, 'Comando Notify');
+      if (ctx.message.member?.roles.cache.has(role?.id ?? 'a')) {
+        ctx.message.member.roles.remove(role ?? 'a', 'Comando Notify');
         return ctx.reply(
           'Como desejar! Você não será mais notificado das atualizações da Menhera!'
         );
       }
-      ctx.message.member.roles.add(role, 'Comando Notify');
+      ctx.message.member?.roles.add(role ?? 'a', 'Comando Notify');
       return ctx.reply('Feitoria! Você será notificado das atualizações da Menhera');
     }
     const role = this.client.guilds.cache
       .get(constants.server)
-      .roles.cache.get(constants.roles.status);
+      ?.roles.cache.get(constants.roles.status);
 
-    if (ctx.message.member.roles.cache.has(role.id)) {
-      ctx.message.member.roles.remove(role, 'Comando Notify');
+    if (ctx.message.member?.roles.cache.has(role?.id ?? 'a')) {
+      ctx.message.member?.roles.remove(role ?? 'a', 'Comando Notify');
       return ctx.reply('Como desejar! Você não será mais notificado dos Status da Menhera');
     }
-    ctx.message.member.roles.add(role, 'Comando Notify');
+    ctx.message.member?.roles.add(role ?? 'a', 'Comando Notify');
     return ctx.reply('Feitoria! Você será notificado dos Status da Menhera');
   }
 }

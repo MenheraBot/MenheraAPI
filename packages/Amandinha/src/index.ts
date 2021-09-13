@@ -9,7 +9,7 @@ const client = new Client({
 client.loadCommands(`src/commands`);
 client.loadEvents(`${__dirname}/events`);
 client
-  .login(process.env.TOKEN)
+  .login(process.env.TOKEN as string)
   .then(() => {
     console.info('Amandinha ta voando alto!');
   })

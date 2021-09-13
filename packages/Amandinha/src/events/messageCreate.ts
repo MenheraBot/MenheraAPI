@@ -10,7 +10,7 @@ export default class MessageReceive extends Event {
     super(client, 'messageCreate');
   }
 
-  async run(message: Message): Promise<Message> {
+  async run(message: Message): Promise<Message | void> {
     if (message.channel.type === 'DM') return;
     if (message.author?.bot) return;
     if (message.channelId === '879207097936543744') {
@@ -64,12 +64,15 @@ export default class MessageReceive extends Event {
       );
       return;
     }
-    if (!message.content.startsWith(process.env.PREFIX)) return;
-    const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
+    if (!message.content.startsWith(process.env.PREFIX as string)) return;
+    const args = message.content
+      .slice((process.env.PREFIX as string).length)
+      .trim()
+      .split(/ +/g);
+    const command = args.shift()?.toLowerCase();
     const comando =
-      this.client.commands.get(command) ||
-      this.client.commands.get(this.client.aliases.get(command));
+      this.client.commands.get(command as string) ||
+      this.client.commands.get(this.client.aliases.get(command as string) as string);
     if (!comando) return;
 
     const ctx = new CommandContext(this.client, message, args);
@@ -82,7 +85,7 @@ export default class MessageReceive extends Event {
     const userPermission = comando.config.UserPermission;
     const clientPermission = comando.config.ClientPermissions;
     if (userPermission !== null) {
-      if (!message.member.permissions.has(userPermission)) {
+      if (!message.member?.permissions.has(userPermission)) {
         const perm = userPermission.map(value => `\`${value}\``).join(', ');
         return ctx.reply(
           `Você precisa das permissões: ${perm} pra executar isso, ${message.author}`
@@ -91,8 +94,8 @@ export default class MessageReceive extends Event {
     }
     if (clientPermission !== null) {
       if (
-        !message.guild.me.permissions.has(clientPermission) ||
-        !message.channel.permissionsFor(this.client.user.id).has(clientPermission)
+        !message.guild?.me?.permissions.has(clientPermission) ||
+        !message.channel.permissionsFor(this.client.user?.id ?? 'a')?.has(clientPermission)
       ) {
         const perm = clientPermission.map(value => `\`${value}\``).join(', ');
         return ctx.reply(`O cliente precisa das permissões: ${perm} pra executar isso`);

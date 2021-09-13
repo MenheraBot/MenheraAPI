@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { MessageEmbed } from 'discord.js';
 import util from 'util';
 import WatchClient from '../../client';
@@ -23,6 +24,7 @@ export default class EvalCommand extends Command {
       if (evaled.length > 1800) evaled = `${evaled.slice(0, 1800)}...`;
       ctx.sendR({ content: evaled, reply: { messageReference: ctx.message } });
     } catch (err) {
+      if (!(err instanceof Error && err.stack)) return;
       const errorMessage = err.stack.length > 1800 ? `${err.stack.slice(0, 1800)}...` : err.stack;
       const embed = new MessageEmbed();
       embed.setColor('#ff0000');

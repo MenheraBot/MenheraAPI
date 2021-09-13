@@ -32,8 +32,8 @@ export default abstract class Command {
     this.config = {
       category: options.category || 'dev',
       aliases: options.aliases || [],
-      UserPermission: options.UserPermission || null,
-      ClientPermissions: options.ClientPermissions || null,
+      UserPermission: options.UserPermission ?? [],
+      ClientPermissions: options.ClientPermissions ?? [],
       OnlyDevs: options.OnlyDevs || false,
     };
   }

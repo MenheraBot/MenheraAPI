@@ -21,7 +21,7 @@ export default class ReadyEvent extends Event {
       },
     ];
 
-    this.client.user.setPresence({
+    this.client.user?.setPresence({
       activities: status,
     });
   }

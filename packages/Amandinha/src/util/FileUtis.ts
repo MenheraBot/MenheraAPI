@@ -30,7 +30,7 @@ export default class FileUtil {
   }
 
   static readdirRecursive(directory: string): string[] {
-    return fs.readdirSync(directory).reduce((p, file) => {
+    return fs.readdirSync(directory).reduce<string[]>((p, file) => {
       const filepath = path.join(directory, file);
       if (fs.statSync(filepath).isDirectory()) {
         return [...p, ...FileUtil.readdirRecursive(filepath)];

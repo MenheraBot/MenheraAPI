@@ -12,7 +12,7 @@ export default class InteractionCreate extends Event {
     if (!interaction.isButton()) return;
     const { message } = interaction;
     const channelsToLookUp = [constants.channels.suggestQueue, constants.channels.suggestInQueue];
-    if (!channelsToLookUp.includes(interaction.channel.id)) return;
+    if (!channelsToLookUp.includes(interaction.channel?.id ?? 'a')) return;
     if (interaction.user.id !== process.env.OWNER_ID) return;
 
     const Handler = async () => {
@@ -22,13 +22,12 @@ export default class InteractionCreate extends Event {
         ) as TextChannel;
         const oldEmbed = message.embeds[0];
         const newEmbed = new MessageEmbed()
-          .setDescription(oldEmbed.description)
+          .setDescription(oldEmbed.description ?? 'a')
           .setColor('#17ec39')
-          .setThumbnail(oldEmbed.thumbnail.url)
+          .setThumbnail(oldEmbed.thumbnail?.url ?? 'a')
           .setTitle('Sugestão aceita!')
-          .setFooter(oldEmbed.footer.text)
-          .setTimestamp(new Date(oldEmbed.timestamp))
-          .setAuthor(oldEmbed.author.name, oldEmbed.author.url);
+          .setFooter(oldEmbed.footer?.text ?? 'a')
+          .setAuthor(oldEmbed.author?.name ?? 'a', oldEmbed.author?.url ?? 'a');
         confirmedChannel.send({ embeds: [newEmbed] });
         (interaction.message as Message).delete().catch();
       }
@@ -42,12 +41,12 @@ export default class InteractionCreate extends Event {
         let motivo: string;
         let msgSent: Message;
 
-        const col = interaction.channel.createMessageCollector({
+        const col = interaction.channel?.createMessageCollector({
           filter: usr => usr.author.id === interaction.user.id,
           max: 1,
         });
 
-        col.on('collect', nsg => {
+        col?.on('collect', nsg => {
           motivo = nsg.content;
           msgSent = nsg;
 
@@ -56,13 +55,12 @@ export default class InteractionCreate extends Event {
 
           const oldEmbed = message.embeds[0] as MessageEmbed;
           const newEmbed = new MessageEmbed()
-            .setDescription(oldEmbed.description)
+            .setDescription(oldEmbed.description ?? 'a')
             .addField('MOTIVO:', motivo)
             .setColor('#fc0505')
-            .setThumbnail(oldEmbed.thumbnail.url)
-            .setFooter(oldEmbed.footer.text)
-            .setTimestamp(new Date(oldEmbed.timestamp))
-            .setAuthor(`A ${oldEmbed.author.name} Foi Negada`, oldEmbed.author.iconURL);
+            .setThumbnail(oldEmbed.thumbnail?.url ?? 'a')
+            .setFooter(oldEmbed.footer?.text ?? 'a')
+            .setAuthor(`A ${oldEmbed.author?.name} Foi Negada`, oldEmbed.author?.iconURL);
           negatedChannel.send({ embeds: [newEmbed] });
           (interaction.message as Message).delete().catch();
         });
@@ -86,13 +84,12 @@ export default class InteractionCreate extends Event {
 
         const oldEmbed = message.embeds[0] as MessageEmbed;
         const newEmbed = new MessageEmbed()
-          .setDescription(oldEmbed.description)
+          .setDescription(oldEmbed.description ?? 'a')
           .setColor('#ffed4b')
-          .setThumbnail(oldEmbed.thumbnail.url)
+          .setThumbnail(oldEmbed.thumbnail?.url ?? 'a')
           .setTitle('Lux está fazendo esta sujestão!')
-          .setFooter(oldEmbed.footer.text)
-          .setTimestamp(new Date(oldEmbed.timestamp))
-          .setAuthor(oldEmbed.author.name, oldEmbed.author.iconURL);
+          .setFooter(oldEmbed.footer?.text ?? 'a')
+          .setAuthor(oldEmbed.author?.name ?? 'a', oldEmbed.author?.iconURL);
         queueChannel.send({
           embeds: [newEmbed],
           components: [{ type: 1, components: [secondButton, FirstButton] }],
@@ -101,7 +98,7 @@ export default class InteractionCreate extends Event {
       }
     };
 
-    await interaction.channel.messages.fetch(interaction.message.id);
+    await interaction.channel?.messages.fetch(interaction.message.id);
     Handler();
   }
 }

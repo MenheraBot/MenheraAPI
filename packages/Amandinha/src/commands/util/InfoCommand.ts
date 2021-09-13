@@ -1,4 +1,4 @@
-import { Message, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 import moment from 'moment';
 import WatchClient from '../../client';
 import Command from '../../structures/command';
@@ -37,56 +37,6 @@ export default class InfoCommand extends Command {
         },
       ]);
 
-    const Button = new MessageButton()
-      .setCustomId('s')
-      .setLabel('Sim')
-      .setEmoji('<:eto:782022370231582721>')
-      .setStyle('SUCCESS');
-
-    const otherButton = new MessageButton().setCustomId('n').setLabel('Nao').setStyle('DANGER');
-
-    const maisum = new MessageButton()
-      .setLabel('Menhera Site FDS')
-      .setURL('https://menherabot.xyz/')
-      .setStyle('LINK');
-
-    const actrow = new MessageActionRow().addComponents(Button, otherButton, maisum);
-
-    const a = (await ctx.sendR({
-      content: 'Você quer ver mais?',
-      embeds: [embed],
-      reply: { messageReference: ctx.message },
-      components: [actrow],
-    })) as Message;
-
-    const filter = interacion =>
-      interacion.message.id === a.id && interacion.user.id === ctx.message.author.id;
-
-    const collector = ctx.message.channel.createMessageComponentCollector({
-      filter,
-      time: 60000,
-      max: 1,
-    });
-    collector.on('collect', i => {
-      switch (i.customID) {
-        case 's':
-          otherButton.setDisabled(true);
-          Button.setDisabled(true);
-          actrow.spliceComponents(0, 2, [otherButton, Button]);
-          i.update({
-            content: 'NAISUUUU obrigada pr clicar, mas n tem nada',
-            components: [actrow],
-          });
-          break;
-        case 'n':
-          i.update({
-            content: 'Bah o meu vai ti fude, se n quer ent n clica',
-            components: [],
-          });
-          break;
-        default:
-          break;
-      }
-    });
+    ctx.sendEmbed(embed);
   }
 }

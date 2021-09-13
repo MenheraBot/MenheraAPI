@@ -28,13 +28,12 @@ export default class MessageReactionAdd extends Event {
         ) as TextChannel;
         const oldEmbed = message.embeds[0];
         const newEmbed = new MessageEmbed()
-          .setDescription(oldEmbed.description)
+          .setDescription(oldEmbed.description ?? 'a')
           .setColor('#17ec39')
-          .setThumbnail(oldEmbed.thumbnail.url)
+          .setThumbnail(oldEmbed.thumbnail?.url ?? 'a')
           .setTitle('Sugestão aceita!')
-          .setFooter(oldEmbed.footer.text)
-          .setTimestamp(new Date(oldEmbed.timestamp))
-          .setAuthor(oldEmbed.author.name, oldEmbed.author.iconURL);
+          .setFooter(oldEmbed.footer?.text ?? 'a')
+          .setAuthor(oldEmbed.author?.name ?? 'a', oldEmbed.author?.iconURL);
         confirmedChannel.send({ embeds: [newEmbed] });
         message.delete().catch();
       }
@@ -60,13 +59,12 @@ export default class MessageReactionAdd extends Event {
 
           const oldEmbed = message.embeds[0];
           const newEmbed = new MessageEmbed()
-            .setDescription(oldEmbed.description)
+            .setDescription(oldEmbed.description ?? 'a')
             .addField('MOTIVO:', motivo)
             .setColor('#fc0505')
-            .setThumbnail(oldEmbed.thumbnail.url)
-            .setFooter(oldEmbed.footer.text)
-            .setTimestamp(new Date(oldEmbed.timestamp))
-            .setAuthor(`A ${oldEmbed.author.name} Foi Negada`, oldEmbed.author.iconURL);
+            .setThumbnail(oldEmbed.thumbnail?.url ?? 'a')
+            .setFooter(oldEmbed.footer?.text ?? 'a')
+            .setAuthor(`A ${oldEmbed.author?.name} Foi Negada`, oldEmbed.author?.iconURL);
           negatedChannel.send({ embeds: [newEmbed] });
           message.delete().catch();
         });
@@ -90,13 +88,12 @@ export default class MessageReactionAdd extends Event {
 
         const oldEmbed = message.embeds[0];
         const newEmbed = new MessageEmbed()
-          .setDescription(oldEmbed.description)
+          .setDescription(oldEmbed.description ?? 'a')
           .setColor('#ffed4b')
-          .setThumbnail(oldEmbed.thumbnail.url)
+          .setThumbnail(oldEmbed.thumbnail?.url ?? 'a')
           .setTitle('Lux está fazendo esta sujestão!')
-          .setFooter(oldEmbed.footer.text)
-          .setTimestamp(new Date(oldEmbed.timestamp))
-          .setAuthor(oldEmbed.author.name, oldEmbed.author.iconURL);
+          .setFooter(oldEmbed.footer?.text ?? 'a')
+          .setAuthor(oldEmbed.author?.name ?? 'a', oldEmbed.author?.iconURL);
         queueChannel.send({
           embeds: [newEmbed],
           components: [{ type: 1, components: [secondButton, FirstButton] }],
