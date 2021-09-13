@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Uma API para a Menhera",
   "main": "dist/server.js",
+  "private": true,
   "scripts": {
     "start": "node -r dotenv/config .",
     "build": "tsc",

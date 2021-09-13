@@ -6,10 +6,18 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@stereobooster/*": ["packages/*/src"]
+    },
   },
   "exclude": [
     "ecosystem.config.js",
     "packages/**/dist",
     "packages/**/*.js"
+  ],
+  "references": [
+      { "path": "packages/logger" },
+      { "path": "packages/execute-webhook" }
   ]
 }

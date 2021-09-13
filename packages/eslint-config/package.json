@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": ".eslintrc.js",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "build": "echo owo",
     "start": "echo uwu"

@@ -4,8 +4,8 @@
   "description": "Um repositório com ferramentas para auxiliar a MenheraBot",
   "private": true,
   "scripts": {
-    "build": "yarn workspaces run -pt build",
-    "start": "yarn workspaces run -pt start",
+    "build": "lerna exec --parallel yarn run build",
+    "start": "lerna exec --parallel yarn run start",
     "api": "yarn workspace @menhera-tools/api",
     "bot": "yarn workspace @menhera-tools/amandinha",
     "lint": "yarn workspace @menhera-tools/eslint-config",
@@ -34,6 +34,7 @@
     ]
   },
   "devDependencies": {
-    "@menhera-tools/eslint-config": "*"
+    "@menhera-tools/eslint-config": "*",
+    "lerna": "^4.0.0"
   }
 }
