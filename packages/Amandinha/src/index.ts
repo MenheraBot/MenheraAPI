@@ -1,5 +1,8 @@
 /* eslint-disable no-console */
+import startServer from './server/index';
 import Client from './client';
+
+startServer();
 
 const client = new Client({
   partials: ['MESSAGE', 'REACTION'],
