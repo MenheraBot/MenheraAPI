@@ -13,6 +13,7 @@ const startServer = (): void => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const rawBodySaver = (req: any, _res: Response, buf: Buffer, encoding: BufferEncoding) => {
+    logger.info('data Received');
     if (buf && buf.length) {
       req.rawBody = buf.toString(encoding || 'utf8');
     }
