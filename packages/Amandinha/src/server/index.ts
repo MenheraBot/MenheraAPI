@@ -11,7 +11,6 @@ import DefaultController from './Controllers/DefaultController';
 const startServer = (client: WatchClient): void => {
   const app = express();
   const server = Http.createServer(app);
-  const controller = new DefaultController(client)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const rawBodySaver = (req: any, _res: Response, buf: Buffer, encoding: BufferEncoding) => {
@@ -25,7 +24,7 @@ const startServer = (client: WatchClient): void => {
 
   app.use(isAuthorized);
 
-  app.post('/api/v1', controller.ReceivedAction);
+  app.post('/api/v1', (req, res) => DefaultController.ReceivedAction(req, res, client));
 
   app.use(NotFound);
 
