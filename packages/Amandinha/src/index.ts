@@ -6,7 +6,7 @@ const client = new Client({
   intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'],
 });
 
-client.loadCommands(`src/commands`);
+client.loadCommands(`${__dirname}/commands`);
 client.loadEvents(`${__dirname}/events`);
 client
   .login(process.env.TOKEN as string)
