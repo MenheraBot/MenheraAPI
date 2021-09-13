@@ -9,11 +9,10 @@ import CoinflipController from './controllers/CoinflipController';
 import RpgController from './controllers/RpgController';
 
 import isAuthorized from './middlewares/isAuthorized';
-import StatusController from './controllers/StatusController';
 
 const router = Router();
 
-router.get('/unknown', isAuthorized, UsagesController.getAllUsersIdsThatDoNotUseMenheraAnymore)
+router.get('/unknown', isAuthorized, UsagesController.getAllUsersIdsThatDoNotUseMenheraAnymore);
 
 router.get('/activity', ActivityController.random);
 router.get('/activity/all', ActivityController.all);
@@ -35,12 +34,10 @@ router.post('/commands', isAuthorized, StatsController.postCommand);
 
 router.post('/rpg', isAuthorized, RpgController.postBattle);
 
-router.all('/status', StatusController.status);
-
 router.get('/usages/most', isAuthorized, UsagesController.mostUsersAndCommands);
 router.get('/usages/top/command', isAuthorized, UsagesController.topCommands);
 router.get('/usages/top/user', isAuthorized, UsagesController.topUsers);
 router.get('/usages/user', isAuthorized, UsagesController.getUserInfo);
-router.get('/usages/user/delete', isAuthorized, UsagesController.getUserDeleteCommand)
+router.get('/usages/user/delete', isAuthorized, UsagesController.getUserDeleteCommand);
 
 export default router;

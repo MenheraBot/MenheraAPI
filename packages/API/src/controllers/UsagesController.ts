@@ -9,7 +9,10 @@ export default class UsagesController {
     return res.status(200).send(usages);
   }
 
-  static async getAllUsersIdsThatDoNotUseMenheraAnymore(_req: Request, res: Response): Promise<Response> {
+  static async getAllUsersIdsThatDoNotUseMenheraAnymore(
+    _req: Request,
+    res: Response
+  ): Promise<Response> {
     const { rows } = await pool.query('SELECT id FROM users WHERE uses < 10');
     return res.status(200).send({ ids: rows });
   }
@@ -42,11 +45,12 @@ export default class UsagesController {
 
   static async getUserDeleteCommand(req: Request, res: Response): Promise<Response> {
     const { userId } = req.body;
-    if(!userId) return res.sendStatus(400) 
-    const commandsExecuted = await pool.query('SELECT count(*) FROM uses WHERE user_id = $1 AND cmd_id = 272', [
-      userId,
-    ]);
+    if (!userId) return res.sendStatus(400);
+    const commandsExecuted = await pool.query(
+      'SELECT count(*) FROM uses WHERE user_id = $1 AND cmd_id = 272',
+      [userId]
+    );
 
-    return res.status(200).send(commandsExecuted.rows[0])
- }
+    return res.status(200).send(commandsExecuted.rows[0]);
+  }
 }
