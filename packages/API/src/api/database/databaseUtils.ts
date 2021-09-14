@@ -152,13 +152,17 @@ async function ensureHunt(userId: string): Promise<true> {
   return true;
 }
 
-export async function postHunt(userId: string, huntType: string, value: number): Promise<void> {
-  const success = value > 0 ? 1 : 0;
-
+export async function postHunt(
+  userId: string,
+  huntType: string,
+  value: number,
+  success: number,
+  tries: number
+): Promise<void> {
   await ensureHunt(userId);
 
   await pool.query(
-    `UPDATE hunts SET ${huntType}_tries = ${huntType}_tries + 1, ${huntType}_success = ${huntType}_success + ${success}, ${huntType}_hunted = ${huntType}_hunted + ${value} WHERE user_id = $1`,
+    `UPDATE hunts SET ${huntType}_tries = ${huntType}_tries + ${tries}, ${huntType}_success = ${huntType}_success + ${success}, ${huntType}_hunted = ${huntType}_hunted + ${value} WHERE user_id = $1`,
     [userId]
   );
 }
