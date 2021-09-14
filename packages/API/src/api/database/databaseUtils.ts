@@ -145,7 +145,7 @@ export async function postCoinflip(
 }
 
 async function ensureHunt(userId: string): Promise<true> {
-  const has = await pool.query('SELECT user_id FROM hunt WHERE user_id = $1', [userId]);
+  const has = await pool.query('SELECT user_id FROM hunts WHERE user_id = $1', [userId]);
   if (has.rows[0]?.user_id) return true;
 
   await pool.query('INSERT INTO hunts (user_id) VALUES ($1)', [userId]);
