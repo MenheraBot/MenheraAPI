@@ -161,8 +161,6 @@ export async function postHunt(
 ): Promise<void> {
   await ensureHunt(userId);
 
-  console.log(`${huntType}_tries = ${huntType}_tries + ${tries}`);
-
   await pool.query(
     `UPDATE hunts SET ${huntType}_tries = ${huntType}_tries + ${tries}, ${huntType}_success = ${huntType}_success + ${success}, ${huntType}_hunted = ${huntType}_hunted + ${value} WHERE user_id = $1`,
     [userId]
