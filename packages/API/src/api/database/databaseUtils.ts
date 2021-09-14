@@ -3,6 +3,7 @@ import {
   BlackJackStats,
   CoinflipStats,
   commandInterface,
+  HuntStats,
   usagesInterface,
   userInterface,
 } from '../util/types';
@@ -141,4 +142,19 @@ export async function postCoinflip(
   );
   if (result.rows[0].id) return true;
   return false;
+}
+
+export async function postHunt(userId: string, huntType: string, value: number): Promise<void> {
+  const success = value > 0 ? 1 : 0;
+
+  await pool.query(
+    `INSERT INTO hunts (user_id, ${huntType}_tries, ${huntType}_success, ${huntType}_hunted) VALUES ($1, $2, $3, $4)
+     ON CONFLICT(user_id) DO
+     UPDATE SET ${huntType}_tries = ${huntType}_tries + 1, ${huntType}_success = ${huntType}_success + ${success}, ${huntType}_hunted = ${huntType}_hunted + ${value})`,
+    [userId, 1, success, value]
+  );
+}
+
+export async function getUserHuntData(userId: string): Promise<HuntStats> {
+  return (await pool.query('SELECT * FROM hunts WHERE user_id = $1', [userId])).rows[0];
 }
