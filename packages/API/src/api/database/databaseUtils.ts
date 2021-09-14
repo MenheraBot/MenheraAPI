@@ -1,34 +1,13 @@
 /* eslint-disable camelcase */
+import {
+  BlackJackStats,
+  CoinflipStats,
+  commandInterface,
+  HuntStats,
+  usagesInterface,
+  userInterface,
+} from '../util/types';
 import pool from './pool';
-
-interface commandInterface {
-  name: string;
-  usages: number;
-}
-
-interface CoinflipStats {
-  cf_wins: number;
-  cf_loses: number;
-  cf_win_money: number;
-  cf_lose_money: number;
-}
-
-interface BlackJackStats {
-  bj_wins: number;
-  bj_loses: number;
-  bj_win_money: number;
-  bj_lose_money: number;
-}
-
-interface userInterface {
-  id: string;
-  uses: number;
-}
-
-interface usagesInterface {
-  command: commandInterface;
-  user: userInterface;
-}
 
 export async function ensureCommand(commandName: string): Promise<number> {
   const command = await pool.query('SELECT (id) FROM cmds WHERE name = $1', [commandName]);
@@ -82,10 +61,11 @@ export async function getTopUsers(): Promise<Array<userInterface>> {
 export async function addCommand(
   userId: string,
   guildId: string,
-  commandId: number,
+  commandName: string,
   data: number,
   args: string
 ): Promise<void> {
+  const commandId = await ensureCommand(commandName);
   const userIdInDatabase = await ensureUser(userId);
   await pool.query(
     'INSERT INTO uses (user_id, cmd_id, guild_id, date, args) VALUES ($1,$2,$3,$4, $5)',
@@ -112,20 +92,6 @@ export async function getBlackJackStats(userId: string): Promise<BlackJackStats>
   return result.rows[0];
 }
 
-export async function postRpgResult(
-  userId: string,
-  userClass: string,
-  userLevel: number,
-  dungeonLevel: number,
-  death: boolean,
-  date: number
-): Promise<void> {
-  const userIdInDatabase = await ensureUser(userId);
-  await pool.query(
-    'INSERT INTO rpg (user_id, user_class, user_level, dungeon_level, death, date) VALUES ($1, $2, $3, $4, $5, $6)',
-    [userIdInDatabase, userClass, userLevel, dungeonLevel, death, date]
-  );
-}
 export async function postBlackJackGame(
   userId: string,
   didWin: boolean,
@@ -176,4 +142,19 @@ export async function postCoinflip(
   );
   if (result.rows[0].id) return true;
   return false;
+}
+
+export async function postHunt(userId: string, huntType: string, value: number): Promise<void> {
+  const success = value > 0 ? 1 : 0;
+
+  await pool.query(
+    `INSERT INTO hunts (user_id, ${huntType}_tries, ${huntType}_success, ${huntType}_hunted) VALUES ($1, $2, $3, $4)
+     ON CONFLICT(user_id) DO
+     UPDATE SET ${huntType}_tries = ${huntType}_tries + 1, ${huntType}_success = ${huntType}_success + ${success}, ${huntType}_hunted = ${huntType}_hunted + ${value})`,
+    [userId, 1, success, value]
+  );
+}
+
+export async function getUserHuntData(userId: string): Promise<HuntStats> {
+  return (await pool.query('SELECT * FROM hunts WHERE user_id = $1', [userId])).rows[0];
 }

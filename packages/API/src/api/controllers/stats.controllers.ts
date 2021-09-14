@@ -1,6 +1,6 @@
 import { CommandInteractionOption } from 'discord.js';
 import { Request, Response } from 'express';
-import database from '../database/manager';
+import { addCommand } from '../database/databaseUtils';
 
 export default class StatsController {
   private static resolveOptions(options: CommandInteractionOption[]): string {
@@ -20,7 +20,7 @@ export default class StatsController {
     if (!authorId || !guildId || !commandName || !data) {
       return res.sendStatus(400);
     }
-    await database(
+    await addCommand(
       authorId,
       guildId,
       commandName,

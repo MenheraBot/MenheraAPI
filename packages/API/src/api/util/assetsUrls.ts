@@ -310,6 +310,7 @@ const urls = {
     'https://i.imgur.com/qpYkBE5.gif',
     'https://i.imgur.com/5N61jJN.gif',
     'https://i.imgur.com/ZfqcByv.gif',
+    'https://i.imgur.com/0Hf3PDp.gif',
   ],
   resurrect: [
     'https://i.imgur.com/krVf6J7.gif',
@@ -469,6 +470,9 @@ const urls = {
     'https://i.imgur.com/JLTb2R0.png',
     'https://i.imgur.com/7DWBTu8.png',
     'https://i.imgur.com/7FE6ubO.png',
+    'https://i.imgur.com/2xiSJfJ.png',
+    'https://i.imgur.com/SAr7JJ5.png',
+    'https://i.imgur.com/H1HckHa.png',
   ],
   angry: [
     'https://i.imgur.com/EX8v2Ds.gif',
