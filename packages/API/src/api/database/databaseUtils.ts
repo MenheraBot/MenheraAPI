@@ -150,7 +150,7 @@ export async function postHunt(userId: string, huntType: string, value: number):
   await pool.query(
     `INSERT INTO hunts (user_id, ${huntType}_tries, ${huntType}_success, ${huntType}_hunted) VALUES ($1, $2, $3, $4)
      ON CONFLICT(user_id) DO
-     UPDATE SET ${huntType}_tries = ${huntType}_tries + 1, ${huntType}_success = ${huntType}_success + ${success}, ${huntType}_hunted = ${huntType}_hunted + ${value})`,
+     UPDATE SET ${huntType}_tries = ${huntType}_tries + 1, ${huntType}_success = ${huntType}_success + ${success}, ${huntType}_hunted = ${huntType}_hunted + ${value}`,
     [userId, 1, success, value]
   );
 }
