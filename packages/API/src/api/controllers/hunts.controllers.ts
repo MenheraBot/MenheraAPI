@@ -17,6 +17,8 @@ export default class HuntsController {
 
     if (!userId || !huntType || !value || !success || !tries) return res.sendStatus(400);
 
+    console.log(tries);
+
     await postHunt(userId, huntType, value, success, tries);
     return res.sendStatus(201);
   }
