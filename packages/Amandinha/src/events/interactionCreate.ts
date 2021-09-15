@@ -28,7 +28,7 @@ export default class InteractionCreate extends Event {
           .setTitle('Sugestão aceita!')
           .setFooter(oldEmbed.footer?.text ?? 'a')
           .setAuthor(oldEmbed.author?.name ?? 'a', oldEmbed.author?.url ?? 'a');
-        confirmedChannel.send({ embeds: [newEmbed] });
+        confirmedChannel.send({ embeds: [newEmbed] }).catch(e => interaction.channel?.send(e));
         (interaction.message as Message).delete().catch();
       }
       if (interaction.customId.startsWith('NO')) {
