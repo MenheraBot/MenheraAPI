@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import Logger from '@menhera-tools/logger';
 import { ActivityOptions } from 'discord.js';
 import WatchClient from '../client';
 import Event from '../structures/event';
@@ -9,7 +10,7 @@ export default class ReadyEvent extends Event {
   }
 
   async run(): Promise<void> {
-    console.log(' MENHERA WATCH IS READY');
+    Logger.info('Amandinha está recebendo eventos!');
     const status: Array<ActivityOptions> = [
       {
         name: 'Averiguando meu Servidor de suporte',

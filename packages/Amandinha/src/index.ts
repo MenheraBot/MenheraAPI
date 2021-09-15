@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import Logger from '@menhera-tools/logger';
 import Client from './client';
 
 const client = new Client({
@@ -11,7 +12,7 @@ client.loadEvents(`${__dirname}/events`);
 client
   .login(process.env.TOKEN as string)
   .then(() => {
-    console.info('Amandinha ta voando alto!');
+    Logger.info('Amandinha se conectou com a gateway do Discord!');
     /*
      * ============ ONLY UNCOMMENT THIS TO START HTTP SERVER TO INTERACTIONS
      *
@@ -20,6 +21,4 @@ client
      *
      */
   })
-  .catch(e =>
-    console.error(`EITA PORRA, DEU MERDA AO TENTAR SE CONECTAR NO DISCORD! ${e.message}`)
-  );
+  .catch(e => Logger.error(`EITA PORRA, DEU MERDA AO TENTAR SE CONECTAR NO DISCORD! ${e.message}`));
