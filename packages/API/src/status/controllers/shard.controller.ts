@@ -12,6 +12,8 @@ export default class ShardStatusController {
     const { id } = req.params;
     const { memoryUsed, uptime, guilds, unavailable, ping, lastPingAt, members } = req.body.data;
 
+    console.log(id, req.body.data);
+
     if (
       typeof id === 'undefined' ||
       typeof memoryUsed === 'undefined' ||
