@@ -21,7 +21,7 @@ export default class CommandsController {
     const { name } = req.params;
     const { disabled } = req.body;
 
-    console.log(name, disabled);
+    console.log(name, req.body);
 
     if (typeof name === 'undefined' || typeof disabled === 'undefined') return res.sendStatus(400);
 
