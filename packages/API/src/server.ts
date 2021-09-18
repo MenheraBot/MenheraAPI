@@ -16,7 +16,8 @@ const server = http.createServer(app);
 
 const limiter = rateLimit({
   windowMs: 5 * 1000,
-  max: 10,
+  max: 15,
+  skip: (req: Request) => req.headers['user-agent'] === process.env.MENHERA_AGENT,
   handler: (_req: Request, res: Response) => {
     res.status(429).send({ message: 'You are beeing rate limited' });
   },
