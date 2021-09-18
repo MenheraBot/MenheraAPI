@@ -1,5 +1,3 @@
-// import './api/database/MongoDB';
-
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import http from 'http';
