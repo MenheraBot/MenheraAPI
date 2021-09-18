@@ -12,20 +12,6 @@ export default class ShardStatusController {
     const { id } = req.params;
     const { memoryUsed, uptime, guilds, unavailable, ping, lastPingAt, members } = req.body.data;
 
-    console.log(id, req.body.data);
-
-    if (
-      typeof id === 'undefined' ||
-      typeof memoryUsed === 'undefined' ||
-      typeof uptime === 'undefined' ||
-      typeof guilds === 'undefined' ||
-      typeof unavailable === 'undefined' ||
-      typeof ping === 'undefined' ||
-      typeof lastPingAt === 'undefined' ||
-      typeof members === 'undefined'
-    )
-      return res.sendStatus(400);
-
     const data = {
       id: Number(id),
       memoryUsed,
