@@ -9,7 +9,7 @@ router.get('/shard', ShardController.getShardStatus);
 router.put('/shard/:id', isAuthorized, ShardController.updateShardStatus);
 
 router.get('/commands', CommandsController.getCommands);
-router.put('/commands', isAuthorized, CommandsController.createCommand);
+router.post('/commands', isAuthorized, CommandsController.createCommands);
 router.patch('/commands/:name', isAuthorized, CommandsController.editMaintenance);
 
 export default router;

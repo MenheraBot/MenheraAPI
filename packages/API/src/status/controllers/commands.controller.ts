@@ -8,28 +8,11 @@ export default class CommandsController {
     return res.json(commands);
   }
 
-  public static createCommand(req: Request, res: Response): Response {
-    const { name, category, cooldown, description, options, disabled } = req.body;
+  public static createCommands(req: Request, res: Response): Response {
+    const { commands } = req.body;
 
-    if (
-      typeof name === 'undefined' ||
-      typeof category === 'undefined' ||
-      typeof cooldown === 'undefined' ||
-      typeof description === 'undefined' ||
-      typeof options === 'undefined' ||
-      typeof disabled === 'undefined'
-    )
-      return res.sendStatus(400);
-
-    const data = {
-      name,
-      category,
-      cooldown,
-      description,
-      options,
-      disabled,
-    };
-    CommandsManager.getInstance().putCommand(name, data);
+    if (!commands) return res.sendStatus(400);
+    CommandsManager.getInstance().postCommands(commands);
 
     return res.sendStatus(200);
   }

@@ -13,8 +13,13 @@ export default class CommandsManager {
     return Array.from(this.commands.values());
   }
 
-  public putCommand(commandName: string, commandData: ICommandData): void {
-    this.commands.set(commandName, commandData);
+  private clearCommands(): void {
+    this.commands.clear();
+  }
+
+  public postCommands(commands: ICommandData[]): void {
+    this.clearCommands();
+    commands.forEach(a => this.commands.set(a.name, a));
   }
 
   public editMaintenance(commandName: string, disabled: ICommandDisabledData): void {
