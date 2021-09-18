@@ -9,7 +9,7 @@ export default class CommandsController {
   }
 
   public static createCommands(req: Request, res: Response): Response {
-    const { commands } = req.body;
+    const { commands } = req.body.data;
 
     if (!commands) return res.sendStatus(400);
     CommandsManager.getInstance().postCommands(commands);
@@ -19,9 +19,7 @@ export default class CommandsController {
 
   public static async editMaintenance(req: Request, res: Response): Promise<Response> {
     const { name } = req.params;
-    const { disabled } = req.body;
-
-    console.log(name, req.body);
+    const { disabled } = req.body.data;
 
     if (typeof name === 'undefined' || typeof disabled === 'undefined') return res.sendStatus(400);
 

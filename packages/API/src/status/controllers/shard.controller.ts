@@ -10,7 +10,7 @@ export default class ShardStatusController {
 
   public static updateShardStatus(req: Request, res: Response): Response {
     const { id } = req.params;
-    const { memoryUsed, uptime, guilds, unavailable, ping, lastPingAt, members } = req.body;
+    const { memoryUsed, uptime, guilds, unavailable, ping, lastPingAt, members } = req.body.data;
 
     if (
       typeof id === 'undefined' ||
