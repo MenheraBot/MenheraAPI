@@ -21,6 +21,8 @@ export default class CommandsController {
     const { name } = req.params;
     const { disabled } = req.body;
 
+    console.log(name, disabled);
+
     if (typeof name === 'undefined' || typeof disabled === 'undefined') return res.sendStatus(400);
 
     CommandsManager.getInstance().editMaintenance(name, disabled);
