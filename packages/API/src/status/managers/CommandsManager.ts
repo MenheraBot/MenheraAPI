@@ -1,20 +1,26 @@
-import { IShardStatus } from '../utils/types';
+import { ICommandData, ICommandDisabledData } from '../utils/types';
 
 export default class CommandsManager {
   private static instance?: CommandsManager;
 
-  private status: Map<number, IShardStatus>;
+  private commands: Map<string, ICommandData>;
 
   private constructor() {
-    this.status = new Map();
+    this.commands = new Map();
   }
 
-  public getAllShards(): Array<IShardStatus> {
-    return Array.from(this.status.values());
+  public getAllCommands(): Array<ICommandData> {
+    return Array.from(this.commands.values());
   }
 
-  public putShard(shardId: number, shardData: IShardStatus): void {
-    this.status.set(shardId, shardData);
+  public putCommand(commandName: string, commandData: ICommandData): void {
+    this.commands.set(commandName, commandData);
+  }
+
+  public editMaintenance(commandName: string, disabled: ICommandDisabledData): void {
+    const existingData = this.commands.get(commandName);
+    existingData.disabled = disabled;
+    this.commands.set(commandName, existingData);
   }
 
   static getInstance(): CommandsManager {

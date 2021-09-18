@@ -1,3 +1,5 @@
+import { ApplicationCommandOptionData } from 'discord.js';
+
 export interface IShardStatus {
   id: number;
   memoryUsed: number;
@@ -7,4 +9,18 @@ export interface IShardStatus {
   ping: number;
   lastPingAt: number;
   members: number;
+}
+
+export interface ICommandDisabledData {
+  isDisabled: boolean;
+  reason: string | null;
+}
+
+export interface ICommandData {
+  name: string;
+  category: string;
+  cooldown: number;
+  description: string;
+  options: ApplicationCommandOptionData[];
+  disabled: ICommandDisabledData;
 }
