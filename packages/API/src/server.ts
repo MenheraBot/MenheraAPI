@@ -23,14 +23,7 @@ const limiter = rateLimit({
   },
 });
 
-app.use(
-  cors({
-    methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'DELETE', 'PUT'],
-    origin: true,
-    maxAge: 86400,
-    preflightContinue: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', 1);
