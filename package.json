@@ -1,6 +1,6 @@
 {
   "name": "menhera-tools",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Um repositório com ferramentas para auxiliar a MenheraBot",
   "private": true,
   "scripts": {
