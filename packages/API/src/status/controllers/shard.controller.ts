@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import ShardStatus from '../managers/ShardStatusManager';
+import { IShardStatus } from '../utils/types';
 
 export default class ShardStatusController {
   public static async getShardStatus(_req: Request, res: Response): Promise<Response> {
@@ -9,20 +10,22 @@ export default class ShardStatusController {
   }
 
   public static updateShardStatus(req: Request, res: Response): Response {
-    const { id } = req.params;
-    const { memoryUsed, uptime, guilds, unavailable, ping, lastPingAt, members } = req.body.data;
+    const { shards } = req.body.data;
 
-    const data = {
-      id: Number(id),
-      memoryUsed,
-      uptime,
-      guilds,
-      unavailable,
-      ping,
-      lastPingAt,
-      members,
-    };
-    ShardStatus.getInstance().putShard(Number(id), data);
+    shards.forEach((shard: IShardStatus) => {
+      const { memoryUsed, uptime, guilds, unavailable, ping, lastPingAt, members, id } = shard;
+      const data = {
+        id: Number(id),
+        memoryUsed,
+        uptime,
+        guilds,
+        unavailable,
+        ping,
+        lastPingAt,
+        members,
+      };
+      ShardStatus.getInstance().putShard(Number(id), data);
+    });
 
     return res.sendStatus(200);
   }
