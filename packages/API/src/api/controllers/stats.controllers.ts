@@ -1,6 +1,7 @@
 import { CommandInteractionOption } from 'discord.js';
 import { Request, Response } from 'express';
 import { addCommand } from '../database/databaseUtils';
+import CommandExecutes from '../util/commandsExecuted';
 
 export default class StatsController {
   private static resolveOptions(options: CommandInteractionOption[]): string {
@@ -16,10 +17,13 @@ export default class StatsController {
   }
 
   public static async postCommand(req: Request, res: Response): Promise<Response> {
-    const { authorId, guildId, commandName, data, args } = req.body;
+    const { authorId, guildId, commandName, data, args, shardId } = req.body;
     if (!authorId || !guildId || !commandName || !data) {
       return res.sendStatus(400);
     }
+
+    CommandExecutes.getInstance().addCommand(shardId ?? 0, commandName);
+
     await addCommand(
       authorId,
       guildId,
