@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import CommandExecutes from '../../api/util/commandsExecuted';
 import CommandsManager from '../managers/CommandsManager';
 
 export default class CommandsController {
@@ -6,6 +7,10 @@ export default class CommandsController {
     const commands = CommandsManager.getInstance().getAllCommands();
 
     return res.json(commands);
+  }
+
+  public static async getCommandsUsages(_req: Request, res: Response): Promise<Response> {
+    return res.send(CommandExecutes.getInstance().getExecutedCommands());
   }
 
   public static createCommands(req: Request, res: Response): Response {
