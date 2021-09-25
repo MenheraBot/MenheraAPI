@@ -17,7 +17,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@menhera-tools/execute-webhook": "*",
     "@menhera-tools/logger": "*",
     "cors": "^2.8.5",
     "discord.js": "^13.0.0",

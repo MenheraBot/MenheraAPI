@@ -26,9 +26,7 @@ Este repositório está dividido em diversos pacotes
 - [Amandinha](#--Amandinha)
 - [Menhera API](#--Menhera-API)
 - [Eslint Config](#--Eslint-Config)
-- [Execute Webhook](#--Execute-Webhook)
 - [Logger](#--Logger)
-- [Menhera Dashboard](#--Menhera-Dashboard)
 
 ## [🤖 | Amandinha](/packages/Amandinha)
 
@@ -61,14 +59,6 @@ Os arquivos de configuração do lint para a padronização dos arquivos de todo
 
 - [eslint](https://eslint.org/)
 
-## [🌐 | Execute Webhook](/packages/execute-webhook)
-
-Pacote com os types dos webhooks do servidor de suporte da Menhera. Feito por [Tsugami](https://github.com/Tsugami)
-
-#### 🔨 • Feito com
-
-- [axios](https://www.npmjs.com/package/axios)
-
 ## [📟 | Logger](/packages/logger)
 
 Um pacote para melhorar os logs das aplicações de todos os outros pacotes
@@ -76,14 +66,6 @@ Um pacote para melhorar os logs das aplicações de todos os outros pacotes
 #### 🔨 • Feito com
 
 - [chalk](https://www.npmjs.com/package/chalk)
-
-## [💻 | Menhera Dashboard](/packages/MenheraDashboard)
-
-Dashboard visual para gerenciamento das atividades da Menhera
-
-#### 🔨 • Feito com
-
-- [react](https://pt-br.reactjs.org/)
 
 ## 💖 | Contribuidores
 
