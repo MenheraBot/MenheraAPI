@@ -25,7 +25,9 @@ export default class ShardStatus {
         .slice(0, 4);
       return {
         ...a,
-        executedCommands: commands[a.id].commands.reduce((e, f) => e + f.uses, 0),
+        executedCommands: commands
+          .find(j => j.shardId === a.id)
+          .commands.reduce((e, f) => e + f.uses, 0),
         top: top5shardCommands,
       };
     });
