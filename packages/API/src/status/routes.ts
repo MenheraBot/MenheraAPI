@@ -11,5 +11,6 @@ router.put('/shard/:id', isAuthorized, ShardController.updateShardStatus);
 router.get('/commands', CommandsController.getCommands);
 router.post('/commands', isAuthorized, CommandsController.createCommands);
 router.patch('/commands/:name', isAuthorized, CommandsController.editMaintenance);
+router.get('/commands/uses', CommandsController.getCommandsUsages);
 
 export default router;
