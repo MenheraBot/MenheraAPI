@@ -5,8 +5,8 @@ import CommandsController from './controllers/commands.controller';
 
 const router = Router();
 
-router.get('/shard', ShardController.getShardStatus);
-router.put('/shard', isAuthorized, ShardController.updateShardStatus);
+router.get('/shards', ShardController.getShardStatus);
+router.put('/shards', isAuthorized, ShardController.updateShardStatus);
 
 router.get('/commands', CommandsController.getCommands);
 router.post('/commands', isAuthorized, CommandsController.createCommands);
