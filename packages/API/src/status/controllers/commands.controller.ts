@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import CommandExecutes from '../../api/util/commandsExecuted';
+import CommandExecutes from '../managers/CommandsExecuted';
 import CommandsManager from '../managers/CommandsManager';
 
 export default class CommandsController {

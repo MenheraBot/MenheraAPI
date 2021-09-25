@@ -1,4 +1,4 @@
-import CommandExecutes from '../../api/util/commandsExecuted';
+import CommandExecutes from './CommandsExecuted';
 import { IShardStatus } from '../utils/types';
 
 export default class ShardStatus {

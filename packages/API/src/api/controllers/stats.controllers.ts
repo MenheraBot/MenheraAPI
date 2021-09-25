@@ -1,7 +1,7 @@
 import { CommandInteractionOption } from 'discord.js';
 import { Request, Response } from 'express';
 import { addCommand } from '../database/databaseUtils';
-import CommandExecutes from '../util/commandsExecuted';
+import CommandExecutes from '../../status/managers/CommandsExecuted';
 
 export default class StatsController {
   private static resolveOptions(options: CommandInteractionOption[]): string {
