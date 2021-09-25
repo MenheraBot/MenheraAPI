@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionData } from 'discord.js';
 
-export interface IShardStatus {
+export interface IShardStatus extends Object {
   id: number;
   memoryUsed: number;
   uptime: number;
