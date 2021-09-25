@@ -14,7 +14,6 @@
     "packages/**/*.js"
   ],
   "references": [
-      { "path": "packages/logger" },
-      { "path": "packages/execute-webhook" }
+      { "path": "packages/logger" }
   ]
 }

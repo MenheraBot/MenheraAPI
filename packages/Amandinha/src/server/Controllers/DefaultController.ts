@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable consistent-return */
-import WatchClient from 'client';
 import { Request, Response } from 'express';
+import WatchClient from '../../client';
 
 export default class DefaultController {
   public static async ReceivedAction(

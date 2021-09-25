@@ -2,7 +2,7 @@ import express, { Response } from 'express';
 import cors from 'cors';
 import Http from 'http';
 import logger from '@menhera-tools/logger';
-import WatchClient from 'client';
+import WatchClient from '../client';
 
 import NotFound from './middlewares/NotFound';
 import isAuthorized from './middlewares/isAuthorized';
