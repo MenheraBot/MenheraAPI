@@ -20,7 +20,7 @@ export default class ShardStatus {
       if (commands.findIndex(l => l.shardId === a.id) === -1)
         return { ...a, executedCommands: 0, top: [] };
       const top5shardCommands = commands
-        .find(a[a.id])
+        .find(b => b.shardId === a.id)
         .commands.sort((c, d) => c.uses - d.uses)
         .slice(0, 4);
       return {
