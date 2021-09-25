@@ -32,4 +32,9 @@ export default class CommandsController {
 
     return res.sendStatus(200);
   }
+
+  public static async clearExecutions(_: Request, res: Response): Promise<Response> {
+    CommandExecutes.getInstance().clearCommandsUsage();
+    return res.sendStatus(200);
+  }
 }

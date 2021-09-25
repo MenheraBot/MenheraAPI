@@ -12,5 +12,6 @@ router.get('/commands', CommandsController.getCommands);
 router.post('/commands', isAuthorized, CommandsController.createCommands);
 router.patch('/commands/:name', isAuthorized, CommandsController.editMaintenance);
 router.get('/commands/uses', CommandsController.getCommandsUsages);
+router.delete('/commands/uses', CommandsController.clearExecutions);
 
 export default router;
