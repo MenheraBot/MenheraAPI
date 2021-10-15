@@ -490,6 +490,25 @@ const urls = {
     'https://i.imgur.com/ZpSIKEv.gif',
     'https://i.imgur.com/1yw8Ui0.gif',
   ],
+  cheek: [
+    'https://i.imgur.com/n52hJY6.gif',
+    'https://i.imgur.com/X3rA9Kx.gif',
+    'https://i.imgur.com/w73LSaZ.gif',
+    'https://i.imgur.com/AV1kJBO.gif',
+    'https://i.imgur.com/HdPogZT.gif',
+    'https://i.imgur.com/MmfWshY.gif',
+    'https://i.imgur.com/5z1ZMJq.gif',
+    'https://i.imgur.com/x9t7NH5.gif',
+    'https://i.imgur.com/kKMCZEi.gif',
+    'https://i.imgur.com/dJMgq6W.gif',
+    'https://i.imgur.com/EJSuFch.gif',
+    'https://i.imgur.com/bOgxsVM.gif',
+    'https://i.imgur.com/Y4v45ZE.gif',
+    'https://i.imgur.com/DfRuO5Z.gif',
+    'https://i.imgur.com/umbpNr8.gif',
+    'https://i.imgur.com/h0mv5LV.gif',
+    'https://i.imgur.com/uRg3gAY.gif',
+  ],
 };
 
 export default urls;
