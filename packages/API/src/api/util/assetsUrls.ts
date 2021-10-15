@@ -164,6 +164,7 @@ const urls = {
     'https://i.imgur.com/QRr6zD4.gif',
     'https://i.imgur.com/b3DeNsk.gif',
     'https://i.imgur.com/wfPey7f.gif',
+    'https://i.imgur.com/5oGCtMX.gif',
     'https://i.imgur.com/jrY7j2q.gif',
     'https://i.imgur.com/L35jwgH.gif',
     'https://i.imgur.com/l9jq01c.gif',
@@ -341,6 +342,7 @@ const urls = {
     'https://i.imgur.com/YIBdXeg.gif',
     'https://i.imgur.com/jPiLZZY.gif',
     'https://i.imgur.com/sFmjxAn.gif',
+    'https://i.imgur.com/5oGCtMX.gif',
     'https://i.imgur.com/1aU6ban.gif',
     'https://i.imgur.com/0nEZ5ms.gif',
     'https://i.imgur.com/edQ31PR.gif',
@@ -359,6 +361,7 @@ const urls = {
     'https://i.imgur.com/OdUhbx0.gif',
     'https://i.imgur.com/JQYACo7.gif',
     'https://i.imgur.com/RJZVYPh.gif',
+    'https://i.imgur.com/gdoay7n.gif',
   ],
   slap: [
     'https://i.imgur.com/XqtlhuZ.gif',
