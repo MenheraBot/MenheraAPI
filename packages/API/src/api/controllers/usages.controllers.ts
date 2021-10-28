@@ -17,6 +17,8 @@ export default class UsagesController {
   static async getInactiveUsers(req: Request, res: Response): Promise<Response> {
     const { users } = req.body;
 
+    console.log(users);
+
     const data = await getInactiveUsersLastCommand(users);
 
     return res.status(200).json(data);
