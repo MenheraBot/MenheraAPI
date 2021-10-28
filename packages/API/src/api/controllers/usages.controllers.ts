@@ -1,12 +1,25 @@
 /* eslint-disable no-param-reassign */
 import { Request, Response } from 'express';
-import { getMostUserAndCommand, getTopCommands, getTopUsers } from '../database/databaseUtils';
+import {
+  getInactiveUsersLastCommand,
+  getMostUserAndCommand,
+  getTopCommands,
+  getTopUsers,
+} from '../database/databaseUtils';
 import pool from '../database/pool';
 
 export default class UsagesController {
   static async mostUsersAndCommands(_req: Request, res: Response): Promise<Response> {
     const usages = await getMostUserAndCommand();
     return res.status(200).send(usages);
+  }
+
+  static async getInactiveUsers(req: Request, res: Response): Promise<Response> {
+    const { users } = req.body;
+
+    const data = await getInactiveUsersLastCommand(users);
+
+    return res.status(200).json(data);
   }
 
   static async getAllUsersIdsThatDoNotUseMenheraAnymore(

@@ -28,6 +28,7 @@ router.post('/commands', StatsController.postCommand);
 router.get('/hunt', HuntsController.getUserInfo);
 router.post('/hunt', HuntsController.postHuntMade);
 
+router.get('/usages/inactive', UsagesController.getInactiveUsers);
 router.get('/usages/most', UsagesController.mostUsersAndCommands);
 router.get('/usages/top/command', UsagesController.topCommands);
 router.get('/usages/top/user', UsagesController.topUsers);
