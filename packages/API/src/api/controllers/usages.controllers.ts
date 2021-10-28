@@ -15,7 +15,7 @@ export default class UsagesController {
   }
 
   static async getInactiveUsers(req: Request, res: Response): Promise<Response> {
-    const { users } = req.body;
+    const { users } = req.body.data;
 
     console.log(users);
 
