@@ -27,6 +27,7 @@
 | POST   | `/api/commands`           | Posta uma execução de comando                                            |
 | GET    | `/api/hunt`               | Retorna os status de caçada do usuário                                   |
 | POST   | `/api/hunt`               | Posta uma execução do comando hunt                                       |
+| GET    | `/api/usages/inactive`    | Retorna o top usuários que estão inativos por mais de uma semana         |
 | GET    | `/api/usages/most`        | Retorna o comando que mais foi usado, e o usuário que mais usou comandos |
 | GET    | `/api/usages/top/command` | Retorna o top 10 comandos mais usados                                    |
 | GET    | `/api/usages/top/user`    | Retorna o top 10 usuários que mais usaram comandos                       |
