@@ -171,3 +171,14 @@ export async function postHunt(
 export async function getUserHuntData(userId: string): Promise<HuntStats> {
   return (await pool.query('SELECT * FROM hunts WHERE user_id = $1', [userId])).rows[0];
 }
+
+export async function getInactiveUsersLastCommand(
+  users: string[] = []
+): Promise<{ user: string; date: number }[]> {
+  const results = await pool.query(
+    'SELECT lc.user_id, lc.date FROM uses lc LEFT JOIN uses nc ON lc.user_id = nc.user_id AND lc.date > nc.date WHERE (nc.date IS NULL) AND (lc.date < $1) AND (lc.user_id IN $2) ORDER BY lc.date DESC',
+    [Date.now() - 604800000, users]
+  );
+
+  return results.rows;
+}
