@@ -12,40 +12,40 @@ export default ({ user }: { user: User }): JSX.Element => (
         </Heading>
         <Flex flexDir="column" align="flex-start" justifyContent="center">
           <Flex className="sidebar-items">
-            <Link>
-              <Icon as={FiHome} fontSize="2xl" className="active-icon"></Icon>{' '}
+            <Link href="/dashboard/home">
+              <Icon as={FiHome} fontSize="2xl" className="active-icon"></Icon>
             </Link>
-            <Link _hover={{ textDecor: 'none' }}>
+            <Link href="/dashboard/home" _hover={{ textDecor: 'none' }}>
               <Text className="active">Home</Text>
             </Link>
           </Flex>
         </Flex>
         <Flex flexDir="column" align="flex-start" justifyContent="center">
           <Flex className="sidebar-items">
-            <Link>
-              <Icon as={FiMessageSquare} fontSize="2xl"></Icon>{' '}
+            <Link href="/dashboard/webhook">
+              <Icon as={FiMessageSquare} fontSize="2xl"></Icon>
             </Link>
-            <Link _hover={{ textDecor: 'none' }}>
+            <Link href="/dashboard/webhook" _hover={{ textDecor: 'none' }}>
               <Text>Webhook</Text>
             </Link>
           </Flex>
         </Flex>
         <Flex flexDir="column" align="flex-start" justifyContent="center">
           <Flex className="sidebar-items">
-            <Link>
-              <Icon as={FiActivity} fontSize="2xl"></Icon>{' '}
+            <Link href="/dashboard/performance">
+              <Icon as={FiActivity} fontSize="2xl"></Icon>
             </Link>
-            <Link _hover={{ textDecor: 'none' }}>
+            <Link href="/dashboard/performance" _hover={{ textDecor: 'none' }}>
               <Text>Performance</Text>
             </Link>
           </Flex>
         </Flex>
         <Flex flexDir="column" align="flex-start" justifyContent="center">
           <Flex className="sidebar-items">
-            <Link>
-              <Icon as={FiCloud} fontSize="2xl"></Icon>{' '}
+            <Link href="/dashboard/http">
+              <Icon as={FiCloud} fontSize="2xl"></Icon>
             </Link>
-            <Link _hover={{ textDecor: 'none' }}>
+            <Link href="/dashboard/http" _hover={{ textDecor: 'none' }}>
               <Text>HTTP</Text>
             </Link>
           </Flex>
