@@ -1,0 +1,55 @@
+name: Lint
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    name: Perform ESLint check on node v16
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js v16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.6.0
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install deps
+        run: |
+          node -v
+          yarn -v
+          yarn --frozen-lockfile
+        env:
+          CI: true
+          NODE_OPTIONS: --max-old-space-size=4096
+
+      - name: '[LOGGER] Build'
+        run: yarn logger build
+        env:
+          CI: true
+
+      - name: '[BOT] Build'
+        run: yarn bot build:test
+        env:
+          CI: true
+
+      - name: '[API] Build'
+        run: yarn api build:test
+        env:
+          CI: true
+
+      - name: 'Run linter'
+        run: yarn run:lint
+        env:
+          CI: true

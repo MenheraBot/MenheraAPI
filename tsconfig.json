@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+  },
+  "exclude": [
+    "ecosystem.config.js",
+    "packages/**/dist",
+    "packages/**/*.js"
+  ],
+  "references": [
+      { "path": "packages/logger" }
+  ]
+}
