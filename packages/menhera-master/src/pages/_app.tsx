@@ -12,6 +12,7 @@ const Auth = ({ children }: { children: JSX.Element }): JSX.Element => {
   }, [isUser, loading]);
 
   if (isUser) {
+    console.log(session.user);
     return children;
   }
 
