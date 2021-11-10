@@ -1,6 +1,9 @@
+import '../styles/globals.css';
+
 import App, { AppContext, AppProps } from 'next/app';
 
 import { Provider, signIn, useSession } from 'next-auth/client';
+import { ChakraProvider } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 const Auth = ({ children }: { children: JSX.Element }): JSX.Element => {
@@ -11,19 +14,22 @@ const Auth = ({ children }: { children: JSX.Element }): JSX.Element => {
     if (!isUser) signIn();
   }, [isUser, loading]);
 
-  if (isUser) {
-    console.log(session.user);
-    return children;
-  }
+  if (isUser) return children;
 
-  return <div>HUT UP AND TAKE MY MONEY</div>;
+  return (
+    <div>
+      <h1>Loading sexo</h1>
+    </div>
+  );
 };
 
 const Application = ({ Component, pageProps }: AppProps): JSX.Element => {
   return (
     <Provider session={pageProps.session}>
       <Auth>
-        <Component {...pageProps} />
+        <ChakraProvider>
+          <Component {...pageProps} />
+        </ChakraProvider>
       </Auth>
     </Provider>
   );
