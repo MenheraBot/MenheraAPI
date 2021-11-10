@@ -10,6 +10,7 @@
     "bot": "yarn workspace @menhera-tools/amandinha",
     "lint": "yarn workspace @menhera-tools/eslint-config",
     "logger": "yarn workspace @menhera-tools/logger",
+    "master": "yarn workspace @menhera-tools/menhera-master",
     "run:lint": "eslint --fix ."
   },
   "repository": {

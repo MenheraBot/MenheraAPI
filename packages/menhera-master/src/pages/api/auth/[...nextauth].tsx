@@ -8,4 +8,7 @@ export default NextAuth({
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
     }),
   ],
+  jwt: {
+    signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
+  },
 });
