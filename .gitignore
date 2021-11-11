@@ -1,7 +1,9 @@
 node_modules/
+.yarn/
 config.json
 .env
 packages/**/dist
 yarn-error.log
 build/
 *.http
+.pnp*

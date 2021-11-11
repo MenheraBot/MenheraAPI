@@ -1,13 +1,14 @@
 {
   "name": "@menhera-tools/menhera-master",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "main": "dist/server.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "docker": "docker build . -t menhera_master:$npm_package_version && docker run -d --restart unless-stopped -p 35425:35425 --name MenheraMaster menhera_master:$npm_package_version"
+    "docker": "docker build -t menheramaster:$npm_package_version . && docker run -d --restart unless-stopped -p 35425:35425 --name MenheraMaster menheramaster:$npm_package_version",
+    "docker:win": "docker build -t menhera_master:%npm_package_version% . && docker run -d --restart unless-stopped -p 35425:35425 --name MenheraMaster menhera_master:%npm_package_version%"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.12",
