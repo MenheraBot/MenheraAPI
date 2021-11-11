@@ -27,6 +27,7 @@ a {
 .sidebar-items {
   color: gray;
   font-size: large;
+  margin-bottom: 1.5em;
 }
 
 .sidebar-items p {
@@ -40,6 +41,7 @@ a {
   color: #9c5ddb;
 }
 
-.sidebar-items:not(:last-child) {
-  margin-bottom: 1.5em;
+.discord-messages {
+  min-height: 260px;
+  border-radius: 25px;
 }
