@@ -23,10 +23,8 @@ import { useForm } from 'react-hook-form';
 import { FiBell, FiXCircle, FiCheck } from 'react-icons/fi';
 import { DiscordMessage, DiscordMessages, DiscordMention } from '@danktuary/react-discord-message';
 import { useState } from 'react';
+import axios from 'axios';
 import DashboardLayout from '../../components/dashboard/Layout';
-import webhook from '../../services/webhook';
-
-//
 
 type Props = {
   session: Session | null;
@@ -59,20 +57,19 @@ export default ({ session }: Props): JSX.Element => {
     message_id: string;
   }): Promise<void> => {
     const parsedContent = `**${values.title}**\n\n${values.description}${
-      mention ? `\n\n<@&${process.env.STATUS_ROLE_ID}>` : ''
+      mention ? `\n\n<@&${process.env.NEXT_PUBLIC_STATUS_ROLE_ID}>` : ''
     }\n\n**STATUS:** ${availableStatus[status as keyof typeof availableStatus]}`;
 
-    console.log(messageId);
+    const res = await axios.post(`/api/webhook`, { content: parsedContent, messageId });
 
-    const res = await webhook(parsedContent, messageId);
-
-    /*
     toast({
-      title: res.data.code < 400 ? 'Webhook Executado com Sucesso' : 'Erro ao executar',
-      status: res.data.code < 400 ? 'success' : 'error',
+      title:
+        res?.data?.code < 400
+          ? 'Webhook Executado com Sucesso'
+          : `Erro ao executar (${res.data.code})`,
+      status: res?.data?.code < 400 ? 'success' : 'error',
       duration: 5000,
-      description: res.data.data,
-    }); */
+    });
   };
 
   return (

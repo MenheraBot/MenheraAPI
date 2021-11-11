@@ -2,6 +2,7 @@
   "name": "@menhera-tools/menhera-master",
   "version": "0.0.1",
   "private": true,
+  "main": "dist/server.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
