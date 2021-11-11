@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "docker": "docker build . -t menhera_master:$npm_package_version && docker run -d --restart unless-stopped -p 35425:35425 --name MenheraMaster menhera_master:$npm_package_version"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.12",
