@@ -1,4 +1,4 @@
-/* eslint-disable no-alert */
+/* eslint-disable camelcase */
 import {
   Stack,
   Box,
@@ -10,10 +10,11 @@ import {
   Select,
   FormHelperText,
   Text,
+  useToast,
   FormControl,
   Input,
   Button,
-  useControllableState,
+  useBoolean,
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { Session } from 'next-auth';
@@ -23,6 +24,9 @@ import { FiBell, FiXCircle, FiCheck } from 'react-icons/fi';
 import { DiscordMessage, DiscordMessages, DiscordMention } from '@danktuary/react-discord-message';
 import { useState } from 'react';
 import DashboardLayout from '../../components/dashboard/Layout';
+import webhook from '../../services/webhook';
+
+//
 
 type Props = {
   session: Session | null;
@@ -34,24 +38,41 @@ export default ({ session }: Props): JSX.Element => {
     register,
     formState: { errors, isSubmitting },
   } = useForm();
+  const toast = useToast();
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [status, setStatus] = useState('');
   const [messageId, setMessageId] = useState('');
-  const [mention, setMention] = useControllableState({ defaultValue: false });
-
-  const onSubmit = (values: unknown): void => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-    }, 3000);
-  };
+  const [mention, setMention] = useBoolean(false);
 
   const availableStatus = {
     programmed: '🔵 PROGRAMADO',
     end: '🟢 FINALIZADO',
     stopped: '🔴 PARADO',
     ongoing: '🟡 EM ANDAMENTO',
+  };
+
+  const onSubmit = async (values: {
+    title: string;
+    description: string;
+    message_id: string;
+  }): Promise<void> => {
+    const parsedContent = `**${values.title}**\n\n${values.description}${
+      mention ? `\n\n<@&${process.env.STATUS_ROLE_ID}>` : ''
+    }\n\n**STATUS:** ${availableStatus[status as keyof typeof availableStatus]}`;
+
+    console.log(messageId);
+
+    const res = await webhook(parsedContent, messageId);
+
+    /*
+    toast({
+      title: res.data.code < 400 ? 'Webhook Executado com Sucesso' : 'Erro ao executar',
+      status: res.data.code < 400 ? 'success' : 'error',
+      duration: 5000,
+      description: res.data.data,
+    }); */
   };
 
   return (
@@ -116,7 +137,7 @@ export default ({ session }: Props): JSX.Element => {
                   <Button
                     colorScheme={mention ? 'green' : 'pink'}
                     leftIcon={!mention ? <FiXCircle /> : <FiCheck />}
-                    onClick={() => setMention(!mention)}
+                    onClick={setMention.toggle}
                   >
                     Mencionar?
                   </Button>
