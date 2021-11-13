@@ -36,6 +36,5 @@
   "devDependencies": {
     "@menhera-tools/eslint-config": "*",
     "lerna": "^4.0.0"
-  },
-  "packageManager": "yarn@3.1.0"
+  }
 }

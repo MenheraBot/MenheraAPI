@@ -1,6 +1,6 @@
 {
   "name": "@menhera-tools/menhera-master",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "main": "dist/server.js",
   "scripts": {
@@ -8,8 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lockgen": "generate-lockfile --lockfile ../../yarn.lock --package package.json --write yarn.lock --force",
-    "docker": "docker build -t menheramaster:$npm_package_version . && docker run -d --restart unless-stopped -p 35425:35425 --name MenheraMaster menheramaster:$npm_package_version",
-    "docker:win": "docker build -t menheramaster:%npm_package_version% . && docker run -d --restart unless-stopped -p 35425:35425 --name MenheraMaster menheramaster:%npm_package_version%"
+    "docker": "yarn lockgen && docker build -t menheramaster:$npm_package_version . && docker run -d --restart unless-stopped -p 35425:35425 --name MenheraMaster menheramaster:$npm_package_version",
+    "docker:win": "yarn lockgen && docker build -t menheramaster:%npm_package_version% . && docker run -d --restart unless-stopped -p 35425:35425 --name MenheraMaster menheramaster:%npm_package_version%"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.12",
