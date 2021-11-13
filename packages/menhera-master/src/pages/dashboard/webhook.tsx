@@ -57,7 +57,7 @@ export default ({ session }: Props): JSX.Element => {
     message_id: string;
   }): Promise<void> => {
     const parsedContent = `**${values.title}**\n\n${values.description}${
-      mention ? `\n\n<@&${process.env.NEXT_PUBLIC_STATUS_ROLE_ID}>` : ''
+      mention ? `\n\n<@&758706770675105802>` : ''
     }\n\n**STATUS:** ${availableStatus[status as keyof typeof availableStatus]}`;
 
     const res = await axios.post(`/api/webhook`, { content: parsedContent, messageId });

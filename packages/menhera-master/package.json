@@ -1,6 +1,6 @@
 {
   "name": "@menhera-tools/menhera-master",
-  "version": "1.0.1",
+  "version": "1.0.7",
   "private": true,
   "main": "dist/server.js",
   "scripts": {
