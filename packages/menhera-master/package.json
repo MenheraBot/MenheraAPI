@@ -1,10 +1,10 @@
 {
   "name": "@menhera-tools/menhera-master",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "private": true,
   "main": "dist/server.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port=35425",
     "build": "next build",
     "start": "next start",
     "lockgen": "generate-lockfile --lockfile ../../yarn.lock --package package.json --write yarn.lock --force",
