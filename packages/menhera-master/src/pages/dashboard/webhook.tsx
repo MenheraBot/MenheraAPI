@@ -16,9 +16,7 @@ import {
   Button,
   useBoolean,
 } from '@chakra-ui/react';
-import { GetServerSideProps } from 'next';
-import { Session } from 'next-auth';
-import { getSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 import { useForm } from 'react-hook-form';
 import { FiBell, FiXCircle, FiCheck } from 'react-icons/fi';
 import { DiscordMessage, DiscordMessages, DiscordMention } from '@danktuary/react-discord-message';
@@ -26,17 +24,14 @@ import { useState } from 'react';
 import axios from 'axios';
 import DashboardLayout from '../../components/dashboard/Layout';
 
-type Props = {
-  session: Session | null;
-};
-
-export default ({ session }: Props): JSX.Element => {
+export default (): JSX.Element => {
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm();
   const toast = useToast();
+  const [session] = useSession();
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
@@ -57,7 +52,7 @@ export default ({ session }: Props): JSX.Element => {
     message_id: string;
   }): Promise<void> => {
     const parsedContent = `**${values.title}**\n\n${values.description}${
-      mention ? `\n\n<@&${process.env.NEXT_PUBLIC_STATUS_ROLE_ID}>` : ''
+      mention ? `\n\n<@&758706770675105802>` : ''
     }\n\n**STATUS:** ${availableStatus[status as keyof typeof availableStatus]}`;
 
     const res = await axios.post(`/api/webhook`, { content: parsedContent, messageId });
@@ -213,12 +208,4 @@ export default ({ session }: Props): JSX.Element => {
       </Stack>
     </DashboardLayout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
-  return {
-    props: {
-      session: await getSession(ctx),
-    },
-  };
 };

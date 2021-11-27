@@ -1,13 +1,15 @@
 {
   "name": "@menhera-tools/menhera-master",
-  "version": "0.0.1",
+  "version": "1.1.0",
   "private": true,
   "main": "dist/server.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port=35425",
     "build": "next build",
     "start": "next start",
-    "docker": "docker build . -t menhera_master:$npm_package_version && docker run -d --restart unless-stopped -p 35425:35425 --name MenheraMaster menhera_master:$npm_package_version"
+    "lockgen": "generate-lockfile --lockfile ../../yarn.lock --package package.json --write yarn.lock --force",
+    "docker": "yarn lockgen && docker build -t menheramaster:$npm_package_version . && docker run -d --restart unless-stopped -p 35425:35425 --name MenheraMaster menheramaster:$npm_package_version",
+    "docker:win": "yarn lockgen && docker build -t menheramaster:%npm_package_version% . && docker run -d --restart unless-stopped -p 35425:35425 --name MenheraMaster menheramaster:%npm_package_version%"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.12",
@@ -24,10 +26,9 @@
     "react-icons": "^4.3.1"
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0",
-    "@types/next-auth": "^3.15.0",
     "@types/node": "^16.11.7",
     "@types/react": "^17.0.34",
+    "generate-lockfile": "^0.0.11",
     "typescript": "^4.4.4"
   }
 }
