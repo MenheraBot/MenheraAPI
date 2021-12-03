@@ -61,7 +61,7 @@ const makeCheck = () => {
     }
 
     if (user.stopStreak < Date.now()) {
-      AwardCooldown.set(userId, Date.now() + 1000 * 60 * 1);
+      AwardCooldown.set(userId, Date.now() + 1000 * 60 * 3);
       const totalAward = Math.floor(
         Math.random() * user.totalStreakMessageLenght.reduce((p, c) => p + c, 0) +
           user.sequence * 20
@@ -70,7 +70,11 @@ const makeCheck = () => {
       makeRequest(totalAward, userId);
 
       (user.channelToAnnouce as ThreadChannel).send({
-        content: `<@${userId}> ganhou **${totalAward}** :star: por conversar aqui UwU`,
+        content: `<@${user.channelToAnnouce?.guild.members
+          .fetch(userId)
+          .then(
+            a => a.nickname ?? a.user.username
+          )}> ganhou **${totalAward}** :star: por conversar aqui UwU`,
       });
 
       Awards.delete(userId);
