@@ -7,6 +7,7 @@
     "build": "rm -rf dist && tsc --project tsconfig.json",
     "start": "node -r dotenv/config . ",
     "build:test": "tsc --noEmit",
+    "debug": "tsnd --ignore node_modules --transpile-only --no-notify --respawn --inspect -r dotenv/config src/index.ts",
     "dev": "tsnd --ignore node_modules --transpile-only --no-notify --respawn -r dotenv/config src/index.ts"
   },
   "keywords": [],
@@ -14,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@menhera-tools/logger": "*",
+    "axios": "^0.24.0",
     "discord.js": "^13.1.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

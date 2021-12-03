@@ -1,6 +1,7 @@
 /* eslint-disable no-new */
 /* eslint-disable consistent-return */
 import { Message, MessageButton, MessageEmbed, TextBasedChannels } from 'discord.js';
+import TalkAward from '../structures/TalkAward';
 import WatchClient from '../client';
 import CommandContext from '../structures/CommandContext';
 import Event from '../structures/event';
@@ -64,6 +65,9 @@ export default class MessageReceive extends Event {
       );
       return;
     }
+
+    TalkAward(message);
+
     if (!message.content.startsWith(process.env.PREFIX as string)) return;
     const args = message.content
       .slice((process.env.PREFIX as string).length)
