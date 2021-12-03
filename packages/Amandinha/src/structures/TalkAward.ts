@@ -1,11 +1,4 @@
-import {
-  DMChannel,
-  Message,
-  NewsChannel,
-  PartialDMChannel,
-  TextChannel,
-  ThreadChannel,
-} from 'discord.js';
+import { GuildChannel, Message, ThreadChannel } from 'discord.js';
 import mongoDb from './mongoDb';
 
 interface TalkAwardData {
@@ -14,7 +7,7 @@ interface TalkAwardData {
   lastMessageAt: number[];
   lastMessageLenght: number;
   totalStreakMessageLenght: number[];
-  channelToAnnouce: PartialDMChannel | DMChannel | TextChannel | NewsChannel | ThreadChannel;
+  channelToAnnouce: GuildChannel | ThreadChannel | undefined;
   spamCount: number;
 }
 
@@ -51,7 +44,7 @@ export default (message: Message): void => {
       stopStreak: Date.now() + 1000 * 30,
       lastMessageAt: [message.createdTimestamp],
       spamCount: 0,
-      channelToAnnouce: message.channel,
+      channelToAnnouce: message.guild?.channels.cache.get('916340162747834368'),
     });
   }
 };
@@ -61,7 +54,7 @@ const makeCheck = () => {
     if (cd < Date.now()) AwardCooldown.delete(user);
   });
   Awards.forEach((user, userId) => {
-    if (user.spamCount > 10) {
+    if (user.spamCount >= 5) {
       Awards.delete(userId);
       AwardCooldown.set(userId, Date.now() + 1000 * 60 * 10);
       return;
@@ -76,7 +69,7 @@ const makeCheck = () => {
 
       makeRequest(totalAward, userId);
 
-      user.channelToAnnouce.send({
+      (user.channelToAnnouce as ThreadChannel).send({
         content: `<@${userId}> ganhou **${totalAward}** :star: por conversar aqui UwU`,
       });
 
