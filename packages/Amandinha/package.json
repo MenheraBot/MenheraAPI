@@ -15,12 +15,12 @@
   "license": "ISC",
   "dependencies": {
     "@menhera-tools/logger": "*",
-    "axios": "^0.24.0",
     "discord.js": "^13.1.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
+    "mongoose": "^6.0.14",
     "nekos.life": "^2.0.7",
     "raw-body": "^2.4.1",
     "tweetnacl": "^1.0.3"

@@ -6,7 +6,7 @@ import {
   TextChannel,
   ThreadChannel,
 } from 'discord.js';
-import Axios from 'axios';
+import mongoDb from './mongoDb';
 
 interface TalkAwardData {
   sequence: number;
@@ -23,17 +23,7 @@ const AwardCooldown = new Map<string, number>();
 const Awards = new Map<string, TalkAwardData>();
 
 const makeRequest = async (total: number, userId: string): Promise<void> => {
-  Axios.patch(
-    process.env.MENHERA_URL as string,
-    { total, userId },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': process.env.MENHERA_AGENT as string,
-        Authorization: process.env.API_TOKEN as string,
-      },
-    }
-  ).catch(() => null);
+  mongoDb(userId, total);
 };
 
 export default (message: Message): void => {
