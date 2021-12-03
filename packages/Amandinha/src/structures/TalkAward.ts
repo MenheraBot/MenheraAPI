@@ -23,6 +23,7 @@ export default (message: Message): void => {
   if (AwardCooldown.has(message.author.id)) return;
 
   const user = Awards.get(message.author.id);
+  const messageLength = message.content.replace(/(.)(?=.*\1)/g, '');
 
   if (user) {
     if (message.createdTimestamp - user.lastMessageAt[user.lastMessageAt.length - 1] < 1500) {
@@ -32,16 +33,16 @@ export default (message: Message): void => {
     }
 
     user.sequence += 1;
-    user.lastMessageLenght = message.content.length;
-    user.totalStreakMessageLenght.push(message.content.length > 300 ? 300 : message.content.length);
-    user.stopStreak = Date.now() + 1000 * 30;
+    user.lastMessageLenght = messageLength.length;
+    user.totalStreakMessageLenght.push(messageLength.length > 300 ? 300 : messageLength.length);
+    user.stopStreak = Date.now() + 1000 * 15;
     user.lastMessageAt.push(message.createdTimestamp);
   } else {
     Awards.set(message.author.id, {
       sequence: 1,
-      lastMessageLenght: message.content.length,
-      totalStreakMessageLenght: [message.content.length > 300 ? 300 : message.content.length],
-      stopStreak: Date.now() + 1000 * 30,
+      lastMessageLenght: messageLength.length,
+      totalStreakMessageLenght: [messageLength.length > 300 ? 300 : messageLength.length],
+      stopStreak: Date.now() + 1000 * 15,
       lastMessageAt: [message.createdTimestamp],
       spamCount: 0,
       channelToAnnouce: message.guild?.channels.cache.get('916340162747834368'),
@@ -61,10 +62,10 @@ const makeCheck = () => {
     }
 
     if (user.stopStreak < Date.now()) {
-      AwardCooldown.set(userId, Date.now() + 1000 * 60 * 3);
+      AwardCooldown.set(userId, Date.now() + 1000 * 60 * 2);
       const totalAward = Math.floor(
         Math.random() * user.totalStreakMessageLenght.reduce((p, c) => p + c, 0) +
-          user.sequence * 20
+          user.sequence * 10
       );
 
       makeRequest(totalAward, userId);
