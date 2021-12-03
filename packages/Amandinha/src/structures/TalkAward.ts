@@ -33,14 +33,14 @@ export default (message: Message): void => {
 
     user.sequence += 1;
     user.lastMessageLenght = message.content.length;
-    user.totalStreakMessageLenght.push(message.content.length);
+    user.totalStreakMessageLenght.push(message.content.length > 300 ? 300 : message.content.length);
     user.stopStreak = Date.now() + 1000 * 30;
     user.lastMessageAt.push(message.createdTimestamp);
   } else {
     Awards.set(message.author.id, {
       sequence: 1,
       lastMessageLenght: message.content.length,
-      totalStreakMessageLenght: [message.content.length],
+      totalStreakMessageLenght: [message.content.length > 300 ? 300 : message.content.length],
       stopStreak: Date.now() + 1000 * 30,
       lastMessageAt: [message.createdTimestamp],
       spamCount: 0,
@@ -53,7 +53,7 @@ const makeCheck = () => {
   AwardCooldown.forEach((cd, user) => {
     if (cd < Date.now()) AwardCooldown.delete(user);
   });
-  Awards.forEach((user, userId) => {
+  Awards.forEach(async (user, userId) => {
     if (user.spamCount >= 5) {
       Awards.delete(userId);
       AwardCooldown.set(userId, Date.now() + 1000 * 60 * 10);
@@ -70,11 +70,10 @@ const makeCheck = () => {
       makeRequest(totalAward, userId);
 
       (user.channelToAnnouce as ThreadChannel).send({
-        content: `<@${user.channelToAnnouce?.guild.members
+        content: `<@${await user.channelToAnnouce?.guild.members
           .fetch(userId)
-          .then(
-            a => a.nickname ?? a.user.username
-          )}> ganhou **${totalAward}** :star: por conversar aqui UwU`,
+          .then(a => a.nickname ?? a.user.username)
+          .catch(() => `<@${userId}>`)}> ganhou **${totalAward}** :star: por conversar aqui UwU`,
       });
 
       Awards.delete(userId);
