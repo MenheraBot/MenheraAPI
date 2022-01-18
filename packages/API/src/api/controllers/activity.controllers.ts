@@ -25,7 +25,7 @@ export default class ActivityController {
 
   public static add(req: Request, res: Response): Response {
     const ACTIVITY_TYPES: ActivityType[] = ['WATCHING', 'PLAYING', 'LISTENING', 'STREAMING'];
-    const { type, name } = req.body;
+    const { type, name, url } = req.body;
 
     if (!type || !name) {
       throw new APIError('O conteúdo do request é inválido!', 400);
@@ -35,7 +35,7 @@ export default class ActivityController {
       throw new APIError(`Este tipo é invalido! tipos: ${ACTIVITY_TYPES}`, 400);
     }
 
-    MenheraActivity.getInstance().addActivity(name, type);
-    return res.status(201).send({ type, name });
+    MenheraActivity.getInstance().addActivity(name, type, url);
+    return res.status(201).send({ type, name, url });
   }
 }
