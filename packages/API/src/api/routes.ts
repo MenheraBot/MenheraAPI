@@ -19,6 +19,7 @@ router.delete('/activity', ActivityController.clear);
 router.get('/assets/:type', AssetsController.getImageUrl);
 
 router.post('/bicho/bet', JogoDoBichoController.addBet);
+router.patch('/bicho/win', JogoDoBichoController.userWin);
 
 router.get('/blackjack', BlackJackController.getUserInfo);
 router.post('/blackjack', BlackJackController.postBlackJack);
