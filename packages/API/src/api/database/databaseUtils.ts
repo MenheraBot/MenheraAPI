@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import {
+  BichoBetType,
   BlackJackStats,
   CoinflipStats,
   commandInterface,
@@ -56,6 +57,25 @@ export async function getTopCommands(): Promise<Array<commandInterface>> {
 export async function getTopUsers(): Promise<Array<userInterface>> {
   const result = await pool.query('SELECT id, uses FROM users ORDER BY uses DESC LIMIT 10');
   return result.rows;
+}
+
+export async function registerBichoBet(
+  userId: string,
+  value: number,
+  betType: BichoBetType,
+  betSelection: string
+): Promise<number> {
+  const userIdInDatabase = await ensureUser(userId);
+  const result = await pool.query(
+    'INSERT INTO bicho (user_id, value, bet_type, bet_selection, date) VALUES ($1,$2,$3,$4,$5) RETURNING game_id',
+    [userIdInDatabase, value, betType, betSelection, Date.now()]
+  );
+
+  return result.rows[0].game_id;
+}
+
+export async function makeUserWinBicho(gameId: number): Promise<void> {
+  await pool.query('UPDATE bicho SET didWin = true WHERE game_id = $1', [gameId]);
 }
 
 export async function addCommand(

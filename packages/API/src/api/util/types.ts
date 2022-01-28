@@ -57,3 +57,12 @@ export interface HuntStats {
   god_success: number;
   god_hunted: number;
 }
+
+export type BichoBetType =
+  | 'unity'
+  | 'ten'
+  | 'hundred'
+  | 'thousand'
+  | 'animal'
+  | 'sequence'
+  | 'corner';

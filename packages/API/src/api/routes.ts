@@ -6,6 +6,7 @@ import StatsController from './controllers/stats.controllers';
 import UsagesController from './controllers/usages.controllers';
 import CoinflipController from './controllers/coinflip.controllers';
 import HuntsController from './controllers/hunts.controllers';
+import JogoDoBichoController from './controllers/jogodobicho.controller';
 
 const router = Router();
 
@@ -16,6 +17,8 @@ router.put('/activity', ActivityController.reset);
 router.delete('/activity', ActivityController.clear);
 
 router.get('/assets/:type', AssetsController.getImageUrl);
+
+router.post('/bicho/bet', JogoDoBichoController.addBet);
 
 router.get('/blackjack', BlackJackController.getUserInfo);
 router.post('/blackjack', BlackJackController.postBlackJack);
