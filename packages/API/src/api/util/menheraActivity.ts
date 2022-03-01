@@ -9,6 +9,10 @@ export default class Activities {
         name: '💖 | Obrigada por me salvarem',
         type: 'PLAYING',
       },
+      {
+        name: '💖 | Twitch da minha Dona',
+        type: 'STREAMING',
+      },
     ];
   }
 

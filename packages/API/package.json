@@ -1,6 +1,6 @@
 {
   "name": "@menhera-tools/api",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Uma API para a Menhera",
   "main": "dist/server.js",
   "private": true,
