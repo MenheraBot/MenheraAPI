@@ -2,18 +2,12 @@
 import { Request, Response } from 'express';
 import {
   getInactiveUsersLastCommand,
-  getMostUserAndCommand,
   getTopCommands,
   getTopUsers,
 } from '../database/databaseUtils';
 import pool from '../database/pool';
 
 export default class UsagesController {
-  static async mostUsersAndCommands(_req: Request, res: Response): Promise<Response> {
-    const usages = await getMostUserAndCommand();
-    return res.status(200).send(usages);
-  }
-
   static async getInactiveUsers(req: Request, res: Response): Promise<Response> {
     const data = await getInactiveUsersLastCommand(req.body);
 
@@ -52,16 +46,5 @@ export default class UsagesController {
   static async topCommands(_req: Request, res: Response): Promise<Response> {
     const rows = await getTopCommands();
     return res.status(200).send(rows);
-  }
-
-  static async getUserDeleteCommand(req: Request, res: Response): Promise<Response> {
-    const { userId } = req.body;
-    if (!userId) return res.sendStatus(400);
-    const commandsExecuted = await pool.query(
-      'SELECT count(*) FROM uses WHERE user_id = $1 AND cmd_id = 272',
-      [userId]
-    );
-
-    return res.status(200).send(commandsExecuted.rows[0]);
   }
 }

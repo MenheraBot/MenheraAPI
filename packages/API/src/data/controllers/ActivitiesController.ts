@@ -4,12 +4,6 @@ import APIError from '../util/APIError';
 import MenheraActivity from '../util/menheraActivity';
 
 export default class ActivityController {
-  public static random(req: Request, res: Response): Response {
-    let { shard } = req.body;
-    if (!shard) shard = 0;
-    return res.send(MenheraActivity.getInstance().getRandomActivity(shard));
-  }
-
   public static all(_req: Request, res: Response): Response {
     return res.json(MenheraActivity.getInstance().getAllActivities());
   }
