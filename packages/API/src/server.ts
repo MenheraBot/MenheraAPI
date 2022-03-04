@@ -10,12 +10,13 @@ import isAuthorized from './api/middlewares/isAuthorized';
 
 import ApiRoutes from './api/routes';
 import StatusRoutes from './status/routes';
+import DataRouter from './data/routes';
 
 const app = express();
 const server = http.createServer(app);
 
 const limiter = rateLimit({
-  windowMs: 5 * 1000,
+  windowMs: 10 * 1000,
   max: 15,
   skip: (req: Request) => req.headers['user-agent'] === process.env.MENHERA_AGENT,
   handler: (_req: Request, res: Response) => {
@@ -34,7 +35,11 @@ app.use((_, res, next) => {
 
 app.use('/status', limiter, StatusRoutes);
 
+// Old API version
 app.use('/api', isAuthorized, ApiRoutes);
+
+// New API Version
+app.use('/data', isAuthorized, DataRouter);
 
 app.use(NotFound);
 app.use(ErrorHandler);
