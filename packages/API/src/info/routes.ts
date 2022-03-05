@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import ShardController from './controllers/ShardsController';
-import isAuthorized from '../api/middlewares/isAuthorized';
+import isAuthorized from '../data/middlewares/isAuthorized';
 import CommandsController from './controllers/CommandsController';
+
+const startTime = Date.now();
 
 const InfoRouter = Router();
 
@@ -11,5 +13,9 @@ InfoRouter.put('/shards', isAuthorized, ShardController.updateShardStatus);
 InfoRouter.get('/commands', CommandsController.getCommands);
 InfoRouter.post('/commands', isAuthorized, CommandsController.createCommands);
 InfoRouter.patch('/commands/:name', isAuthorized, CommandsController.editMaintenance);
+
+InfoRouter.get('/ping', (_, res) => {
+  res.status(200).send(Date.now() - startTime);
+});
 
 export default InfoRouter;

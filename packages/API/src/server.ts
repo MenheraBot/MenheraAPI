@@ -4,12 +4,10 @@ import http from 'http';
 import logger from '@menhera-tools/logger';
 import rateLimit from 'express-rate-limit';
 
-import NotFound from './api/middlewares/NotFound';
-import ErrorHandler from './api/middlewares/ErrorHandler';
-import isAuthorized from './api/middlewares/isAuthorized';
+import NotFound from './data/middlewares/NotFound';
+import ErrorHandler from './data/middlewares/ErrorHandler';
+import isAuthorized from './data/middlewares/isAuthorized';
 
-import ApiRoutes from './api/routes';
-import StatusRoutes from './status/routes';
 import DataRouter from './data/routes';
 import InfoRouter from './info/routes';
 
@@ -34,16 +32,8 @@ app.use((_, res, next) => {
   return next();
 });
 
-// Old Status System version
-app.use('/status', limiter, StatusRoutes);
-
-// New Status System version
 app.use('/info', limiter, InfoRouter);
 
-// Old API version
-app.use('/api', isAuthorized, ApiRoutes);
-
-// New API Version
 app.use('/data', isAuthorized, DataRouter);
 
 app.use(NotFound);
