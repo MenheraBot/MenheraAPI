@@ -11,6 +11,7 @@ import isAuthorized from './api/middlewares/isAuthorized';
 import ApiRoutes from './api/routes';
 import StatusRoutes from './status/routes';
 import DataRouter from './data/routes';
+import InfoRouter from './info/routes';
 
 const app = express();
 const server = http.createServer(app);
@@ -33,7 +34,11 @@ app.use((_, res, next) => {
   return next();
 });
 
+// Old Status System version
 app.use('/status', limiter, StatusRoutes);
+
+// New Status System version
+app.use('/info', limiter, InfoRouter);
 
 // Old API version
 app.use('/api', isAuthorized, ApiRoutes);
