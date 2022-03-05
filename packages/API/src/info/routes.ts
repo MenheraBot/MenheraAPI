@@ -15,7 +15,7 @@ InfoRouter.post('/commands', isAuthorized, CommandsController.createCommands);
 InfoRouter.patch('/commands/:name', isAuthorized, CommandsController.editMaintenance);
 
 InfoRouter.get('/ping', (_, res) => {
-  res.status(200).send(Date.now() - startTime);
+  res.status(200).json({ uptime: Date.now() - startTime });
 });
 
 export default InfoRouter;
