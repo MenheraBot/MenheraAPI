@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getCoinflipStats, postCoinflip } from '../database/databaseUtils';
+import { getCoinflipStats, postCoinflip } from '../database/DatabaseQueries';
 
 export default class CoinflipController {
   public static async getUserInfo(req: Request, res: Response): Promise<Response> {

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ActivityType } from '../util/types';
 import APIError from '../util/APIError';
-import MenheraActivity from '../util/menheraActivity';
+import MenheraActivity from '../util/Activities';
 
 export default class ActivityController {
   public static all(_req: Request, res: Response): Response {

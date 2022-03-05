@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getBlackJackStats, postBlackJackGame } from '../database/databaseUtils';
+import { getBlackJackStats, postBlackJackGame } from '../database/DatabaseQueries';
 
 export default class BlackJackController {
   public static async getUserInfo(req: Request, res: Response): Promise<Response> {

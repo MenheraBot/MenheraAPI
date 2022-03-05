@@ -8,7 +8,7 @@ import {
   usagesInterface,
   userInterface,
 } from '../util/types';
-import pool from './pool';
+import pool from './Pool';
 
 export async function ensureCommand(commandName: string): Promise<number> {
   const command = await pool.query('SELECT (id) FROM cmds WHERE name = $1', [commandName]);
@@ -201,4 +201,23 @@ export async function getInactiveUsersLastCommand(
   );
 
   return results.rows;
+}
+
+export async function getUserCommandsUsesCount(userId: string): Promise<{ count: number } | null> {
+  const commandsExecuted = await pool.query('SELECT uses AS count FROM users WHERE id = $1', [
+    userId,
+  ]);
+
+  if (!commandsExecuted.rows[0]) return null;
+
+  return commandsExecuted.rows[0];
+}
+
+export async function getUserTopCommandsUsed(userId: number): Promise<unknown[]> {
+  const allCommands = await pool.query(
+    'SELECT cmds.name, COUNT(cmds.name) FROM uses INNER JOIN cmds ON uses.cmd_id = cmds.id WHERE user_id = $1 GROUP BY cmds.name ORDER BY count DESC LIMIT 10',
+    [userId]
+  );
+
+  return allCommands.rows;
 }

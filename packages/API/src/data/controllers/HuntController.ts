@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getUserHuntData, postHunt } from '../database/databaseUtils';
+import { getUserHuntData, postHunt } from '../database/DatabaseQueries';
 
 export default class HuntsController {
   public static async getUserInfo(req: Request, res: Response): Promise<Response> {

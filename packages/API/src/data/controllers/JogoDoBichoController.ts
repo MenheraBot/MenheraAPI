@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
-import { makeUserWinBicho, registerBichoBet } from '../database/databaseUtils';
-import { BichoBetType } from '../util/types';
+import { makeUserWinBicho, registerBichoBet } from '../database/DatabaseQueries';
 
 export default class JogoDoBichoController {
   public static async addBet(req: Request, res: Response): Promise<Response> {
     const { userId, value, betType, betSelection } = req.body;
-    const gameId = await JogoDoBichoController.registerBet(userId, value, betType, betSelection);
+    const gameId = await registerBichoBet(userId, value, betType, betSelection);
 
     return res.status(201).json({ gameId });
   }
@@ -16,14 +15,5 @@ export default class JogoDoBichoController {
     makeUserWinBicho(gameId);
 
     return res.sendStatus(200);
-  }
-
-  private static async registerBet(
-    userId: string,
-    value: number,
-    betType: BichoBetType,
-    betSelection: string
-  ): Promise<number> {
-    return registerBichoBet(userId, value, betType, betSelection);
   }
 }

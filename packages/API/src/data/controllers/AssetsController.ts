@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import urls from '../util/assetsUrls';
+import urls from '../util/AssetsURL';
 
 export default class AssetsController {
   public static async getImageUrl(req: Request, res: Response): Promise<Response> {
