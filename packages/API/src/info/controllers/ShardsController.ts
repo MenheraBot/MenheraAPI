@@ -13,7 +13,8 @@ export default class ShardStatusController {
     const { shards } = req.body.data;
 
     shards.forEach((shard: IShardStatus) => {
-      const { memoryUsed, uptime, guilds, unavailable, ping, lastPingAt, members, id } = shard;
+      const { memoryUsed, uptime, guilds, unavailable, ping, lastPingAt, members, id, clusterId } =
+        shard;
       const data = {
         id: Number(id),
         memoryUsed,
@@ -23,6 +24,7 @@ export default class ShardStatusController {
         ping,
         lastPingAt,
         members,
+        clusterId,
       };
       ShardStatus.getInstance().putShard(Number(id), data);
     });

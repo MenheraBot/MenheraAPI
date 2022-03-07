@@ -9,6 +9,7 @@ export interface IShardStatus extends Object {
   ping: number;
   lastPingAt: number;
   members: number;
+  clusterId: number;
 }
 
 export interface ICommandDisabledData {
