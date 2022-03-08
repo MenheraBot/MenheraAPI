@@ -8,6 +8,7 @@ export interface IShardStatus extends Object {
   unavailable: number;
   ping: number;
   lastPingAt: number;
+  connected: number;
   members: number;
   clusterId: number;
 }
