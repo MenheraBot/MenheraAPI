@@ -42,7 +42,7 @@ UsagesGroup.get('/top/user', UsagesController.topUsers);
 
 const RoleplayGroup = Router();
 RoleplayGroup.get('/battleconf', RoleplayController.getConfig);
-RoleplayGroup.patch('/battleconf',RoleplayController.setConfig);
+RoleplayGroup.patch('/battleconf', RoleplayController.setConfig);
 
 DataRouter.use('/activity', ActivityGroup);
 DataRouter.use('/statistics', StatisticsGroup);

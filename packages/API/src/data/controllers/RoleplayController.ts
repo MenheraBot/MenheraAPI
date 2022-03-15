@@ -7,6 +7,8 @@ export default class RoleplayController {
   public static async getConfig(req: Request, res: Response): Promise<Response> {
     const { userId } = req.query;
 
+    console.log(userId, req.query);
+
     if (!userId) return res.sendStatus(400);
 
     const config = RoleplayBattleConfigs.find(a => a.userId === userId);
@@ -19,6 +21,10 @@ export default class RoleplayController {
   public static async setConfig(req: Request, res: Response): Promise<Response> {
     const { userId } = req.query;
     const { config } = req.body;
+
+    console.log(userId, req.query);
+
+    console.log(config);
 
     if (!config || !userId) return res.sendStatus(400);
 
