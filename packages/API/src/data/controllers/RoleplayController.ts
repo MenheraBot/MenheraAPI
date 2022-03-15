@@ -24,7 +24,7 @@ export default class RoleplayController {
 
     console.log(userId, req.query);
 
-    console.log(config);
+    console.log(req.body);
 
     if (!config || !userId) return res.sendStatus(400);
 
