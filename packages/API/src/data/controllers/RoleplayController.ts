@@ -24,8 +24,6 @@ export default class RoleplayController {
 
     const found = RoleplayBattleConfigs.find(a => a.userId === userId);
 
-    console.log(found);
-
     if (found) {
       for (const att in config) {
         found.config[att] = config[att];
