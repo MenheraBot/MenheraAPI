@@ -7,11 +7,11 @@ export default class RoleplayController {
   public static async getConfig(req: Request, res: Response): Promise<Response> {
     const { userId } = req.query;
 
-    if (!userId) return res.status(400);
+    if (!userId) return res.sendStatus(400);
 
     const config = RoleplayBattleConfigs.find(a => a.userId === userId);
 
-    if (!config) return res.status(404);
+    if (!config) return res.sendStatus(404);
 
     return res.status(200).json({ config: config.config });
   }
@@ -20,7 +20,7 @@ export default class RoleplayController {
     const { userId } = req.query;
     const { config } = req.body;
 
-    if (!config || !userId) return res.status(400);
+    if (!config || !userId) return res.sendStatus(400);
 
     const found = RoleplayBattleConfigs.find(a => a.userId === userId);
 
@@ -32,6 +32,6 @@ export default class RoleplayController {
       RoleplayBattleConfigs.push({ userId: userId as string, config });
     }
 
-    return res.status(201);
+    return res.sendStatus(201);
   }
 }
