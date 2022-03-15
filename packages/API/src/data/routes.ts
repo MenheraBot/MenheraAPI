@@ -39,8 +39,13 @@ UsagesGroup.get('/user', UsagesController.getUserInfo);
 UsagesGroup.get('/top/command', UsagesController.topCommands);
 UsagesGroup.get('/top/user', UsagesController.topUsers);
 
+const RoleplayGroup = Router();
+RoleplayGroup.get('/battleconf?userId');
+RoleplayGroup.patch('/battleconf');
+
 DataRouter.use('/activity', ActivityGroup);
 DataRouter.use('/statistics', StatisticsGroup);
 DataRouter.use('/usages', UsagesGroup);
+DataRouter.use('/roleplay', RoleplayGroup);
 
 export default DataRouter;
