@@ -6,6 +6,7 @@ import StatsController from './controllers/CommandsController';
 import UsagesController from './controllers/UsagesController';
 import CoinflipController from './controllers/CoinflipController';
 import HuntsController from './controllers/HuntController';
+import RoleplayController from './controllers/RoleplayController';
 import JogoDoBichoController from './controllers/JogoDoBichoController';
 
 const DataRouter = Router();
@@ -40,8 +41,8 @@ UsagesGroup.get('/top/command', UsagesController.topCommands);
 UsagesGroup.get('/top/user', UsagesController.topUsers);
 
 const RoleplayGroup = Router();
-RoleplayGroup.get('/battleconf');
-RoleplayGroup.patch('/battleconf');
+RoleplayGroup.get('/battleconf', RoleplayController.getConfig);
+RoleplayGroup.patch('/battleconf',RoleplayController.setConfig);
 
 DataRouter.use('/activity', ActivityGroup);
 DataRouter.use('/statistics', StatisticsGroup);
