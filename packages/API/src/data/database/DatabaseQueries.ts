@@ -227,12 +227,16 @@ export async function updateUserRouletteStatus(
 
   if (didWin)
     await pool.query(
-      `UPDATE roletauser SET earn_money = earn_money + ${profit}, won_games = won_games + 1 WHERE user_id = ${userId}`
+      'UPDATE roletauser SET earn_money = earn_money + $1, won_games = won_games + 1 WHERE user_id = $2',
+      [profit, userId]
     );
   else
-    await pool.query(
-      `UPDATE roletauser SET lost_money = lost_money + ${betValue}, lost_games = lost_games + 1 WHERE user_id = ${userId}`
-    );
+    await pool
+      .query(
+        'UPDATE roletauser SET lost_money = lost_money + $1, lost_games = lost_games + 1 WHERE user_id = $2',
+        [betValue, userId]
+      )
+      .catch(e => console.log(`NO UPDATE ${e}`));
 }
 
 export async function createRouletteGame(
@@ -245,12 +249,14 @@ export async function createRouletteGame(
 ): Promise<void> {
   await ensureUser(userId);
 
-  updateUserRouletteStatus(userId, betValue, profit, didWin);
+  await updateUserRouletteStatus(userId, betValue, profit, didWin);
 
-  await pool.query(
-    'INSERT INTO roulette (user_id, bet_value, didwin, bet_type, selected_values, profit) VALUES ($1, $2, $3, $4, $5, $6)',
-    [userId, betValue, didWin, betType, selectedValues, profit]
-  );
+  await pool
+    .query(
+      'INSERT INTO roulette (user_id, bet_value, didwin, bet_type, selected_values, profit) VALUES ($1, $2, $3, $4, $5, $6)',
+      [userId, betValue, didWin, betType, selectedValues, profit]
+    )
+    .catch(e => console.log(`PROBLEMA NO ROULETTE ${e}`));
 }
 
 export async function getRouletteStatus(userId: string): Promise<RouletteStats | false> {
