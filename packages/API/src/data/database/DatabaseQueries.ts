@@ -231,12 +231,10 @@ export async function updateUserRouletteStatus(
       [profit, userId]
     );
   else
-    await pool
-      .query(
-        'UPDATE roletauser SET lost_money = lost_money + $1, lost_games = lost_games + 1 WHERE user_id = $2',
-        [betValue, userId]
-      )
-      .catch(e => console.log(`NO UPDATE ${e}`));
+    await pool.query(
+      'UPDATE roletauser SET lost_money = lost_money + $1, lost_games = lost_games + 1 WHERE user_id = $2',
+      [betValue, userId]
+    );
 }
 
 export async function createRouletteGame(
@@ -251,12 +249,10 @@ export async function createRouletteGame(
 
   await updateUserRouletteStatus(userId, betValue, profit, didWin);
 
-  await pool
-    .query(
-      'INSERT INTO roulette (user_id, bet_value, didwin, bet_type, selected_values, profit) VALUES ($1, $2, $3, $4, $5, $6)',
-      [userId, betValue, didWin, betType, selectedValues, profit]
-    )
-    .catch(e => console.log(`PROBLEMA NO ROULETTE ${e}`));
+  await pool.query(
+    'INSERT INTO roulette (user_id, bet_value, didwin, bet_type, selected_values, profit) VALUES ($1, $2, $3, $4, $5, $6)',
+    [userId, betValue, didWin, betType, selectedValues, profit]
+  );
 }
 
 export async function getRouletteStatus(userId: string): Promise<RouletteStats | false> {
