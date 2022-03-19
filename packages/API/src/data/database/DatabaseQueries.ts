@@ -221,13 +221,17 @@ export async function updateUserRouletteStatus(
   profit: number,
   didWin: boolean
 ): Promise<void> {
+  await pool.query('INSERT INTO roletauser (user_id) VALUES ($1) ON CONFLICT(user_id) DO NOTHING', [
+    userId,
+  ]);
+
   if (didWin)
     await pool.query(
-      `INSERT INTO roletauser (user_id, earn_money, won_games) VALUES (${userId}, ${profit}, 1) ON CONFLICT(user_id) DO UPDATE SET earn_money = earn_money + ${profit}, won_games = won_games + 1`
+      `UPDATE roletauser SET earn_money = earn_money + ${profit}, won_games = won_games + 1 WHERE user_id = ${userId}`
     );
   else
     await pool.query(
-      `INSERT INTO roletauser (user_id, lost_money, lost_games) VALUES (${userId}, ${betValue}, 1) ON CONFLICT(user_id) DO UPDATE SET lost_money = lost_money + ${betValue}, lost_games = lost_games + 1`
+      `UPDATE roletauser SET lost_money = lost_money + ${betValue}, lost_games = lost_games + 1 WHERE user_id = ${userId}`
     );
 }
 
