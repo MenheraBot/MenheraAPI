@@ -8,6 +8,7 @@ import CoinflipController from './controllers/CoinflipController';
 import HuntsController from './controllers/HuntController';
 import RoleplayController from './controllers/RoleplayController';
 import JogoDoBichoController from './controllers/JogoDoBichoController';
+import RouletteController from './controllers/RouletteController';
 
 const DataRouter = Router();
 DataRouter.get('/assets/:type', AssetsController.getImageUrl);
@@ -31,6 +32,9 @@ StatisticsGroup.post('/blackjack', BlackJackController.postBlackJack);
 // Coinflip Command
 StatisticsGroup.get('/coinflip', CoinflipController.getUserInfo);
 StatisticsGroup.post('/coinflip', CoinflipController.postCoinflip);
+// Roulette Command
+StatisticsGroup.get('/roulette', RouletteController.getUserRouletteStatus);
+StatisticsGroup.post('/roulette', RouletteController.postRouletteGame);
 
 const UsagesGroup = Router();
 UsagesGroup.post('/commands', StatsController.postCommand);

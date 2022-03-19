@@ -29,6 +29,8 @@
 | POST   | `/statistics/blackjack`          | Atualiza os dados de um jogador de Blackjack                                                    |
 | GET    | `/statistics/coinflip`           | Retorna as informações dos coinflips de um usuário                                              |
 | POST   | `/statistics/coinflip`           | Atualiza os dados de um jogador de coinflip                                                     |
+| GET    | `/statistics/roulette`           | Retorna as informações de roleta de um usuário                                                  |
+| POST   | `/statistics/roulette`           | Atualiza os dados de um jogador de roleta                                                       |
 | GET    | `/statistics/hunt`               | Retorna os status de caçada do usuário                                                          |
 | POST   | `/statistics/hunt`               | Atualiza is dadis de um jogador nas caças                                                       |
 | POST   | `/usages/commands`               | Posta uma execução de comando                                                                   |
