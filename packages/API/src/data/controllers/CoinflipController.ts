@@ -30,13 +30,12 @@ export default class CoinflipController {
   }
 
   public static async postCoinflip(req: Request, res: Response): Promise<Response> {
-    const { winnerId, loserId, betValue, date } = req.body;
+    const { winnerId, loserId, betValue } = req.body;
 
-    if (!winnerId || !loserId || !betValue || !date) return res.sendStatus(400);
+    if (!winnerId || !loserId || !betValue) return res.sendStatus(400);
 
-    const result = await postCoinflip(winnerId, loserId, betValue, date);
+    await postCoinflip(winnerId, loserId, betValue);
 
-    if (!result) return res.sendStatus(500);
     return res.sendStatus(201);
   }
 }

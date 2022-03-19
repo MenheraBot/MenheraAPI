@@ -5,6 +5,7 @@ import {
   CoinflipStats,
   commandInterface,
   HuntStats,
+  RouletteStats,
   usagesInterface,
   userInterface,
 } from '../util/types';
@@ -149,19 +150,11 @@ async function updateCoinflipUserStats(
 export async function postCoinflip(
   winnerId: string,
   loserId: string,
-  betValue: number,
-  date: number
-): Promise<boolean> {
+  betValue: number
+): Promise<void> {
   const winnerIdInDatabase = await ensureUser(winnerId);
   const loserIdInDatabase = await ensureUser(loserId);
   await updateCoinflipUserStats(winnerIdInDatabase, loserIdInDatabase, betValue);
-
-  const result = await pool.query(
-    'INSERT INTO coinflip (winner, loser, value, date) VALUES ($1, $2, $3, $4) RETURNING id',
-    [winnerIdInDatabase, loserIdInDatabase, betValue, date]
-  );
-  if (result.rows[0].id) return true;
-  return false;
 }
 
 async function ensureHunt(userId: string): Promise<true> {
@@ -220,4 +213,48 @@ export async function getUserTopCommandsUsed(userId: number): Promise<unknown[]>
   );
 
   return allCommands.rows;
+}
+
+export async function updateUserRouletteStatus(
+  userId: string,
+  betValue: number,
+  profit: number,
+  didWin: boolean
+): Promise<void> {
+  if (didWin)
+    await pool.query(
+      `INSERT INTO roletauser (user_id, earn_money, won_games) VALUES (${userId}, ${profit}, 1) ON CONFLICT(user_id) DO UPDATE SET earn_money = earn_money + ${profit}, won_games = won_games + 1`
+    );
+  else
+    await pool.query(
+      `INSERT INTO roletauser (user_id, lost_money, lost_games) VALUES (${userId}, ${betValue}, 1) ON CONFLICT(user_id) DO UPDATE SET lost_money = lost_money + ${betValue}, lost_games = lost_games + 1`
+    );
+}
+
+export async function createRouletteGame(
+  userId: string,
+  betValue: number,
+  profit: number,
+  didWin: boolean,
+  betType: string,
+  selectedValues: string
+): Promise<void> {
+  await ensureUser(userId);
+
+  updateUserRouletteStatus(userId, betValue, profit, didWin);
+
+  await pool.query(
+    'INSERT INTO roulette (user_id, bet_value, didwin, bet_type, selected_values, profit) VALUES ($1, $2, $3, $4, $5, $6)',
+    [userId, betValue, didWin, betType, selectedValues, profit]
+  );
+}
+
+export async function getRouletteStatus(userId: string): Promise<RouletteStats | false> {
+  const result = await pool.query(
+    'SELECT earn_money, lost_money, won_games, lost_games FROM roletauser WHERE user_id = $1',
+    [userId]
+  );
+
+  if (result.rowCount === 0) return false;
+  return result.rows[0];
 }

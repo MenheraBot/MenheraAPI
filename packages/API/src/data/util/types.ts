@@ -26,6 +26,13 @@ export interface BlackJackStats {
   bj_lose_money: number;
 }
 
+export interface RouletteStats {
+  earn_money: number;
+  lost_money: number;
+  lost_games: number;
+  won_games: number;
+}
+
 export interface userInterface {
   id: string;
   uses: number;
