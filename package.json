@@ -15,15 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ySnoopyDogy/Menhera-Tools.git"
+    "url": "git+https://github.com/MenheraBot/Menhera-Tools.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ySnoopyDogy/Menhera-Tools/issues"
+    "url": "https://github.com/MenheraBot/Menhera-Tools/issues"
   },
-  "homepage": "https://github.com/ySnoopyDogy/Menhera-Tools#readme",
+  "homepage": "https://github.com/MenheraBot/Menhera-Tools#readme",
   "dependencies": {
     "typescript": "^4.1.2"
   },
