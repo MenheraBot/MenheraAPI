@@ -6,10 +6,10 @@
   "scripts": {
     "build:no-plugin": "lerna exec --parallel yarn run build",
     "start": "lerna exec --parallel yarn run start",
+    "logger": "yarn workspace @menhera-tools/logger",
     "api": "yarn workspace @menhera-tools/api",
     "bot": "yarn workspace @menhera-tools/amandinha",
     "lint": "yarn workspace @menhera-tools/eslint-config",
-    "logger": "yarn workspace @menhera-tools/logger",
     "run:lint": "eslint --fix .",
     "typecheck": "lerna exec --parallel yarn run typecheck"
   },
