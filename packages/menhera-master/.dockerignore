@@ -1,7 +1,0 @@
-Dockerfile
-.dockerignore
-node_modules
-*.log
-*.error
-*.md
-.next
