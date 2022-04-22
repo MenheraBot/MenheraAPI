@@ -8,7 +8,8 @@
     "start": "node -r dotenv/config . ",
     "build:test": "tsc --noEmit",
     "debug": "tsnd --ignore node_modules --transpile-only --no-notify --respawn --inspect -r dotenv/config src/index.ts",
-    "dev": "tsnd --ignore node_modules --transpile-only --no-notify --respawn -r dotenv/config src/index.ts"
+    "dev": "tsnd --ignore node_modules --transpile-only --no-notify --respawn -r dotenv/config src/index.ts",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
