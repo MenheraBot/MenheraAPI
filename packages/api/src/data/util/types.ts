@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 export type ActivityType = 'PLAYING' | 'LISTENING' | 'WATCHING' | 'STREAMING';
 
+export type Nullable<T> = T | null;
+
 export interface Activity {
   name: string;
   type: ActivityType;
@@ -9,9 +11,12 @@ export interface Activity {
 
 export interface commandInterface {
   name: string;
-  usages: number;
+  usages: Nullable<number>;
 }
 
+export type AllNulable<T> = { [P in keyof T]: T[P] | null };
+
+export type HuntTypes = 'demon' | 'giant' | 'angel' | 'archangel' | 'demigod' | 'god';
 export interface CoinflipStats {
   cf_wins: number;
   cf_loses: number;
@@ -35,34 +40,18 @@ export interface RouletteStats {
 
 export interface userInterface {
   id: string;
-  uses: number;
+  uses: Nullable<number>;
 }
 
 export interface usagesInterface {
-  command: commandInterface;
-  user: userInterface;
-}
-
-export interface HuntStats {
-  user_id: string;
-  demon_tries: number;
-  demon_success: number;
-  demon_hunted: number;
-  giant_tries: number;
-  giant_success: number;
-  giant_hunted: number;
-  angel_tries: number;
-  angel_success: number;
-  angel_hunted: number;
-  archangel_tries: number;
-  archangel_success: number;
-  archangel_hunted: number;
-  demigod_tries: number;
-  demigod_success: number;
-  demigod_hunted: number;
-  god_tries: number;
-  god_success: number;
-  god_hunted: number;
+  command: {
+    usages: number | null;
+    name: string;
+  } | null;
+  user: {
+    uses: number | null;
+    id: string;
+  } | null;
 }
 
 export type BichoBetType =

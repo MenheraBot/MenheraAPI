@@ -1,12 +1,13 @@
 /* eslint-disable camelcase */
+import { hunts } from '@prisma/client';
 import {
+  AllNulable,
   BichoBetType,
   BlackJackStats,
   CoinflipStats,
   commandInterface,
-  HuntStats,
+  HuntTypes,
   RouletteStats,
-  usagesInterface,
   userInterface,
 } from '../util/types';
 import Prisma from './Connection';
@@ -36,229 +37,240 @@ const incrementUsages = async (userId: string, commandId: number): Promise<void>
   ]);
 };
 
-export async function getMostUserAndCommand(): Promise<usagesInterface> {
-  const mostCommandUsed = await pool.query(
-    'SELECT name, usages FROM cmds ORDER BY usages DESC LIMIT 1'
-  );
-  const mostUserCommand = await pool.query('SELECT * FROM users ORDER BY uses DESC LIMIT 1');
-  const result = {
-    command: mostCommandUsed.rows[0],
-    user: mostUserCommand.rows[0],
-  };
-  return result;
-}
+export const getTopCommands = async (): Promise<commandInterface[]> => {
+  return Prisma.cmds.findMany({
+    orderBy: { usages: 'desc' },
+    take: 10,
+    select: { name: true, usages: true },
+  });
+};
 
-export async function getTopCommands(): Promise<Array<commandInterface>> {
-  const result = await pool.query('SELECT name, usages FROM cmds ORDER BY usages DESC LIMIT 10');
-  return result.rows;
-}
+export const getTopUsers = async (): Promise<userInterface[]> => {
+  return Prisma.users.findMany({
+    orderBy: { uses: 'desc' },
+    take: 10,
+    select: { id: true, uses: true },
+  });
+};
 
-export async function getTopUsers(): Promise<Array<userInterface>> {
-  const result = await pool.query('SELECT id, uses FROM users ORDER BY uses DESC LIMIT 10');
-  return result.rows;
-}
-
-export async function registerBichoBet(
+export const registerBichoBet = async (
   userId: string,
   value: number,
   betType: BichoBetType,
   betSelection: string
-): Promise<number> {
-  const userIdInDatabase = await ensureUser(userId);
-  const result = await pool.query(
-    'INSERT INTO bicho (user_id, value, bet_type, bet_selection, date) VALUES ($1,$2,$3,$4,$5) RETURNING game_id',
-    [userIdInDatabase, value, betType, betSelection, Date.now()]
-  );
+): Promise<number> => {
+  await ensureUser(userId);
+  const result = await Prisma.bicho.create({
+    data: {
+      user_id: userId,
+      bet_selection: betSelection,
+      value,
+      bet_type: betType,
+      date: Date.now(),
+    },
+    select: {
+      game_id: true,
+    },
+  });
 
-  return result.rows[0].game_id;
-}
+  return result.game_id;
+};
 
-export async function makeUserWinBicho(gameId: number): Promise<void> {
-  await pool.query('UPDATE bicho SET didWin = true WHERE game_id = $1', [gameId]);
-}
+export const makeUserWinBicho = async (gameId: number): Promise<void> => {
+  await Prisma.bicho.update({ where: { game_id: gameId }, data: { didwin: true } });
+};
 
-export async function addCommand(
+export const createCommandExecution = async (
   userId: string,
   guildId: string,
   commandName: string,
-  data: number,
+  date: number,
   args: string
-): Promise<void> {
+): Promise<void> => {
   const commandId = await ensureCommand(commandName);
-  const userIdInDatabase = await ensureUser(userId);
-  await pool.query(
-    'INSERT INTO uses (user_id, cmd_id, guild_id, date, args) VALUES ($1,$2,$3,$4, $5)',
-    [userIdInDatabase, commandId, guildId, data, args]
-  );
-  incrementUsages(userIdInDatabase, commandId);
-}
+  await ensureUser(userId);
 
-export async function getCoinflipStats(userId: string): Promise<CoinflipStats> {
-  const userIdInDatabase = await ensureUser(userId);
-  const result = await pool.query(
-    'SELECT cf_wins, cf_loses, cf_win_money, cf_lose_money FROM users WHERE id = $1',
-    [userIdInDatabase]
-  );
-  return result.rows[0];
-}
+  await Prisma.uses.create({
+    data: { guild_id: guildId, args, user_id: userId, cmd_id: commandId, date },
+  });
 
-export async function getBlackJackStats(userId: string): Promise<BlackJackStats> {
-  const userIdInDatabase = await ensureUser(userId);
-  const result = await pool.query(
-    'SELECT bj_wins, bj_loses, bj_win_money, bj_lose_money FROM users WHERE id = $1',
-    [userIdInDatabase]
-  );
-  return result.rows[0];
-}
+  await incrementUsages(userId, commandId);
+};
 
-export async function postBlackJackGame(
+export const getCoinflipStats = async (
+  userId: string
+): Promise<AllNulable<CoinflipStats> | null> => {
+  await ensureUser(userId);
+  const result = await Prisma.users.findUnique({
+    where: { id: userId },
+    select: { cf_wins: true, cf_loses: true, cf_win_money: true, cf_lose_money: true },
+  });
+
+  return result;
+};
+
+export const getBlackJackStats = async (
+  userId: string
+): Promise<AllNulable<BlackJackStats> | null> => {
+  await ensureUser(userId);
+  const result = await Prisma.users.findUnique({
+    where: { id: userId },
+    select: { bj_wins: true, bj_loses: true, bj_win_money: true, bj_lose_money: true },
+  });
+
+  return result;
+};
+
+export const postBlackJackGame = async (
   userId: string,
   didWin: boolean,
   betValue: number
-): Promise<void> {
-  const userIdInDatabase = await ensureUser(userId);
+): Promise<void> => {
+  await ensureUser(userId);
 
   if (didWin)
-    await pool.query(
-      'UPDATE users SET bj_wins = bj_wins + 1, bj_win_money = bj_win_money + $1 WHERE id = $2',
-      [betValue, userIdInDatabase]
-    );
+    await Prisma.users.update({
+      where: { id: userId },
+      data: { bj_wins: { increment: 1 }, bj_win_money: { increment: betValue } },
+    });
   else
-    await pool.query(
-      'UPDATE users SET bj_loses = bj_loses + 1, bj_lose_money = bj_lose_money + $1 WHERE id = $2',
-      [betValue, userIdInDatabase]
-    );
-}
+    await Prisma.users.update({
+      where: { id: userId },
+      data: { bj_loses: { increment: 1 }, bj_lose_money: { increment: betValue } },
+    });
+};
 
-async function updateCoinflipUserStats(
+export const postCoinflip = async (
   winnerId: string,
   loserId: string,
   value: number
-): Promise<void> {
-  await pool.query(
-    'UPDATE users SET cf_wins = cf_wins + 1, cf_win_money = cf_win_money + $1 WHERE id = $2',
-    [value, winnerId]
-  );
-  await pool.query(
-    'UPDATE users SET cf_loses = cf_loses + 1, cf_lose_money = cf_lose_money + $1 WHERE id = $2',
-    [value, loserId]
-  );
-}
+): Promise<void> => {
+  await Promise.all([ensureUser(winnerId), ensureUser(loserId)]);
 
-export async function postCoinflip(
-  winnerId: string,
-  loserId: string,
-  betValue: number
-): Promise<void> {
-  const winnerIdInDatabase = await ensureUser(winnerId);
-  const loserIdInDatabase = await ensureUser(loserId);
-  await updateCoinflipUserStats(winnerIdInDatabase, loserIdInDatabase, betValue);
-}
+  await Prisma.$transaction([
+    Prisma.users.update({
+      where: { id: winnerId },
+      data: { cf_wins: { increment: 1 }, cf_win_money: { increment: value } },
+    }),
+    Prisma.users.update({
+      where: { id: loserId },
+      data: { cf_loses: { increment: 1 }, cf_lose_money: { increment: value } },
+    }),
+  ]);
+};
 
-async function ensureHunt(userId: string): Promise<true> {
-  await ensureUser(userId);
-  const has = await pool.query('SELECT user_id FROM hunts WHERE user_id = $1', [userId]);
-  if (has.rows[0]?.user_id) return true;
-
-  await pool.query('INSERT INTO hunts (user_id) VALUES ($1)', [userId]);
-  return true;
-}
-
-export async function postHunt(
+export const postHunt = async (
   userId: string,
-  huntType: string,
+  huntType: HuntTypes,
   value: number,
   success: number,
   tries: number
-): Promise<void> {
-  await ensureHunt(userId);
+): Promise<void> => {
+  await ensureUser(userId);
 
-  await pool.query(
-    `UPDATE hunts SET ${huntType}_tries = ${huntType}_tries + ${tries}, ${huntType}_success = ${huntType}_success + ${success}, ${huntType}_hunted = ${huntType}_hunted + ${value} WHERE user_id = $1`,
-    [userId]
-  );
-}
+  await Prisma.hunts.upsert({
+    where: { user_id: userId },
+    update: {
+      [`${huntType}_hunted`]: { increment: value },
+      [`${huntType}_tries`]: { increment: tries },
+      [`${huntType}_success`]: { increment: success },
+    },
+    create: { user_id: userId },
+  });
+};
 
-export async function getUserHuntData(userId: string): Promise<HuntStats> {
-  return (await pool.query('SELECT * FROM hunts WHERE user_id = $1', [userId])).rows[0];
-}
+export const getUserHuntData = async (userId: string): Promise<hunts | null> => {
+  return Prisma.hunts.findUnique({ where: { user_id: userId } });
+};
 
 export async function getInactiveUsersLastCommand(
   users: string[] = []
 ): Promise<{ user: string; date: number }[]> {
-  const results = await pool.query(
-    'SELECT lc.user_id, lc.date FROM uses lc LEFT JOIN uses nc ON lc.user_id = nc.user_id AND lc.date > nc.date WHERE (nc.date IS NULL) AND (lc.date < $1) AND (lc.user_id IN ($2)) ORDER BY lc.date DESC',
-    [Date.now() - 604800000, users]
-  );
+  const results =
+    (await Prisma.$queryRaw`SELECT lc.user_id, lc.date FROM uses lc LEFT JOIN uses nc ON lc.user_id = nc.user_id AND lc.date > nc.date WHERE (nc.date IS NULL) AND (lc.date < ${
+      Date.now() - 604800000
+    }) AND (lc.user_id IN (${users})) ORDER BY lc.date DESC`) as { user: string; date: number }[];
 
-  return results.rows;
+  return results;
 }
 
-export async function getUserCommandsUsesCount(userId: string): Promise<{ count: number } | null> {
-  const commandsExecuted = await pool.query('SELECT uses AS count FROM users WHERE id = $1', [
-    userId,
-  ]);
+export const getUserCommandsUsesCount = async (
+  userId: string
+): Promise<{ count: number } | null> => {
+  const commands = await Prisma.users.findUnique({
+    where: { id: userId },
+    select: { uses: true },
+  });
 
-  if (!commandsExecuted.rows[0]) return null;
+  if (!commands) return null;
 
-  return commandsExecuted.rows[0];
-}
+  return { count: commands.uses ?? 0 };
+};
 
-export async function getUserTopCommandsUsed(userId: number): Promise<unknown[]> {
-  const allCommands = await pool.query(
-    'SELECT cmds.name, COUNT(cmds.name) FROM uses INNER JOIN cmds ON uses.cmd_id = cmds.id WHERE user_id = $1 GROUP BY cmds.name ORDER BY count DESC LIMIT 10',
-    [userId]
-  );
+export const getUserTopCommandsUsed = async (
+  userId: string
+): Promise<{ name: string; count: number }[]> => {
+  const results =
+    await Prisma.$queryRaw`SELECT cmds.name, COUNT(cmds.name) FROM uses INNER JOIN cmds ON uses.cmd_id = cmds.id WHERE user_id = ${userId} GROUP BY cmds.name ORDER BY count DESC LIMIT 10`;
+  return results as { name: string; count: number }[];
+};
 
-  return allCommands.rows;
-}
-
-export async function updateUserRouletteStatus(
+export const updateUserRouletteStatus = async (
   userId: string,
   betValue: number,
   profit: number,
   didWin: boolean
-): Promise<void> {
-  await pool.query('INSERT INTO roletauser (user_id) VALUES ($1) ON CONFLICT(user_id) DO NOTHING', [
-    userId,
-  ]);
+): Promise<void> => {
+  const winOrLoseGame = didWin ? 'won' : 'lost';
+  const winOrLoseMoney = didWin ? 'earn' : 'lost';
 
-  if (didWin)
-    await pool.query(
-      'UPDATE roletauser SET earn_money = earn_money + $1, won_games = won_games + 1 WHERE user_id = $2',
-      [profit, userId]
-    );
-  else
-    await pool.query(
-      'UPDATE roletauser SET lost_money = lost_money + $1, lost_games = lost_games + 1 WHERE user_id = $2',
-      [betValue, userId]
-    );
-}
+  await Prisma.roletauser.upsert({
+    where: { user_id: userId },
+    update: {
+      [`${winOrLoseMoney}_money`]: { increment: didWin ? profit : betValue },
+      [`${winOrLoseGame}_games`]: { increment: 1 },
+    },
+    create: {
+      [`${winOrLoseMoney}_money`]: didWin ? profit : betValue,
+      [`${winOrLoseGame}_games`]: 1,
+      user_id: userId,
+    },
+  });
+};
 
-export async function createRouletteGame(
+export const createRouletteGame = async (
   userId: string,
   betValue: number,
   profit: number,
   didWin: boolean,
   betType: string,
   selectedValues: string
-): Promise<void> {
-  await ensureUser(userId);
+): Promise<void> => {
+  await Promise.all([
+    ensureUser(userId),
+    updateUserRouletteStatus(userId, betValue, profit, didWin),
+    Prisma.roulette.create({
+      data: {
+        user_id: userId,
+        bet_value: betValue,
+        didwin: didWin,
+        bet_type: betType,
+        selected_values: selectedValues,
+        profit,
+      },
+    }),
+  ]);
+};
 
-  await updateUserRouletteStatus(userId, betValue, profit, didWin);
+export const getRouletteStatus = async (
+  userId: string
+): Promise<AllNulable<RouletteStats> | null> => {
+  const result = await Prisma.roletauser.findUnique({
+    where: { user_id: userId },
+    select: { earn_money: true, lost_games: true, lost_money: true, won_games: true },
+  });
 
-  await pool.query(
-    'INSERT INTO roulette (user_id, bet_value, didwin, bet_type, selected_values, profit) VALUES ($1, $2, $3, $4, $5, $6)',
-    [userId, betValue, didWin, betType, selectedValues, profit]
-  );
-}
+  if (!result) return null;
 
-export async function getRouletteStatus(userId: string): Promise<RouletteStats | false> {
-  const result = await pool.query(
-    'SELECT earn_money, lost_money, won_games, lost_games FROM roletauser WHERE user_id = $1',
-    [userId]
-  );
-
-  if (result.rowCount === 0) return false;
-  return result.rows[0];
-}
+  return result;
+};
