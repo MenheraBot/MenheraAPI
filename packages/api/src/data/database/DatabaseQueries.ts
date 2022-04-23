@@ -49,7 +49,7 @@ export const getTopUsers = async (): Promise<userInterface[]> => {
   return Prisma.users.findMany({
     orderBy: { uses: 'desc' },
     take: 10,
-    select: { id: true, uses: true },
+    select: { id: true, uses: true }, // ok
   });
 };
 
