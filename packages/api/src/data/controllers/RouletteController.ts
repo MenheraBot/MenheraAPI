@@ -26,15 +26,15 @@ export default class RouletteController {
 
     if (!result) return res.sendStatus(404);
 
-    const playedGames = (result.lost_games ?? 0) + (result.won_games ?? 0);
+    const playedGames = result.lost_games + result.won_games;
 
     if (playedGames === 0) return res.status(200).send({ error: true });
     const lostGames = result.lost_games;
     const winGames = result.won_games;
     const winMoney = result.earn_money;
     const lostMoney = result.lost_money;
-    const winPorcentage = ((winGames ?? 0 / playedGames) * 100).toFixed(2) || 0;
-    const lostPorcentage = ((lostGames ?? 0 / playedGames) * 100).toFixed(2) || 0;
+    const winPorcentage = ((winGames / playedGames) * 100).toFixed(2) || 0;
+    const lostPorcentage = ((lostGames / playedGames) * 100).toFixed(2) || 0;
     const returnObject = {
       playedGames,
       lostGames,

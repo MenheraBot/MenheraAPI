@@ -9,7 +9,7 @@ export default class CoinflipController {
 
     if (!result) return res.sendStatus(400);
 
-    const playedGames = (result.cf_wins ?? 0) + (result.cf_loses ?? 0);
+    const playedGames = result.cf_wins + result.cf_loses;
 
     if (playedGames === 0) return res.status(200).send({ error: true });
     const lostGames = result.cf_loses;
