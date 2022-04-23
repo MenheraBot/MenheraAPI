@@ -24,6 +24,7 @@ export default class CommandsManager {
 
   public editMaintenance(commandName: string, disabled: ICommandDisabledData): void {
     const existingData = this.commands.get(commandName);
+    if (!existingData) return;
     existingData.disabled = disabled;
     this.commands.set(commandName, existingData);
   }

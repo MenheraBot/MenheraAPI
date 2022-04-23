@@ -10,7 +10,7 @@ import Command from './structures/command';
 import EventManager from './structures/EventManager';
 import Event from './structures/event';
 
-export default class WatchClient extends Client {
+export default class WatchClient extends Client<true> {
   public commands: Collection<string, Command> = new Collection();
 
   public aliases: Collection<string, string> = new Collection();

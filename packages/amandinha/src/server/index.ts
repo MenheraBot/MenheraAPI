@@ -1,7 +1,6 @@
 import express, { Response } from 'express';
 import cors from 'cors';
 import Http from 'http';
-import logger from '@menhera-tools/logger';
 import WatchClient from '../client';
 
 import NotFound from './middlewares/NotFound';
@@ -29,7 +28,7 @@ const startServer = (client: WatchClient): void => {
   app.use(NotFound);
 
   server.listen(process.env.PORT, () => {
-    logger.info(`[AMANDNINHA INTERACTION SERVER] Server started on port ${process.env.PORT}`);
+    console.log(`[AMANDNINHA INTERACTION SERVER] Server started on port ${process.env.PORT}`);
   });
 };
 

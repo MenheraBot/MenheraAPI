@@ -1,4 +1,4 @@
-const RoleplayBattleConfigs: { userId: string; config: unknown }[] = [];
+const RoleplayBattleConfigs: { userId: string; config: { [struct: string]: unknown } }[] = [];
 
 // TODO: Add configuration to database
 

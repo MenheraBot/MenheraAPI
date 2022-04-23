@@ -17,6 +17,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
+    'no-console': 'off',
     'import/extensions': ['error', 'never'],
     'import/no-extraneous-dependencies': 'off',
     '@typescript-eslint/type-annotation-spacing': [

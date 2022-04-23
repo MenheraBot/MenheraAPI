@@ -9,34 +9,32 @@ import {
   usagesInterface,
   userInterface,
 } from '../util/types';
-import pool from './Pool';
+import Prisma from './Connection';
 
-export async function ensureCommand(commandName: string): Promise<number> {
-  const command = await pool.query('SELECT (id) FROM cmds WHERE name = $1', [commandName]);
+export const ensureCommand = async (commandsName: string): Promise<number> => {
+  const command = await Prisma.cmds.findFirst({ where: { name: commandsName } });
 
-  if (command.rowCount === 0) {
-    const commandId = await pool.query('INSERT INTO cmds (name) VALUES ($1) RETURNING id', [
-      commandName,
-    ]);
-    return commandId.rows[0].id;
-  }
-  return command.rows[0].id;
-}
+  if (command) return command.id;
 
-async function ensureUser(user: string): Promise<string> {
-  const hasUser = await pool.query('SELECT id FROM users WHERE id = $1', [user]);
+  const res = await Prisma.cmds.create({ data: { name: commandsName } });
+  return res.id;
+};
 
-  if (hasUser.rowCount === 0) {
-    const userId = await pool.query('INSERT INTO users (id) VALUES ($1) RETURNING id', [user]);
-    return userId.rows[0].id;
-  }
-  return hasUser.rows[0].id;
-}
+export const ensureUser = async (userId: string): Promise<string> => {
+  const user = await Prisma.users.findUnique({ where: { id: userId } });
 
-async function incrementUsages(user: string, command: number): Promise<void> {
-  await pool.query('UPDATE users SET uses = uses + 1 WHERE id = $1', [user]);
-  await pool.query('UPDATE cmds SET usages = usages + 1 WHERE id = $1', [command]);
-}
+  if (user) return user.id;
+
+  const res = await Prisma.users.create({ data: { id: userId } });
+  return res.id;
+};
+
+const incrementUsages = async (userId: string, commandId: number): Promise<void> => {
+  await Prisma.$transaction([
+    Prisma.users.update({ where: { id: userId }, data: { uses: { increment: 1 } } }),
+    Prisma.cmds.update({ where: { id: commandId }, data: { usages: { increment: 1 } } }),
+  ]);
+};
 
 export async function getMostUserAndCommand(): Promise<usagesInterface> {
   const mostCommandUsed = await pool.query(

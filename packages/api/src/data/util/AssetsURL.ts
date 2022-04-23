@@ -1,4 +1,4 @@
-const urls = {
+const urls: { [type: string]: string[] } = {
   bicuda: [
     'https://i.imgur.com/GoHtaA8.gif',
     'https://i.imgur.com/krh4BD6.gif',

@@ -1,13 +1,9 @@
-/* eslint-disable @typescript-eslint/type-annotation-spacing */ // O preetier manda ficar separado, e o eslint junto, por isso que desabilitei pra não me estressar
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable global-require */
-/* eslint-disable import/no-dynamic-require */
 import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line import/no-cycle
 import WatchClient from '../client';
 
+// eslint-disable-next-line @typescript-eslint/type-annotation-spacing
 type ReloadFunction<Module> = (module: Module, dirPath: string) => void;
 
 export default class FileUtil {

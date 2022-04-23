@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model bicho {
+  user_id       String   @db.VarChar(20)
+  value         Int?
+  bet_type      String?  @db.VarChar
+  bet_selection String?  @db.VarChar
+  date          BigInt?
+  game_id       Int      @id @default(autoincrement())
+  didwin        Boolean? @default(false)
+  users         users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model cmds {
+  id     Int    @id @default(autoincrement())
+  name   String @db.VarChar(20)
+  usages Int?   @default(0)
+  uses   uses[]
+}
+
+model coinflip {
+  id                           Int     @id @default(autoincrement())
+  winner                       String? @db.VarChar(20)
+  loser                        String? @db.VarChar(20)
+  value                        Int
+  date                         BigInt?
+  users_coinflip_loserTousers  users?  @relation("coinflip_loserTousers", fields: [loser], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_coinflip_winnerTousers users?  @relation("coinflip_winnerTousers", fields: [winner], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model hunts {
+  user_id           String @id @db.VarChar
+  demon_tries       Int?   @default(0)
+  demon_success     Int?   @default(0)
+  demon_hunted      Int?   @default(0)
+  giant_tries       Int?   @default(0)
+  giant_success     Int?   @default(0)
+  giant_hunted      Int?   @default(0)
+  angel_tries       Int?   @default(0)
+  angel_success     Int?   @default(0)
+  angel_hunted      Int?   @default(0)
+  archangel_tries   Int?   @default(0)
+  archangel_success Int?   @default(0)
+  archangel_hunted  Int?   @default(0)
+  demigod_tries     Int?   @default(0)
+  demigod_success   Int?   @default(0)
+  demigod_hunted    Int?   @default(0)
+  god_tries         Int?   @default(0)
+  god_success       Int?   @default(0)
+  god_hunted        Int?   @default(0)
+  users             users  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user_id")
+}
+
+model roletauser {
+  user_id    String @id @db.VarChar(20)
+  earn_money Int?   @default(0)
+  lost_money Int?   @default(0)
+  lost_games Int?   @default(0)
+  won_games  Int?   @default(0)
+  users      users  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
+}
+
+model roulette {
+  id              Int      @id @default(autoincrement())
+  user_id         String?  @db.VarChar(20)
+  bet_value       Int?
+  didwin          Boolean?
+  bet_type        String?  @db.VarChar(50)
+  selected_values String?
+  profit          Int?
+}
+
+model users {
+  id                              String      @id @db.VarChar(20)
+  uses                            Int?        @default(0)
+  cf_wins                         Int?        @default(0)
+  cf_loses                        Int?        @default(0)
+  cf_win_money                    Int?        @default(0)
+  cf_lose_money                   Int?        @default(0)
+  bj_wins                         Int?        @default(0)
+  bj_loses                        Int?        @default(0)
+  bj_win_money                    Int?        @default(0)
+  bj_lose_money                   Int?        @default(0)
+  bicho                           bicho[]
+  coinflip_coinflip_loserTousers  coinflip[]  @relation("coinflip_loserTousers")
+  coinflip_coinflip_winnerTousers coinflip[]  @relation("coinflip_winnerTousers")
+  hunts                           hunts?
+  roletauser                      roletauser?
+  uses_usersTouses                uses[]
+}
+
+model uses {
+  id       Int     @id @default(autoincrement())
+  user_id  String? @db.VarChar(20)
+  cmd_id   Int?
+  guild_id String  @db.VarChar(20)
+  date     BigInt?
+  args     String?
+  cmds     cmds?   @relation(fields: [cmd_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users    users?  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}

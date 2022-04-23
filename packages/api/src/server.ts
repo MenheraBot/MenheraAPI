@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import http from 'http';
-import logger from '@menhera-tools/logger';
 import rateLimit from 'express-rate-limit';
 
 import NotFound from './data/middlewares/NotFound';
@@ -40,5 +39,5 @@ app.use(NotFound);
 app.use(ErrorHandler);
 
 server.listen(process.env.PORT, () => {
-  logger.info(`[API] Server started on port ${process.env.PORT}`);
+  console.log(`[API] Server started on port ${process.env.PORT}`);
 });

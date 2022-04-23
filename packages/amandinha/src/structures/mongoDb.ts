@@ -1,7 +1,6 @@
-import Logger from '@menhera-tools/logger';
 import { connect, Schema, model } from 'mongoose';
 
-connect(process.env.MONGO_URI as string).then(() => Logger.info('[DATABASE] Conectada'));
+connect(process.env.MONGO_URI as string).then(() => console.log('[DATABASE] Conectada'));
 
 const userSchema = new Schema({
   id: String,
