@@ -23,6 +23,8 @@
 | POST   | `/activity`                      | Adiciona uma nova atividade                                                                     |
 | PUT    | `/activity`                      | Reseta todas as atividades para as padrões                                                      |
 | DELETE | `/activity`                      | Deleta todas as atividades                                                                      |
+| GET    | `/statistics/bicho`              | Retorna as estatisticas de um usuário no Jogo do Bicho                                          |
+| GET    | `/statistics/bicho/top`          | Retorna o top usuários do jogo do bicho                                                         |
 | POST   | `/statistics/bicho`              | Cria uma aposta do Jogo do Bicho no Banco de Dados                                              |
 | PUT    | `/statistics/bicho`              | Atualiza os dados de um jogador no bicho                                                        |
 | PATCH  | `/statistics/bicho`              | Modifica o estado de uma aposta, settando-a como Vencedora                                      |
