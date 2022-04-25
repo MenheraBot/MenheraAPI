@@ -308,7 +308,13 @@ export const getRouletteStatus = async (
 ): Promise<AllNulable<RouletteStats> | null> => {
   const result = await Prisma.roletauser.findUnique({
     where: { user_id: userId },
-    select: { earn_money: true, lost_games: true, lost_money: true, won_games: true },
+    select: {
+      earn_money: true,
+      lost_games: true,
+      lost_money: true,
+      won_games: true,
+      user_id: true,
+    },
   });
 
   if (!result) return null;
@@ -328,7 +334,7 @@ export const getTopBlackjack = async (
     skip,
     where: { id: { notIn: bannedUsers } },
     orderBy: { [toOrderBy]: 'desc' },
-    select: { bj_wins: true, bj_win_money: true, bj_loses: true, bj_lose_money: true },
+    select: { bj_wins: true, bj_win_money: true, bj_loses: true, bj_lose_money: true, id: true },
   });
 
   return result;
@@ -346,7 +352,7 @@ export const getTopCoinflip = async (
     skip,
     where: { id: { notIn: bannedUsers } },
     orderBy: { [toOrderBy]: 'desc' },
-    select: { cf_wins: true, cf_win_money: true, cf_loses: true, cf_lose_money: true },
+    select: { cf_wins: true, cf_win_money: true, cf_loses: true, cf_lose_money: true, id: true },
   });
 
   return result;
@@ -367,6 +373,7 @@ export const getTopHunt = async (
       [`${huntType}_success`]: true,
       [`${huntType}_tries`]: true,
       [`${huntType}_hunted`]: true,
+      user_id: true,
     },
   });
 
@@ -390,6 +397,7 @@ export const getTopRoulette = async (
       lost_games: true,
       lost_money: true,
       won_games: true,
+      user_id: true,
     },
   });
 
@@ -413,6 +421,7 @@ export const getTopBicho = async (
       lost_games: true,
       lost_money: true,
       won_games: true,
+      user_id: true,
     },
   });
 
