@@ -21,8 +21,9 @@ ActivityGroup.delete('/', ActivityController.clear);
 
 const StatisticsGroup = Router();
 // Jogo do Bicho System
-StatisticsGroup.post('/bicho', JogoDoBichoController.addBet); // Create a bet
-StatisticsGroup.patch('/bicho', JogoDoBichoController.userWin); // Update if user win a bet
+StatisticsGroup.get('/bicho', JogoDoBichoController.getUserInfo);
+StatisticsGroup.post('/bicho', JogoDoBichoController.addBet);
+StatisticsGroup.patch('/bicho', JogoDoBichoController.userWin);
 // Hunt Command
 StatisticsGroup.get('/hunt', HuntsController.getUserInfo);
 StatisticsGroup.post('/hunt', HuntsController.postHuntMade);
