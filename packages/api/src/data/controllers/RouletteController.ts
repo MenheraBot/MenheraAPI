@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createRouletteGame, getRouletteStatus } from '../database/DatabaseQueries';
+import { createRouletteGame, getRouletteStatus, getTopRoulette } from '../database/DatabaseQueries';
 
 export default class RouletteController {
   public static async postRouletteGame(req: Request, res: Response): Promise<Response> {
@@ -46,5 +46,13 @@ export default class RouletteController {
     };
 
     return res.status(200).send(returnObject);
+  }
+
+  public static async topRoulette(req: Request, res: Response): Promise<Response> {
+    const { skip, bannedUsers, type } = req.body;
+
+    const top = await getTopRoulette(skip, bannedUsers, type);
+
+    return res.status(200).send(top);
   }
 }

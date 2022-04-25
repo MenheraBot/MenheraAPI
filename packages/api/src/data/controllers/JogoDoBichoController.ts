@@ -1,5 +1,11 @@
 import { Request, Response } from 'express';
-import { getBichoStats, makeUserWinBicho, registerBichoBet } from '../database/DatabaseQueries';
+import {
+  getBichoStats,
+  getTopBicho,
+  makeUserWinBicho,
+  registerBichoBet,
+  updateUserBichoStatus,
+} from '../database/DatabaseQueries';
 
 export default class JogoDoBichoController {
   public static async addBet(req: Request, res: Response): Promise<Response> {
@@ -47,5 +53,23 @@ export default class JogoDoBichoController {
     };
 
     return res.status(200).send(returnObject);
+  }
+
+  public static async postBichoGame(req: Request, res: Response): Promise<Response> {
+    const { userId, betValue, profit, didWin } = req.body;
+    if (!userId || !betValue || !profit || typeof didWin === 'undefined')
+      return res.sendStatus(400);
+
+    await updateUserBichoStatus(userId, betValue, profit, didWin);
+
+    return res.sendStatus(201);
+  }
+
+  public static async topBicho(req: Request, res: Response): Promise<Response> {
+    const { skip, bannedUsers, type } = req.body;
+
+    const top = await getTopBicho(skip, bannedUsers, type);
+
+    return res.status(200).send(top);
   }
 }

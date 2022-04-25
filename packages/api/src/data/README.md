@@ -24,15 +24,20 @@
 | PUT    | `/activity`                      | Reseta todas as atividades para as padrões                                                      |
 | DELETE | `/activity`                      | Deleta todas as atividades                                                                      |
 | POST   | `/statistics/bicho`              | Cria uma aposta do Jogo do Bicho no Banco de Dados                                              |
+| PUT    | `/statistics/bicho`              | Atualiza os dados de um jogador no bicho                                                        |
 | PATCH  | `/statistics/bicho`              | Modifica o estado de uma aposta, settando-a como Vencedora                                      |
 | GET    | `/statistics/blackjack`          | Retorna as informações dos jogos de Blackjack de um usuário                                     |
+| GET    | `/statistics/blackjack/top`      | Retorna o top jogadores do blackjack                                                            |
 | POST   | `/statistics/blackjack`          | Atualiza os dados de um jogador de Blackjack                                                    |
 | GET    | `/statistics/coinflip`           | Retorna as informações dos coinflips de um usuário                                              |
+| GET    | `/statistics/coinflip/top`       | Retorna o top jogadores de coinflip                                                             |
 | POST   | `/statistics/coinflip`           | Atualiza os dados de um jogador de coinflip                                                     |
 | GET    | `/statistics/roulette`           | Retorna as informações de roleta de um usuário                                                  |
+| GET    | `/statistics/roulette/top`       | Retorna o top jogadores de roleta                                                               |
 | POST   | `/statistics/roulette`           | Atualiza os dados de um jogador de roleta                                                       |
 | GET    | `/statistics/hunt`               | Retorna os status de caçada do usuário                                                          |
-| POST   | `/statistics/hunt`               | Atualiza is dadis de um jogador nas caças                                                       |
+| GET    | `/statistics/hunt/top`           | Retorna o top caçadores                                                                         |
+| POST   | `/statistics/hunt`               | Atualiza os dados de um jogador nas caças                                                       |
 | POST   | `/usages/commands`               | Posta uma execução de comando                                                                   |
 | GET    | `/usages/inactive`               | Retorna o ID de todos os usuários que estão inativos por mais de uma semana                     |
 | GET    | `/usages/top/command`            | Retorna o top 10 comandos mais usados                                                           |

@@ -22,19 +22,25 @@ ActivityGroup.delete('/', ActivityController.clear);
 const StatisticsGroup = Router();
 // Jogo do Bicho System
 StatisticsGroup.get('/bicho', JogoDoBichoController.getUserInfo);
+StatisticsGroup.get('/bicho/top', JogoDoBichoController.topBicho);
 StatisticsGroup.post('/bicho', JogoDoBichoController.addBet);
+StatisticsGroup.post('/bicho/user', JogoDoBichoController.postBichoGame);
 StatisticsGroup.patch('/bicho', JogoDoBichoController.userWin);
 // Hunt Command
 StatisticsGroup.get('/hunt', HuntsController.getUserInfo);
+StatisticsGroup.get('/hunt/top', HuntsController.topHunts);
 StatisticsGroup.post('/hunt', HuntsController.postHuntMade);
 // Blackjack Command
 StatisticsGroup.get('/blackjack', BlackJackController.getUserInfo);
+StatisticsGroup.get('/blackjack/top', BlackJackController.topBlackjack);
 StatisticsGroup.post('/blackjack', BlackJackController.postBlackJack);
 // Coinflip Command
 StatisticsGroup.get('/coinflip', CoinflipController.getUserInfo);
+StatisticsGroup.get('/coinflip/top', CoinflipController.topCoinflip);
 StatisticsGroup.post('/coinflip', CoinflipController.postCoinflip);
 // Roulette Command
 StatisticsGroup.get('/roulette', RouletteController.getUserRouletteStatus);
+StatisticsGroup.get('/roulette/top', RouletteController.topRoulette);
 StatisticsGroup.post('/roulette', RouletteController.postRouletteGame);
 
 const UsagesGroup = Router();

@@ -197,6 +197,29 @@ export const postHunt = async (
   });
 };
 
+export const updateUserBichoStatus = async (
+  userId: string,
+  betValue: number,
+  profit: number,
+  didWin: boolean
+): Promise<void> => {
+  const winOrLoseGame = didWin ? 'won' : 'lost';
+  const winOrLoseMoney = didWin ? 'earn' : 'lost';
+
+  await Prisma.roletauser.upsert({
+    where: { user_id: userId },
+    update: {
+      [`${winOrLoseMoney}_money`]: { increment: didWin ? profit : betValue },
+      [`${winOrLoseGame}_games`]: { increment: 1 },
+    },
+    create: {
+      [`${winOrLoseMoney}_money`]: didWin ? profit : betValue,
+      [`${winOrLoseGame}_games`]: 1,
+      user_id: userId,
+    },
+  });
+};
+
 export const getUserHuntData = async (userId: string): Promise<hunts | null> => {
   return Prisma.hunts.findUnique({ where: { user_id: userId } });
 };
@@ -289,6 +312,109 @@ export const getRouletteStatus = async (
   });
 
   if (!result) return null;
+
+  return result;
+};
+
+export const getTopBlackjack = async (
+  skip: number,
+  bannedUsers: string[],
+  type: 'money' | 'wins'
+): Promise<BlackJackStats[]> => {
+  const toOrderBy = type === 'money' ? 'bj_win_money' : 'bj_wins';
+
+  const result = await Prisma.users.findMany({
+    take: 10,
+    skip,
+    where: { id: { notIn: bannedUsers } },
+    orderBy: { [toOrderBy]: 'desc' },
+    select: { bj_wins: true, bj_win_money: true, bj_loses: true, bj_lose_money: true },
+  });
+
+  return result;
+};
+
+export const getTopCoinflip = async (
+  skip: number,
+  bannedUsers: string[],
+  type: 'money' | 'wins'
+): Promise<CoinflipStats[]> => {
+  const toOrderBy = type === 'money' ? 'cf_win_money' : 'cf_wins';
+
+  const result = await Prisma.users.findMany({
+    take: 10,
+    skip,
+    where: { id: { notIn: bannedUsers } },
+    orderBy: { [toOrderBy]: 'desc' },
+    select: { cf_wins: true, cf_win_money: true, cf_loses: true, cf_lose_money: true },
+  });
+
+  return result;
+};
+
+export const getTopHunt = async (
+  skip: number,
+  bannedUsers: string[],
+  huntType: HuntTypes,
+  type: 'success' | 'hunted' | 'tries'
+): Promise<unknown[]> => {
+  const result = await Prisma.hunts.findMany({
+    take: 10,
+    skip,
+    where: { user_id: { notIn: bannedUsers } },
+    orderBy: { [`${huntType}_${type}`]: 'desc' },
+    select: {
+      [`${huntType}_success`]: true,
+      [`${huntType}_tries`]: true,
+      [`${huntType}_hunted`]: true,
+    },
+  });
+
+  return result;
+};
+
+export const getTopRoulette = async (
+  skip: number,
+  bannedUsers: string[],
+  type: 'wins' | 'money'
+): Promise<RouletteStats[]> => {
+  const toOrderBy = type === 'money' ? 'earn_money' : 'won_games';
+
+  const result = await Prisma.roletauser.findMany({
+    take: 10,
+    skip,
+    where: { user_id: { notIn: bannedUsers } },
+    orderBy: { [toOrderBy]: 'desc' },
+    select: {
+      earn_money: true,
+      lost_games: true,
+      lost_money: true,
+      won_games: true,
+    },
+  });
+
+  return result;
+};
+
+export const getTopBicho = async (
+  skip: number,
+  bannedUsers: string[],
+  type: 'wins' | 'money'
+): Promise<RouletteStats[]> => {
+  const toOrderBy = type === 'money' ? 'earn_money' : 'won_games';
+
+  const result = await Prisma.bichouser.findMany({
+    take: 10,
+    skip,
+    where: { user_id: { notIn: bannedUsers } },
+    orderBy: { [toOrderBy]: 'desc' },
+    select: {
+      earn_money: true,
+      lost_games: true,
+      lost_money: true,
+      won_games: true,
+    },
+  });
 
   return result;
 };

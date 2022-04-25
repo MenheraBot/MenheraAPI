@@ -17,6 +17,7 @@ export interface commandInterface {
 export type AllNulable<T> = { [P in keyof T]: T[P] | null };
 
 export type HuntTypes = 'demon' | 'giant' | 'angel' | 'archangel' | 'demigod' | 'god';
+
 export interface CoinflipStats {
   cf_wins: number;
   cf_loses: number;

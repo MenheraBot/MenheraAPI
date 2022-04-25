@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getCoinflipStats, postCoinflip } from '../database/DatabaseQueries';
+import { getCoinflipStats, getTopCoinflip, postCoinflip } from '../database/DatabaseQueries';
 
 export default class CoinflipController {
   public static async getUserInfo(req: Request, res: Response): Promise<Response> {
@@ -39,5 +39,13 @@ export default class CoinflipController {
     await postCoinflip(winnerId, loserId, betValue);
 
     return res.sendStatus(201);
+  }
+
+  public static async topCoinflip(req: Request, res: Response): Promise<Response> {
+    const { skip, bannedUsers, type } = req.body;
+
+    const top = await getTopCoinflip(skip, bannedUsers, type);
+
+    return res.status(200).send(top);
   }
 }

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getBlackJackStats, postBlackJackGame } from '../database/DatabaseQueries';
+import { getBlackJackStats, getTopBlackjack, postBlackJackGame } from '../database/DatabaseQueries';
 
 export default class BlackJackController {
   public static async getUserInfo(req: Request, res: Response): Promise<Response> {
@@ -39,5 +39,13 @@ export default class BlackJackController {
     await postBlackJackGame(userId, didWin, betValue);
 
     return res.sendStatus(201);
+  }
+
+  public static async topBlackjack(req: Request, res: Response): Promise<Response> {
+    const { skip, bannedUsers, type } = req.body;
+
+    const top = await getTopBlackjack(skip, bannedUsers, type);
+
+    return res.status(200).send(top);
   }
 }

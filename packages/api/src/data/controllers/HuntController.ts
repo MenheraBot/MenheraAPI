@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getUserHuntData, postHunt } from '../database/DatabaseQueries';
+import { getTopHunt, getUserHuntData, postHunt } from '../database/DatabaseQueries';
 
 export default class HuntsController {
   public static async getUserInfo(req: Request, res: Response): Promise<Response> {
@@ -19,5 +19,13 @@ export default class HuntsController {
 
     await postHunt(userId, huntType, value, success, tries);
     return res.sendStatus(201);
+  }
+
+  public static async topHunts(req: Request, res: Response): Promise<Response> {
+    const { skip, bannedUsers, type, huntType } = req.body;
+
+    const top = await getTopHunt(skip, bannedUsers, huntType, type);
+
+    return res.status(200).send(top);
   }
 }
