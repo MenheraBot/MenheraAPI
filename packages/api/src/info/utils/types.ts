@@ -23,6 +23,8 @@ export interface ICommandData {
   category: string;
   cooldown: number;
   description: string;
+  nameLocalizations: unknown;
+  descriptionLocalizations: unknown;
   options: ApplicationCommandOptionData[];
   disabled: ICommandDisabledData;
 }
