@@ -1,4 +1,6 @@
 /* eslint-disable no-restricted-syntax */
+import fetch from 'node-fetch';
+
 export interface AssetsLimit {
   angry: number;
   bicuda: number;
@@ -32,12 +34,12 @@ export interface AssetsLimit {
 export default class CdnManager {
   private static instance?: CdnManager;
 
-  private AssetLimits: Array<AssetsLimit>;
+  private AssetLimits: AssetsLimit;
 
   public interval: NodeJS.Timer;
 
   private async reloadAssets() {
-    this.AssetLimits = await (await fetch(process.env.CDN_URL)).json();
+    this.AssetLimits = (await (await fetch(process.env.CDN_URL)).json()) as AssetsLimit;
   }
 
   private constructor(fetchInterval = 21600000) {
@@ -45,7 +47,7 @@ export default class CdnManager {
     this.interval = setInterval(() => this.reloadAssets(), fetchInterval);
   }
 
-  public getLimits(): Array<AssetsLimit> {
+  public getLimits(): AssetsLimit {
     return this.AssetLimits;
   }
 
