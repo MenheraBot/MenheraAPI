@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import fetch from 'node-fetch';
+import fetch from 'axios';
 
 export interface AssetsLimit {
   angry: number;
@@ -39,7 +39,7 @@ export default class CdnManager {
   public interval: NodeJS.Timer;
 
   private async reloadAssets() {
-    this.AssetLimits = (await (await fetch(process.env.CDN_URL)).json()) as AssetsLimit;
+    this.AssetLimits = await (await fetch.get(process.env.CDN_URL)).data;
   }
 
   private constructor(fetchInterval = 21600000) {
