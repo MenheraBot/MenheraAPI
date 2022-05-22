@@ -56,7 +56,9 @@ export default class CdnManager {
 
     const random = Math.floor(Math.random() * this.AssetLimits[type]);
 
-    return `${process.env.CDN_URL}/${type}/${random}`;
+    const extension = type === 'humor' || type === 'fodase' ? 'png' : 'gif';
+
+    return `${process.env.CDN_URL}/images/${type}/${random}.${extension}`;
   }
 
   static getInstance(): CdnManager {
