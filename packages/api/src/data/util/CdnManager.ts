@@ -52,7 +52,7 @@ export default class CdnManager {
   }
 
   public getLink(type: keyof AssetsLimit): string {
-    if (!this.AssetLimits[type]) return 'NO-LINKS';
+    if (!this.AssetLimits || !this.AssetLimits[type]) return 'NO-LINKS';
 
     const random = Math.floor(Math.random() * this.AssetLimits[type]);
 
