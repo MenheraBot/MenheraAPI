@@ -14,6 +14,6 @@
 
 ## 🔀 | Rotas
 
-### [Rotas de Dados](/data)
+### [Rotas de Dados](src/data)
 
-### [Rotas de Informações](/info)
+### [Rotas de Informações](src/info)

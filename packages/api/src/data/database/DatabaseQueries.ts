@@ -2,7 +2,6 @@
 import { hunts } from '@prisma/client';
 import {
   AllNulable,
-  BichoBetType,
   BlackJackStats,
   CoinflipStats,
   commandInterface,
@@ -51,33 +50,6 @@ export const getTopUsers = async (): Promise<userInterface[]> => {
     take: 10,
     select: { id: true, uses: true }, // ok
   });
-};
-
-export const registerBichoBet = async (
-  userId: string,
-  value: number,
-  betType: BichoBetType,
-  betSelection: string
-): Promise<number> => {
-  await ensureUser(userId);
-  const result = await Prisma.bicho.create({
-    data: {
-      user_id: userId,
-      bet_selection: betSelection,
-      value,
-      bet_type: betType,
-      date: Date.now(),
-    },
-    select: {
-      game_id: true,
-    },
-  });
-
-  return result.game_id;
-};
-
-export const makeUserWinBicho = async (gameId: number): Promise<void> => {
-  await Prisma.bicho.update({ where: { game_id: gameId }, data: { didwin: true } });
 };
 
 export const createCommandExecution = async (

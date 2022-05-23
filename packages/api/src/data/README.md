@@ -25,9 +25,7 @@
 | DELETE | `/activity`                      | Deleta todas as atividades                                                                      |
 | GET    | `/statistics/bicho`              | Retorna as estatisticas de um usuário no Jogo do Bicho                                          |
 | GET    | `/statistics/bicho/top`          | Retorna o top usuários do jogo do bicho                                                         |
-| POST   | `/statistics/bicho`              | Cria uma aposta do Jogo do Bicho no Banco de Dados                                              |
-| PUT    | `/statistics/bicho`              | Atualiza os dados de um jogador no bicho                                                        |
-| PATCH  | `/statistics/bicho`              | Modifica o estado de uma aposta, settando-a como Vencedora                                      |
+| POST   | `/statistics/bicho`              | Atualiza os dados de um jogador no bicho                                                        |
 | GET    | `/statistics/blackjack`          | Retorna as informações dos jogos de Blackjack de um usuário                                     |
 | GET    | `/statistics/blackjack/top`      | Retorna o top jogadores do blackjack                                                            |
 | POST   | `/statistics/blackjack`          | Atualiza os dados de um jogador de Blackjack                                                    |

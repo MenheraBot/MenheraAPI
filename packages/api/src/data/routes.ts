@@ -23,9 +23,7 @@ const StatisticsGroup = Router();
 // Jogo do Bicho System
 StatisticsGroup.get('/bicho', JogoDoBichoController.getUserInfo);
 StatisticsGroup.get('/bicho/top', JogoDoBichoController.topBicho);
-StatisticsGroup.post('/bicho', JogoDoBichoController.addBet);
-StatisticsGroup.post('/bicho/user', JogoDoBichoController.postBichoGame);
-StatisticsGroup.patch('/bicho', JogoDoBichoController.userWin);
+StatisticsGroup.post('/bicho', JogoDoBichoController.postBichoGame);
 // Hunt Command
 StatisticsGroup.get('/hunt', HuntsController.getUserInfo);
 StatisticsGroup.get('/hunt/top', HuntsController.topHunts);

@@ -54,12 +54,3 @@ export interface usagesInterface {
     id: string;
   } | null;
 }
-
-export type BichoBetType =
-  | 'unity'
-  | 'ten'
-  | 'hundred'
-  | 'thousand'
-  | 'animal'
-  | 'sequence'
-  | 'corner';
