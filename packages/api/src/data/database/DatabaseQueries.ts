@@ -178,7 +178,7 @@ export const updateUserBichoStatus = async (
   const winOrLoseGame = didWin ? 'won' : 'lost';
   const winOrLoseMoney = didWin ? 'earn' : 'lost';
 
-  await Prisma.roletauser.upsert({
+  await Prisma.bichouser.upsert({
     where: { user_id: userId },
     update: {
       [`${winOrLoseMoney}_money`]: { increment: didWin ? profit : betValue },
