@@ -37,6 +37,9 @@ export default class JogoDoBichoController {
 
   public static async postBichoGame(req: Request, res: Response): Promise<Response> {
     const players = req.body.players as BichoGamePlayer[];
+
+    console.log(players);
+
     if (!players) return res.sendStatus(400);
 
     players.forEach(a => {
