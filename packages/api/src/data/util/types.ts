@@ -54,3 +54,10 @@ export interface usagesInterface {
     id: string;
   } | null;
 }
+
+export interface BichoGamePlayer {
+  id: string;
+  profit: number;
+  bet: number;
+  didWin: boolean;
+}

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getBichoStats, getTopBicho, updateUserBichoStatus } from '../database/DatabaseQueries';
+import { BichoGamePlayer } from '../util/types';
 
 export default class JogoDoBichoController {
   public static async getUserInfo(req: Request, res: Response): Promise<Response> {
@@ -35,11 +36,12 @@ export default class JogoDoBichoController {
   }
 
   public static async postBichoGame(req: Request, res: Response): Promise<Response> {
-    const { userId, betValue, profit, didWin } = req.body;
-    if (!userId || !betValue || !profit || typeof didWin === 'undefined')
-      return res.sendStatus(400);
+    const players = req.body.players as BichoGamePlayer[];
+    if (!players) return res.sendStatus(400);
 
-    await updateUserBichoStatus(userId, betValue, profit, didWin);
+    players.forEach(a => {
+      updateUserBichoStatus(a.id, a.bet, a.profit, a.didWin);
+    });
 
     return res.sendStatus(201);
   }
