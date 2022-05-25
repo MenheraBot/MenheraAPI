@@ -11,7 +11,7 @@ export default class RoleplayController {
 
     const config = RoleplayBattleConfigs.find(a => a.userId === userId);
 
-    if (!config) return res.sendStatus(404);
+    if (!config) return res.sendStatus(303);
 
     return res.status(200).json({ config: config.config });
   }
