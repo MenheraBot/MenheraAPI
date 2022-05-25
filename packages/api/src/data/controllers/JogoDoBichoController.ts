@@ -10,24 +10,23 @@ export default class JogoDoBichoController {
 
     const result = await getBichoStats(userId);
 
-    if (!result) return res.sendStatus(400);
+    if (!result) return res.sendStatus(404);
 
-    const [wonGames, loseGames] = result;
-
-    const playedGames = wonGames.length + loseGames.length;
+    const playedGames = result.lost_games + result.won_games;
 
     if (playedGames === 0) return res.status(200).send({ error: true });
-
-    const lostGames = loseGames.length;
-    const winGames = wonGames.length;
+    const lostGames = result.lost_games;
+    const winGames = result.won_games;
+    const winMoney = result.earn_money;
+    const lostMoney = result.lost_money;
     const winPorcentage = ((winGames / playedGames) * 100).toFixed(2) || 0;
     const lostPorcentage = ((lostGames / playedGames) * 100).toFixed(2) || 0;
     const returnObject = {
       playedGames,
       lostGames,
       winGames,
-      wonGames,
-      loseGames,
+      winMoney,
+      lostMoney,
       winPorcentage,
       lostPorcentage,
     };
@@ -37,8 +36,6 @@ export default class JogoDoBichoController {
 
   public static async postBichoGame(req: Request, res: Response): Promise<Response> {
     const players = req.body.players as BichoGamePlayer[];
-
-    console.log(players);
 
     if (!players) return res.sendStatus(400);
 

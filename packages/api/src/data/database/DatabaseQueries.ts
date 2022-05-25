@@ -81,20 +81,19 @@ export const getCoinflipStats = async (
   return result;
 };
 
-export const getBichoStats = async (
-  userId: string
-): Promise<{ bet_type: string; value: number }[][]> => {
-  await ensureUser(userId);
-  const result = await Prisma.$transaction([
-    Prisma.bicho.findMany({
-      where: { user_id: userId, didwin: true },
-      select: { bet_type: true, value: true },
-    }),
-    Prisma.bicho.findMany({
-      where: { user_id: userId, didwin: { not: true } },
-      select: { bet_type: true, value: true },
-    }),
-  ]);
+export const getBichoStats = async (userId: string): Promise<AllNulable<RouletteStats> | null> => {
+  const result = await Prisma.bichouser.findUnique({
+    where: { user_id: userId },
+    select: {
+      earn_money: true,
+      lost_games: true,
+      lost_money: true,
+      won_games: true,
+      user_id: true,
+    },
+  });
+
+  if (!result) return null;
 
   return result;
 };
