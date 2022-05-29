@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import ActivityController from './controllers/ActivitiesController';
-import AssetsController from './controllers/AssetsController';
 import BlackJackController from './controllers/BlackjackController';
 import StatsController from './controllers/CommandsController';
 import UsagesController from './controllers/UsagesController';
@@ -11,7 +10,6 @@ import JogoDoBichoController from './controllers/JogoDoBichoController';
 import RouletteController from './controllers/RouletteController';
 
 const DataRouter = Router();
-DataRouter.get('/assets/:type', AssetsController.getImageUrl);
 
 const ActivityGroup = Router();
 ActivityGroup.get('/', ActivityController.all);
