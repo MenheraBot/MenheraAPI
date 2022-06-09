@@ -21,35 +21,35 @@
 
 ## 📦 | Packages
 
-Este repositório está dividido em diversos pacotes
+Este repositório está dividido em pacotes
 
 - [Amandinha](#--Amandinha)
 - [Menhera API](#--Menhera-API)
 - [Eslint Config](#--Eslint-Config)
-- [Logger](#--Logger)
 
 ## [🤖 | Amandinha](/packages/Amandinha)
 
 Amandinha é um bot privado para auxiliar no [servidor de suporte](https://discord.gg/fZMdQbA) da Menhera.
-Ela possui comandos de administração como `ban`, `lock` e `lockdown`, funcionalidades para gerenciar as famílias do Mundo de Boleham.
+Possui módulos para auxiliar na manutenção do servidor
 
 #### 🔨 • Feito com
 
-- [discord.js](https://discord.js.org/#/)
+- [discordeno.js](https://github.com/meister03/discordeno.js)
 - [mongoose](https://mongoosejs.com/)
 
 ## [📡 | Menhera API](/packages/API)
 
-A api da Menhera tem o propósito de gerenciar:
+A API da Menhera tem o propósito de gerenciar:
 
 - Atividades da Menhera;
-- Webhooks de Status;
-- Autodeploy para o servidor de produção;
-- Salvar execução de comandos.
+- Salvar execução de comandos;
+- Manter as estatísticas de shards;
+- Salvar estatísticas de usuários.
 
 #### 🔨 • Feito com
 
 - [express](https://expressjs.com/pt-br/)
+- [prisma](https://www.prisma.io/)
 
 ## [👷 | Eslint Config](packages/eslint-config)
 
@@ -58,14 +58,6 @@ Os arquivos de configuração do lint para a padronização dos arquivos de todo
 #### 🔨 • Feito com
 
 - [eslint](https://eslint.org/)
-
-## [📟 | Logger](/packages/logger)
-
-Um pacote para melhorar os logs das aplicações de todos os outros pacotes
-
-#### 🔨 • Feito com
-
-- [chalk](https://www.npmjs.com/package/chalk)
 
 ## 💖 | Contribuidores
 
@@ -79,7 +71,7 @@ Distribuído sob a licença MIT. Consulte `LICENSE` para obter mais informaçõe
 ## 📧 | Contato
 
 Discord: **Luxanna#0507**
-Twitter: **[@\_\_MenheraBot](https://twitter.com/__MenheraBot)**
+Twitter: **[@Luxanna-Dev](https://twitter.com/Luxanna_Dev)**
 
 ---
 

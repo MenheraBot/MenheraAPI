@@ -12,9 +12,6 @@
     "ecosystem.config.js",
     "packages/**/dist",
     "packages/**/*.js"
-  ],
-  "references": [
-      { "path": "packages/logger" }
   ]
 }
 /* {
