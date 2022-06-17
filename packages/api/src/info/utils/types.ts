@@ -1,5 +1,3 @@
-import { ApplicationCommandOptionData } from 'discord.js';
-
 export interface IShardStatus extends Object {
   id: number;
   memoryUsed: number;
@@ -25,6 +23,6 @@ export interface ICommandData {
   description: string;
   nameLocalizations: unknown;
   descriptionLocalizations: unknown;
-  options: ApplicationCommandOptionData[];
+  options: unknown[];
   disabled: ICommandDisabledData;
 }

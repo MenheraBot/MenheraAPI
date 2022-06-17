@@ -61,3 +61,18 @@ export interface BichoGamePlayer {
   bet: number;
   didWin: boolean;
 }
+
+export interface CommandInteractionOption {
+  name: string;
+  type: string;
+  value?: string | number | boolean;
+  focused?: boolean;
+  autocomplete?: boolean;
+  options?: CommandInteractionOption[];
+  user?: { id: string };
+  member?: unknown;
+  channel?: { id: string };
+  role?: { id: string };
+  attachment?: unknown;
+  message?: unknown;
+}

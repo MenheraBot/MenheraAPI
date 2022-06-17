@@ -1,5 +1,5 @@
-import { CommandInteractionOption } from 'discord.js';
 import { Request, Response } from 'express';
+import { CommandInteractionOption } from '../util/types';
 import { createCommandExecution } from '../database/DatabaseQueries';
 
 export default class StatsController {
