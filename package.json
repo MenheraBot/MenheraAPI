@@ -7,7 +7,6 @@
     "build:no-plugin": "lerna exec --parallel yarn run build",
     "start": "lerna exec --parallel yarn run start",
     "api": "yarn workspace @menhera-tools/api",
-    "bot": "yarn workspace @menhera-tools/amandinha",
     "lint": "yarn workspace @menhera-tools/eslint-config",
     "run:lint": "eslint --fix .",
     "typecheck": "lerna exec --parallel yarn run typecheck"
@@ -34,6 +33,7 @@
   },
   "devDependencies": {
     "@menhera-tools/eslint-config": "*",
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "prettier-plugin-java": "^1.6.2"
   }
 }

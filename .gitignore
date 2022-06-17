@@ -3,8 +3,11 @@ node_modules/
 config.json
 .env
 packages/**/dist
+packages/**/target
 yarn-error.log
 build/
 *.http
 .next/
 .pnp*
+.vscode
+

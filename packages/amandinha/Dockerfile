@@ -1,13 +1,16 @@
-FROM node:16.6.0-alpine
+FROM maven:3.6.0-jdk-11-slim AS build
 
-USER root
+COPY src /home/app/src
 
-WORKDIR /app
+COPY pom.xml /home/app
 
-COPY . .
+RUN mvn -f /home/app/pom.xml clean compile assembly:single 
 
-RUN npm install
+FROM openjdk:16-alpine3.13
 
-RUN npm run build
+WORKDIR /home/app
 
-CMD ["npm", "start"]
+COPY --from=build /home/app/target/Amandinha.jar Amandinha.jar
+COPY .env .env
+
+ENTRYPOINT ["java", "-jar", "/home/app/Amandinha.jar"]
