@@ -36,21 +36,19 @@ const incrementUsages = async (userId: string, commandId: number): Promise<void>
   ]);
 };
 
-export const getTopCommands = async (): Promise<commandInterface[]> => {
-  return Prisma.cmds.findMany({
+export const getTopCommands = async (): Promise<commandInterface[]> =>
+  Prisma.cmds.findMany({
     orderBy: { usages: 'desc' },
     take: 10,
     select: { name: true, usages: true },
   });
-};
 
-export const getTopUsers = async (): Promise<userInterface[]> => {
-  return Prisma.users.findMany({
+export const getTopUsers = async (): Promise<userInterface[]> =>
+  Prisma.users.findMany({
     orderBy: { uses: 'desc' },
     take: 10,
     select: { id: true, uses: true }, // ok
   });
-};
 
 export const createCommandExecution = async (
   userId: string,
@@ -191,17 +189,15 @@ export const updateUserBichoStatus = async (
   });
 };
 
-export const getUserHuntData = async (userId: string): Promise<hunts | null> => {
-  return Prisma.hunts.findUnique({ where: { user_id: userId } });
-};
+export const getUserHuntData = async (userId: string): Promise<hunts | null> =>
+  Prisma.hunts.findUnique({ where: { user_id: userId } });
 
 export async function getInactiveUsersLastCommand(
   users: string[] = []
 ): Promise<{ user: string; date: number }[]> {
-  const results =
-    (await Prisma.$queryRaw`SELECT lc.user_id, lc.date FROM uses lc LEFT JOIN uses nc ON lc.user_id = nc.user_id AND lc.date > nc.date WHERE (nc.date IS NULL) AND (lc.date < ${
-      Date.now() - 604800000
-    }) AND (lc.user_id IN (${users})) ORDER BY lc.date DESC`) as { user: string; date: number }[];
+  const results = (await Prisma.$queryRaw`SELECT lc.user_id, lc.date FROM uses lc LEFT JOIN uses nc ON lc.user_id = nc.user_id AND lc.date > nc.date WHERE (nc.date IS NULL) AND (lc.date < ${
+    Date.now() - 604800000
+  }) AND (lc.user_id IN (${users})) ORDER BY lc.date DESC`) as { user: string; date: number }[];
 
   return results;
 }
@@ -222,8 +218,7 @@ export const getUserCommandsUsesCount = async (
 export const getUserTopCommandsUsed = async (
   userId: string
 ): Promise<{ name: string; count: number }[]> => {
-  const results =
-    await Prisma.$queryRaw`SELECT cmds.name, COUNT(cmds.name) FROM uses INNER JOIN cmds ON uses.cmd_id = cmds.id WHERE user_id = ${userId} GROUP BY cmds.name ORDER BY count DESC LIMIT 10`;
+  const results = await Prisma.$queryRaw`SELECT cmds.name, COUNT(cmds.name) FROM uses INNER JOIN cmds ON uses.cmd_id = cmds.id WHERE user_id = ${userId} GROUP BY cmds.name ORDER BY count DESC LIMIT 10`;
   return results as { name: string; count: number }[];
 };
 

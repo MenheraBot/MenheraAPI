@@ -28,7 +28,7 @@ module.exports = {
       },
     ],
   },
-  ignorePatterns: ['*.js', 'packages/**/node_modules/*', 'packages/**/dist/*', '*.jsx'],
+
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts'],
