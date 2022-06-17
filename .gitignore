@@ -1,13 +1,6 @@
 node_modules/
 .yarn/
-config.json
 .env
-packages/**/dist
-packages/**/target
-yarn-error.log
-build/
-*.http
-.next/
-.pnp*
+*.log
 .vscode
 

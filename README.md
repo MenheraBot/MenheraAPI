@@ -4,77 +4,68 @@
 
 <br />
 <p align="center">
-  <a href="https://github.com/ySnoopyDogy/Menhera-Tools">
+  <a href="https://github.com/MenheraBot/MenheraAPI">
     <img src="https://i.imgur.com/jjgBki0.png" alt="Logo" width="160" height="160">
   </a>
 
-  <h3 align="center">🔧 Menhera Tools 🔧</h3>
+  <h3 align="center">🔧 Menhera API 🔧</h3>
 
   <p align="center">
-    Um repositório com ferramentas para auxiliar a MenheraBot
+    An HTTP API to help some functionalities of MenheraBot
     <br />
-    <a href="https://github.com/ySnoopyDogy/MenheraBot"><strong>MenheraBot »</strong></a>
+    <a href="https://github.com/MenheraBot/MenheraBot"><strong>MenheraBot »</strong></a>
     <br />
     <br />
   </p>
 </p>
 
-## 📦 | Packages
+# 📡 | MenheraAPI
 
-Este repositório está dividido em pacotes
+Menhera's API is intended to manage:
 
-- [Amandinha](#--Amandinha)
-- [Menhera API](#--Menhera-API)
-- [Eslint Config](#--Eslint-Config)
+- Save command execution;
+- Keep shard statistics updated;
+- Save command info;
+- Serve user statistics.
+- Serve data to its [WebSite](https://menherabot.xyz).
 
-## [🤖 | Amandinha](/packages/amandinha)
+## 🔀 | Routes
 
-Amandinha é um bot privado para auxiliar no [servidor de suporte](https://discord.gg/fZMdQbA) da Menhera.
-Possui módulos para auxiliar na manutenção do servidor
+> This repository is divided into 2 main routes, which serves different type of data:
 
-#### 🔨 • Feito com
+### [Data](src/data)
 
-- [JDA](https://github.com/DV8FromTheWorld/JDA)
+  This is a private route protected with a secret token. It's used to update user statistics, save command execution.
 
-## [📡 | Menhera API](/packages/api)
+### [Info](src/info)
 
-A API da Menhera tem o propósito de gerenciar:
+  This route is open to the public. It's used to serve command info and shards info to [MenheraBot's Website](https://menherabot.xyz)
 
-- Atividades da Menhera;
-- Salvar execução de comandos;
-- Manter as estatísticas de shards;
-- Salvar estatísticas de usuários.
+## 🔨 | Made With
 
-#### 🔨 • Feito com
+- [Express](https://expressjs.com/pt-br/)
+- [Prisma](https://www.prisma.io/)
+- [TypeScript](https://www.typescriptlang.org/)
 
-- [express](https://expressjs.com/pt-br/)
-- [prisma](https://www.prisma.io/)
-
-## [👷 | Eslint Config](packages/eslint-config)
-
-Os arquivos de configuração do lint para a padronização dos arquivos de todos os packages
-
-#### 🔨 • Feito com
-
-- [eslint](https://eslint.org/)
 
 ## 💖 | Contribuidores
 
 | [<img src="https://avatars1.githubusercontent.com/u/59155752?s=400&u=8e971f52c061732abb996aa9618ea2fafba5c0ae&v=4" width=115><br><sub>@ySnoopyDogy</sub>](https://github.com/ySnoopyDogy) | [<img src="https://avatars2.githubusercontent.com/u/27602189?s=400&u=7954c97ada727d3a059d9b769f5a296ea599083b&v=4" width=115><br><sub>@Tsugami</sub>](https://github.com/Tsugami) |
 | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
-## ⚖️ | Licença
+## ⚖️ | License
 
-Distribuído sob a licença MIT. Consulte `LICENSE` para obter mais informações.
+Distributed under the MIT License. See `LICENSE` for more information.
 
-## 📧 | Contato
+## 📧 | Contact
 
-Discord: **Luxanna#0507**
-Twitter: **[@Luxanna-Dev](https://twitter.com/Luxanna_Dev)**
+Discord: **Luxanna#5757**
+
+Twitter: **[@Luxanna_Dev](https://twitter.com/Luxanna_Dev)**
 
 ---
 
-MenheraBot foi criada com ❤️ por Luxanna.
+**MenheraBot** was made with ❤️ by Luxanna.
 
 [contributors-shield]: https://img.shields.io/github/contributors/ySnoopyDogy/Menhera-Tools?label=Contribuidores
 [contributors-url]: https://github.com/ySnoopyDogy/Menhera-Tools/graphs/contributors
