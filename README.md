@@ -27,17 +27,16 @@ Este repositório está dividido em pacotes
 - [Menhera API](#--Menhera-API)
 - [Eslint Config](#--Eslint-Config)
 
-## [🤖 | Amandinha](/packages/Amandinha)
+## [🤖 | Amandinha](/packages/amandinha)
 
 Amandinha é um bot privado para auxiliar no [servidor de suporte](https://discord.gg/fZMdQbA) da Menhera.
 Possui módulos para auxiliar na manutenção do servidor
 
 #### 🔨 • Feito com
 
-- [discordeno.js](https://github.com/meister03/discordeno.js)
-- [mongoose](https://mongoosejs.com/)
+- [JDA](https://github.com/DV8FromTheWorld/JDA)
 
-## [📡 | Menhera API](/packages/API)
+## [📡 | Menhera API](/packages/api)
 
 A API da Menhera tem o propósito de gerenciar:
 

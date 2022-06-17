@@ -34,16 +34,6 @@ jobs:
           CI: true
           NODE_OPTIONS: --max-old-space-size=4096
 
-      - name: '[LOGGER] Build'
-        run: yarn logger build
-        env:
-          CI: true
-
-      - name: '[BOT] Build'
-        run: yarn bot build:test
-        env:
-          CI: true
-
       - name: '[API] Build'
         run: yarn api build:test
         env:
