@@ -35,11 +35,11 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=4096
 
       - name: '[API] Build'
-        run: yarn api build:test
+        run: yarn build:test
         env:
           CI: true
 
       - name: 'Run linter'
-        run: yarn run:lint
+        run: yarn lint:fix
         env:
           CI: true
