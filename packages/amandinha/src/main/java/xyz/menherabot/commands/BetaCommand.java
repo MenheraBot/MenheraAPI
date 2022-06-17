@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import xyz.menherabot.Constants;
 
-public class BetaJava extends ListenerAdapter {
+public class BetaCommand extends ListenerAdapter {
   @Override
   public void onSlashCommandInteraction(@Nonnull SlashCommandInteractionEvent e) {
     if(!e.getName().equals("beta")) return;

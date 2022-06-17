@@ -15,7 +15,8 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
-import xyz.menherabot.commands.BetaJava;
+import xyz.menherabot.commands.BetaCommand;
+import xyz.menherabot.commands.InfoCommand;
 import xyz.menherabot.commands.NotifyCommand;
 import xyz.menherabot.commands.StatusCommand;
 
@@ -41,9 +42,10 @@ public class Amandinha extends ListenerAdapter {
                 .enableIntents(EnumSet.of(GatewayIntent.GUILD_MESSAGES))
                 .addEventListeners(
                     new Amandinha(),
-                    new BetaJava(),
+                    new BetaCommand(),
                     new NotifyCommand(),
-                    new StatusCommand()
+                    new StatusCommand(),
+                    new InfoCommand()
                 )
                 .build();
     }
@@ -57,7 +59,8 @@ public class Amandinha extends ListenerAdapter {
         commands.addCommands(
             Commands.slash("status", "Escolha entre receber ou não atualizaçõs dos Status da Menhera"),
             Commands.slash("beta", "Escolha entre receber ou não notificações das atualizações da Beta da Menhera"),
-            Commands.slash("atualizações", "Escolha entre receber ou não notificações de atualizações lançadas da Menhera")
+            Commands.slash("atualizações", "Escolha entre receber ou não notificações de atualizações lançadas da Menhera"),
+            Commands.slash("info", "Informações sobre a Amandinha")
             );
 
         commands.queue();
