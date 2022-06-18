@@ -5,8 +5,8 @@ on:
   - pull_request
 
 jobs:
-  build:
-    name: Perform ESLint check on node v16
+  deploy:
+    name: Test Code
     runs-on: ubuntu-latest
 
     steps:
@@ -35,11 +35,13 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=4096
 
       - name: '[API] Build'
+        id: build
         run: yarn build:test
         env:
           CI: true
 
       - name: 'Run linter'
         run: yarn lint:fix
+        id: lint
         env:
           CI: true
