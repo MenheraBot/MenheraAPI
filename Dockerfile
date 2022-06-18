@@ -24,4 +24,4 @@ COPY --from=compiler /app ./
 USER 1000
 EXPOSE 25156
 LABEL org.opencontainers.image.description An HTTP API to help MenheraBot
-CMD ["server.js"]
+CMD ["node", "server.js"]
