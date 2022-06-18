@@ -1,17 +1,23 @@
-FROM node:16.6.0-alpine
-
+FROM node:16.6.0-alpine as installer
 USER root
-
 WORKDIR /app
-
-COPY . .
-
+COPY package*.json .
+COPY tsconfig.json .
 RUN npm install
-
-RUN npx prisma generate
-
+COPY . . 
 RUN npm run build
 
-EXPOSE 25156
+FROM node:16.6.0-alpine as compiler
+WORKDIR /app
+COPY --from=installer /app/package*.json .
+COPY --from=installer /app/dist .
+RUN npm install --production
+RUN npx prisma generate
 
-CMD ["npm", "start"]
+FROM gcr.io/distroless/nodejs:16
+WORKDIR /app
+COPY --from=compiler /app .
+USER 1000
+EXPOSE 25156
+LABEL org.opencontainers.image.description An HTTP API to help MenheraBot
+CMD ["server.js"]
