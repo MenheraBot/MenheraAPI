@@ -40,4 +40,5 @@ module.exports = {
       typescript: {},
     },
   },
+  ignorePatterns: ['src/data/database/generated'],
 };

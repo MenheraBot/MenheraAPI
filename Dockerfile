@@ -8,7 +8,7 @@ RUN yarn --frozen-lockfile
 COPY . .
 RUN yarn build
 RUN rm -rf node_modules
-RUN mv /docker/.yarnclear .yarnclean
+RUN mv docker/.yarnclean .yarnclean
 RUN yarn install --production
 RUN yarn autoclean --force
 
