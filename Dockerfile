@@ -3,16 +3,19 @@ USER root
 WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.json ./
+COPY prisma ./prisma
 RUN npm install
 COPY . .
-RUN npx prisma generate
 RUN npm run build
 
 FROM node:16.6.0-alpine as compiler
+USER root
 WORKDIR /app
 COPY --from=installer /app/package*.json ./
 COPY --from=installer /app/dist ./
 RUN npm install --production
+RUN npm install -g prisma
+RUN npx prisma generate
 
 FROM gcr.io/distroless/nodejs:16
 WORKDIR /app
