@@ -66,6 +66,7 @@ docker run --name MenheraApi \
 -e "MENHERA_AGENT=" \
 -e "DATABASE_URL=" \
 --restart unless-stopped \
+-p 25156:25156 \
 -d -t api
 ```
 
@@ -93,6 +94,7 @@ docker run --name MenheraApi \
 -e "PORT=25156" \
 -e "MENHERA_AGENT=" \
 -e "DATABASE_URL=" \
+-p 25156:25156
 --restart unless-stopped \
 -d -t ghcr.io/menherabot/api:latest
 ```
