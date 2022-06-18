@@ -1,27 +1,22 @@
-FROM node:16.6.0-alpine as installer
+FROM node:16.6.0-alpine as builder
 USER root
 WORKDIR /app
-COPY package*.json ./
+COPY package.json yarn.lock ./
 COPY tsconfig.json ./
 COPY prisma ./prisma
-RUN npm install
+RUN yarn --frozen-lockfile
 COPY . .
-RUN npm run build
+RUN yarn build
+RUN rm -rf node_modules
+RUN mv /docker/.yarnclear .yarnclean
+RUN yarn install --production
+RUN yarn autoclean --force
 
-FROM node:16.6.0-alpine as compiler
-USER root
-WORKDIR /app
-COPY --from=installer /app/package*.json ./
-COPY --from=installer /app/dist ./
-COPY --from=installer /app/prisma ./prisma
-RUN npm install --production
-RUN npm install -g prisma
-RUN npx prisma generate
-
-FROM node:16.6.0-slim
-WORKDIR /app
-COPY --from=compiler /app ./
+FROM node:16.6.0-alpine
 USER 1000
+WORKDIR /app
+COPY --from=builder /app/dist ./
+COPY --from=builder /app/node_modules ./node_modules
 EXPOSE 25156
 LABEL org.opencontainers.image.description An HTTP API to help MenheraBot
 CMD ["node", "server.js"]

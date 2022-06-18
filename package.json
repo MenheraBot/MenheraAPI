@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "node .",
-    "build": "tsc",
+    "build": "tsc && cp -r src/data/database/generated dist/data/database/generated",
     "build:test": "tsc --noEmit",
     "lint:fix": "eslint --fix --ext ts src",
     "dev": "tsnd --ignore node_modules --transpile-only --no-notify --respawn -r dotenv/config src/server.ts",

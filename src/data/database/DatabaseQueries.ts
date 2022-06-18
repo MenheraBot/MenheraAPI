@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { hunts } from '@prisma/client';
+import { hunts } from './generated/client';
 import {
   AllNulable,
   BlackJackStats,
