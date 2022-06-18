@@ -18,10 +18,10 @@ RUN npm install --production
 RUN npm install -g prisma
 RUN npx prisma generate
 
-FROM gcr.io/distroless/nodejs:16
+FROM node:16.6.0-slim
 WORKDIR /app
 COPY --from=compiler /app ./
 USER 1000
 EXPOSE 25156
 LABEL org.opencontainers.image.description An HTTP API to help MenheraBot
-CMD ["server.js"]
+CMD ["node", "server.js"]
