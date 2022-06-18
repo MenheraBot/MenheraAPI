@@ -13,6 +13,7 @@ USER root
 WORKDIR /app
 COPY --from=installer /app/package*.json ./
 COPY --from=installer /app/dist ./
+COPY --from=installer /app/prisma ./prisma
 RUN npm install --production
 RUN npm install -g prisma
 RUN npx prisma generate
