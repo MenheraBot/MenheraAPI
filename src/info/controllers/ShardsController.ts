@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import ShardStatus from '../managers/ShardStatusManager';
-import { IShardStatus } from '../utils/types';
 
 export default class ShardStatusController {
   public static async getShardStatus(_req: Request, res: Response): Promise<Response> {
