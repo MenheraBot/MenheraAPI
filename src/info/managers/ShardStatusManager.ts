@@ -13,8 +13,10 @@ export default class ShardStatus {
     return Array.from(this.status.values());
   }
 
-  public putShard(shardId: number, shardData: IShardStatus): void {
-    this.status.set(shardId, shardData);
+  public updateShards(shardData: IShardStatus[]): void {
+    shardData.forEach((shard) => {
+      this.status.set(Number(shard.id), {...shard, id: Number(shard.id)})
+    })
   }
 
   static getInstance(): ShardStatus {
