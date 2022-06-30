@@ -25,4 +25,3 @@
 | POST   | `/commands` | Change the array of commands to the new commands passed                                     |
 | PATCH  | `/commands` | Change the maintenance state of some command                                                |
 | GET    | `/disabled` | Return all disabled commands                                                                |
-| GET    | `/ws`       | Websocket Server                                                                            |
