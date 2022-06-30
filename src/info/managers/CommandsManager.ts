@@ -13,6 +13,10 @@ export default class CommandsManager {
     return Array.from(this.commands.values());
   }
 
+  public getDisabledCommands(): Array<ICommandData> {
+    return Array.from(this.commands.values()).filter(a => a.disabled);
+  }
+
   private clearCommands(): void {
     this.commands.clear();
   }

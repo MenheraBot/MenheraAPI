@@ -1,16 +1,28 @@
-# Info API
+<br />
+<p align="center">
+  <a href="https://github.com/ySnoopyDogy/Menhera-Tools">
+    <img src="https://i.imgur.com/jjgBki0.png" alt="Logo" width="160" height="160">
+  </a>
 
-> This API is only for serving data for the (WebSite)[https://menherabot.xyz]
+  <h3 align="center"> Info Routes </h3>
 
-## 🔀 | Rotas
+  <p align="center">
+    This route is only for serving data for the <a href="https://menherabot.xyz">WebSite</a>
+    <br />
+  </p>
+</p>
 
-> Esta API tem como base o endpoint `/info`.
+## 🔀 | Routes
 
-| Tipo  | Endpoint    | Descrição                                                                                                             |
-| ----- | ----------- | --------------------------------------------------------------------------------------------------------------------- |
-| GET   | `/ping`     | Retorna o uptime da API                                                                                               |
-| GET   | `/shards`   | Retorna um array com informações dos shards, como uptime, memória usada e servidores                                  |
-| PUT   | `/shards`   | Edita os valores de um shard específico                                                                               |
-| GET   | `/commands` | Retorna um array com informações dos comandos da Menhera, mostrando o nome, descrição, opções e se está em manutenção |
-| POST  | `/commands` | Altera o array de comandos para os novos comandos passados                                                            |
-| PATCH | `/commands` | Altera o estado de manutenção de algum comando                                                                        |
+> This routes are based on the `/info` endpoint.
+
+| Method | Endpoint    | Description                                                                                 |
+| ------ | ----------- | ------------------------------------------------------------------------------------------- |
+| GET    | `/ping`     | Returns the API uptime                                                                      |
+| GET    | `/shards`   | Returns an array with information about the shards, such as uptime, memory used and servers |
+| PUT    | `/shards`   | Edit the values ​​of a specific shard                                                       |
+| GET    | `/commands` | Returns an array with information about Menhera's commands                                  |
+| POST   | `/commands` | Change the array of commands to the new commands passed                                     |
+| PATCH  | `/commands` | Change the maintenance state of some command                                                |
+| GET    | `/disabled` | Return all disabled commands                                                                |
+| GET    | `/ws`       | Websocket Server                                                                            |

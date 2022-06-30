@@ -20,6 +20,8 @@ module.exports = {
     'no-console': 'off',
     'import/extensions': ['error', 'never'],
     'import/no-extraneous-dependencies': 'off',
+    'no-useless-constructor': 'off',
+    '@typescript-eslint/no-useless-constructor': ['error'],
     '@typescript-eslint/type-annotation-spacing': [
       'error',
       {
