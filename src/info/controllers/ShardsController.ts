@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import ShardStatus from '../managers/ShardStatusManager';
 import { IShardStatus } from '../utils/types';
+import StatusBroker from '../websocket/Server';
 
 export default class ShardStatusController {
   public static async getShardStatus(_req: Request, res: Response): Promise<Response> {
@@ -39,6 +40,8 @@ export default class ShardStatusController {
       };
       ShardStatus.getInstance().putShard(Number(id), data);
     });
+
+    StatusBroker.getInstance.emitStatus(ShardStatus.getInstance().getAllShards());
 
     return res.sendStatus(200);
   }
