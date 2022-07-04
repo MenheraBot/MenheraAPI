@@ -164,6 +164,14 @@ export const postHunt = async (
     },
     create: { user_id: userId },
   });
+
+  await Prisma.weekly_hunts.create({
+    data: {
+      hunt_type: huntType,
+      hunted: value,
+      user_id: userId,
+    },
+  });
 };
 
 export const updateUserBichoStatus = async (
