@@ -9,11 +9,11 @@ const WeeklyHunters = {
   lastRequestAt: 0,
   lastRequestData: [] as WeeklyHuntersTop[],
   requestsMade: 0,
-  request: async (): Promise<{ data: WeeklyHuntersTop[]; cache: boolean }> => {
+  request: async (): Promise<WeeklyHuntersTop[]> => {
     const now = Date.now();
 
     if (now - WeeklyHunters.lastRequestAt < 1000 * 60 * 60 * 1.5)
-      return { data: WeeklyHunters.lastRequestData, cache: true };
+      return WeeklyHunters.lastRequestData;
 
     const top = await getWeeklyHuntersTop();
 
@@ -27,7 +27,7 @@ const WeeklyHunters = {
       deleteOldWeeklyHunters();
     }
 
-    return { data: top, cache: false };
+    return top;
   },
 };
 

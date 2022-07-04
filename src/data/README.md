@@ -36,7 +36,6 @@
 | POST   | `/statistics/roulette`           | Updates a Roulette Player's Data                                                             |
 | GET    | `/statistics/hunt`               | Returns the user's hunt status                                                               |
 | GET    | `/statistics/hunt/top`           | Returns the top hunters                                                                      |
-| GET    | `/statistics/hunt/weekly`        | Returns the weekly top hunters                                                               |
 | POST   | `/statistics/hunt`               | Updates a Player's Data on Hunts                                                             |
 | POST   | `/usages/commands`               | Post a command execution                                                                     |
 | GET    | `/usages/inactive`               | Returns the ID of all users who have been inactive for more than a week                      |
