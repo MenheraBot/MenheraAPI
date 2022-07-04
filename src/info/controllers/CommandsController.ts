@@ -27,10 +27,4 @@ export default class CommandsController {
 
     return res.sendStatus(200);
   }
-
-  public static async disabledCommands(_req: Request, res: Response): Promise<Response> {
-    const commands = CommandsManager.getInstance().getDisabledCommands();
-
-    return res.json(commands);
-  }
 }

@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
 import ShardStatus from '../managers/ShardStatusManager';
-import { IShardStatus } from '../utils/types';
-import StatusBroker from '../websocket/Server';
 
 export default class ShardStatusController {
   public static async getShardStatus(_req: Request, res: Response): Promise<Response> {
@@ -13,35 +11,7 @@ export default class ShardStatusController {
   public static updateShardStatus(req: Request, res: Response): Response {
     const { shards } = req.body.data;
 
-    shards.forEach((shard: IShardStatus) => {
-      const {
-        memoryUsed,
-        uptime,
-        guilds,
-        unavailable,
-        ping,
-        lastPingAt,
-        members,
-        id,
-        clusterId,
-        connected,
-      } = shard;
-      const data = {
-        id: Number(id),
-        memoryUsed,
-        uptime,
-        guilds,
-        unavailable,
-        ping,
-        lastPingAt,
-        members,
-        connected,
-        clusterId,
-      };
-      ShardStatus.getInstance().putShard(Number(id), data);
-    });
-
-    StatusBroker.getInstance.emitStatus(ShardStatus.getInstance().getAllShards());
+    ShardStatus.getInstance().updateShards(shards);
 
     return res.sendStatus(200);
   }

@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import http from 'node:http';
 import rateLimit from 'express-rate-limit';
-import StatusBroker from './info/websocket/Server';
 
 import NotFound from './data/middlewares/NotFound';
 import ErrorHandler from './data/middlewares/ErrorHandler';
@@ -13,7 +12,6 @@ import InfoRouter from './info/routes';
 
 const app = express();
 const server = http.createServer(app);
-StatusBroker.createInstance(server);
 
 const limiter = rateLimit({
   windowMs: 10 * 1000,
