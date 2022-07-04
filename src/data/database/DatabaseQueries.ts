@@ -401,3 +401,40 @@ export const getTopBicho = async (
 
   return result;
 };
+
+export type WeeklyHuntersTop = {
+  hunt_type: string;
+  hunted: number;
+  user_id: string;
+};
+
+export const deleteOldWeeklyHunters = async (): Promise<void> => {
+  const week = new Date();
+  week.setDate(week.getDate() - 7);
+
+  await Prisma.weekly_hunts.deleteMany({ where: { hunted_at: { lt: week } } });
+};
+
+export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
+  const week = new Date();
+  week.setDate(week.getDate() - 7);
+
+  const rawData = await Prisma.weekly_hunts.findMany({
+    where: { hunted_at: { gte: week }, hunted: { gt: 0 } },
+    select: { hunt_type: true, hunted: true, user_id: true },
+  });
+
+  const result = rawData.reduce<WeeklyHuntersTop[]>((acc, cur) => {
+    const found = acc.find(u => u.user_id === cur.user_id && u.hunt_type === cur.hunt_type);
+
+    if (!found) {
+      acc.push(cur);
+      return acc;
+    }
+
+    found.hunted += cur.hunted;
+    return acc;
+  }, []);
+
+  return result;
+};

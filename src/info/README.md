@@ -21,6 +21,7 @@
 | GET    | `/ping`     | Returns the API uptime                                                                      |
 | GET    | `/shards`   | Returns an array with information about the shards, such as uptime, memory used and servers |
 | PUT    | `/shards`   | Edit the values ​​of a specific shard                                                       |
+| GET    | `/hunts`    | Returns an array with weekly hunters data                                                   |
 | GET    | `/commands` | Returns an array with information about Menhera's commands                                  |
 | POST   | `/commands` | Change the array of commands to the new commands passed                                     |
 | PATCH  | `/commands` | Change the maintenance state of some command                                                |
