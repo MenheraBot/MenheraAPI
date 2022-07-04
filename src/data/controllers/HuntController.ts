@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { getTopHunt, getUserHuntData, postHunt } from '../database/DatabaseQueries';
 
+import WeeklyHunters from '../util/WeeklyHunters';
+
 export default class HuntsController {
   public static async getUserInfo(req: Request, res: Response): Promise<Response> {
     const { userId } = req.body;
@@ -30,7 +32,10 @@ export default class HuntsController {
   }
 
   public static async weeklyHunters(_req: Request, res: Response): Promise<Response> {
-    return res.sendStatus(418);
-    // TODO
+    const top = await WeeklyHunters.request();
+
+    if (top.cache) return res.send(top.data);
+
+    return res.status(200).send(top.data);
   }
 }
