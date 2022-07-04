@@ -28,4 +28,9 @@ export default class HuntsController {
 
     return res.status(200).send(top);
   }
+
+  public static async weeklyHunters(_req: Request, res: Response): Promise<Response> {
+    return res.sendStatus(418);
+    // TODO
+  }
 }

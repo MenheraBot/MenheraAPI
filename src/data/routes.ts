@@ -25,6 +25,7 @@ StatisticsGroup.post('/bicho', JogoDoBichoController.postBichoGame);
 // Hunt Command
 StatisticsGroup.get('/hunt', HuntsController.getUserInfo);
 StatisticsGroup.get('/hunt/top', HuntsController.topHunts);
+StatisticsGroup.get('/hunt/weekly', HuntsController.weeklyHunters);
 StatisticsGroup.post('/hunt', HuntsController.postHuntMade);
 // Blackjack Command
 StatisticsGroup.get('/blackjack', BlackJackController.getUserInfo);
