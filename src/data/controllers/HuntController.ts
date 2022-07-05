@@ -13,11 +13,11 @@ export default class HuntsController {
   }
 
   public static async postHuntMade(req: Request, res: Response): Promise<Response> {
-    const { userId, huntType, value, success, tries } = req.body;
+    const { userId, huntType, value, success, tries, userTag } = req.body;
 
     if (!userId) return res.sendStatus(400);
 
-    await postHunt(userId, huntType, value, success, tries);
+    await postHunt(userId, huntType, value, success, tries, userTag);
     return res.sendStatus(201);
   }
 
