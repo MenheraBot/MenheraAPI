@@ -151,7 +151,8 @@ export const postHunt = async (
   huntType: HuntTypes,
   value: number,
   success: number,
-  tries: number
+  tries: number,
+  userTag: string
 ): Promise<void> => {
   await ensureUser(userId);
 
@@ -170,6 +171,7 @@ export const postHunt = async (
       hunt_type: huntType,
       hunted: value,
       user_id: userId,
+      user_tag: userTag,
     },
   });
 };
