@@ -408,6 +408,7 @@ export type WeeklyHuntersTop = {
   hunt_type: string;
   hunted: number;
   user_id: string;
+  user_tag: string;
 };
 
 export const deleteOldWeeklyHunters = async (): Promise<void> => {
@@ -423,7 +424,7 @@ export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
 
   const rawData = await Prisma.weekly_hunts.findMany({
     where: { hunted_at: { gte: week }, hunted: { gt: 0 } },
-    select: { hunt_type: true, hunted: true, user_id: true },
+    select: { hunt_type: true, hunted: true, user_id: true, user_tag: true },
   });
 
   const result = rawData.reduce<WeeklyHuntersTop[]>((acc, cur) => {
