@@ -425,6 +425,7 @@ export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
   const rawData = await Prisma.weekly_hunts.findMany({
     where: { hunted_at: { gte: week }, hunted: { gt: 0 } },
     select: { hunt_type: true, hunted: true, user_id: true, user_tag: true },
+    orderBy: { id: 'desc' },
   });
 
   const result = rawData.reduce<WeeklyHuntersTop[]>((acc, cur) => {
@@ -436,6 +437,7 @@ export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
     }
 
     found.hunted += cur.hunted;
+
     return acc;
   }, []);
 
