@@ -185,18 +185,22 @@ export const updateUserBichoStatus = async (
   const winOrLoseGame = didWin ? 'won' : 'lost';
   const winOrLoseMoney = didWin ? 'earn' : 'lost';
 
-  await Prisma.bichouser.upsert({
-    where: { user_id: userId },
-    update: {
-      [`${winOrLoseMoney}_money`]: { increment: didWin ? profit : betValue },
-      [`${winOrLoseGame}_games`]: { increment: 1 },
-    },
-    create: {
-      [`${winOrLoseMoney}_money`]: didWin ? profit : betValue,
-      [`${winOrLoseGame}_games`]: 1,
-      user_id: userId,
-    },
-  });
+  await Prisma.bichouser
+    .upsert({
+      where: { user_id: userId },
+      update: {
+        [`${winOrLoseMoney}_money`]: { increment: didWin ? profit : betValue },
+        [`${winOrLoseGame}_games`]: { increment: 1 },
+      },
+      create: {
+        [`${winOrLoseMoney}_money`]: didWin ? profit : betValue,
+        [`${winOrLoseGame}_games`]: 1,
+        user_id: userId,
+      },
+    })
+    .catch(err => {
+      console.error('[PRISMA ERROR] - Error in upsert bicho status', err);
+    });
 };
 
 export const getUserHuntData = async (userId: string): Promise<hunts | null> =>
@@ -410,6 +414,8 @@ export type WeeklyHuntersTop = {
   user_id: string;
   user_tag: string;
 };
+
+export type WeeklyHuntersTopDated = { data: WeeklyHuntersTop[]; nextUpdate: number };
 
 export const deleteOldWeeklyHunters = async (): Promise<void> => {
   const week = new Date();
