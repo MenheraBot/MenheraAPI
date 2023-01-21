@@ -8,12 +8,12 @@ import {
 
 const WeeklyHunters = {
   nextUpdateAt: 0,
-  lastRequestData: {} as WeeklyHuntersTop[],
+  lastRequestData: [] as WeeklyHuntersTop[],
   requestsMade: 0,
   request: async (): Promise<WeeklyHuntersTopDated> => {
     const now = Date.now();
 
-    if (now > WeeklyHunters.nextUpdateAt)
+    if (now < WeeklyHunters.nextUpdateAt)
       return {
         data: WeeklyHunters.lastRequestData,
         nextUpdate: WeeklyHunters.nextUpdateAt,
