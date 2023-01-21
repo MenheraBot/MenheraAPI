@@ -22,6 +22,7 @@ const WeeklyHunters = {
     const top = await getWeeklyHuntersTop();
 
     WeeklyHunters.nextUpdateAt = Date.now() + 1000 * 60 * 60 * 1.5;
+    WeeklyHunters.lastRequestData = top;
     WeeklyHunters.requestsMade += 1;
 
     if (WeeklyHunters.requestsMade > 30) {
