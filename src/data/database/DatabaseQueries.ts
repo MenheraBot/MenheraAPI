@@ -196,7 +196,9 @@ export const updateUserBichoStatus = async (
       [`${winOrLoseGame}_games`]: 1,
       user_id: userId,
     },
-  });
+  }).catch((err) => {
+    console.error('[PRISMA ERROR] - Error in upsert bicho status', err)
+  })
 };
 
 export const getUserHuntData = async (userId: string): Promise<hunts | null> =>
