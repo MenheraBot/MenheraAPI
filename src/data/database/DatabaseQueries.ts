@@ -166,6 +166,8 @@ export const postHunt = async (
     create: { user_id: userId },
   });
 
+  if (value === 0) return;
+
   await Prisma.weekly_hunts.create({
     data: {
       hunt_type: huntType,
