@@ -17,6 +17,11 @@ InfoRouter.get('/hunts', async (_req, res) => {
   return res.send(results);
 });
 
+InfoRouter.get('/headers', (req,res) => {
+  console.log(req.headers)
+  res.sendStatus(418)
+})
+
 InfoRouter.get('/commands', CommandsController.getCommands);
 InfoRouter.post('/commands', isAuthorized, CommandsController.createCommands);
 InfoRouter.patch('/commands/:name', isAuthorized, CommandsController.editMaintenance);
