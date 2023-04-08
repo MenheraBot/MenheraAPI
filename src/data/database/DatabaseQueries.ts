@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+// @ts-ignore
 import { hunts } from './generated/client';
 import {
   AllNulable,
