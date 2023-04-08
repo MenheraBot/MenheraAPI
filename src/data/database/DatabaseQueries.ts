@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { hunts } from './generated/client';
 import {
