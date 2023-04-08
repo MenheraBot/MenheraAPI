@@ -1,13 +1,5 @@
 /* eslint-disable camelcase */
-export type ActivityType = 'PLAYING' | 'LISTENING' | 'WATCHING' | 'STREAMING';
-
 export type Nullable<T> = T | null;
-
-export interface Activity {
-  name: string;
-  type: ActivityType;
-  url?: string;
-}
 
 export interface commandInterface {
   name: string;

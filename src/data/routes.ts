@@ -1,21 +1,13 @@
 import { Router } from 'express';
-import ActivityController from './controllers/ActivitiesController';
 import BlackJackController from './controllers/BlackjackController';
 import StatsController from './controllers/CommandsController';
 import UsagesController from './controllers/UsagesController';
 import CoinflipController from './controllers/CoinflipController';
 import HuntsController from './controllers/HuntController';
-import RoleplayController from './controllers/RoleplayController';
 import JogoDoBichoController from './controllers/JogoDoBichoController';
 import RouletteController from './controllers/RouletteController';
 
 const DataRouter = Router();
-
-const ActivityGroup = Router();
-ActivityGroup.get('/', ActivityController.all);
-ActivityGroup.post('/', ActivityController.add);
-ActivityGroup.put('/', ActivityController.reset);
-ActivityGroup.delete('/', ActivityController.clear);
 
 const StatisticsGroup = Router();
 // Jogo do Bicho System
@@ -47,13 +39,7 @@ UsagesGroup.get('/user', UsagesController.getUserInfo);
 UsagesGroup.get('/top/command', UsagesController.topCommands);
 UsagesGroup.get('/top/user', UsagesController.topUsers);
 
-const RoleplayGroup = Router();
-RoleplayGroup.get('/battleconf', RoleplayController.getConfig);
-RoleplayGroup.patch('/battleconf', RoleplayController.setConfig);
-
-DataRouter.use('/activity', ActivityGroup);
 DataRouter.use('/statistics', StatisticsGroup);
 DataRouter.use('/usages', UsagesGroup);
-DataRouter.use('/roleplay', RoleplayGroup);
 
 export default DataRouter;

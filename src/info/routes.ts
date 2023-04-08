@@ -13,10 +13,15 @@ InfoRouter.get('/hunts', async (_req, res) => {
   return res.send(results);
 });
 
-InfoRouter.get('/headers', (req,res) => {
-  console.log(req.headers)
-  res.sendStatus(418)
-})
+InfoRouter.get('/headers', (req, res) => {
+  console.log(
+    `[${new Date().toISOString()}] IP="${req.headers['cf-connecting-ip']}" COUNTRY="${
+      req.headers['cf-ipcountry']
+    }" - ${req.headers['user-agent']}`
+  );
+
+  res.status(418);
+});
 
 InfoRouter.get('/commands', CommandsController.getCommands);
 InfoRouter.post('/commands', isAuthorized, CommandsController.createCommands);

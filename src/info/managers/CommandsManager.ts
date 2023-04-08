@@ -1,5 +1,5 @@
+import https from 'node:https';
 import { ICommandData, ICommandDisabledData } from '../utils/types';
-import https from 'node:https'
 
 export default class CommandsManager {
   private static instance?: CommandsManager;
@@ -38,19 +38,17 @@ export default class CommandsManager {
     if (!this.instance) {
       this.instance = new CommandsManager();
 
-      console.log(this.instance.commands)
-
-      https.request({
-        host: 'api.menherabot.xyz',
-        port: 443,
-        path: '/main/commands',
-        method: 'GET',
-        headers: {
-          authorization: process.env.API_TOKEN,
-        }
-      }).end()
-
-      console.log(this.instance.commands)
+      https
+        .request({
+          host: 'api.menherabot.xyz',
+          port: 443,
+          path: '/main/commands',
+          method: 'GET',
+          headers: {
+            authorization: process.env.API_TOKEN,
+          },
+        })
+        .end();
     }
 
     return this.instance;
