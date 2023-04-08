@@ -20,7 +20,7 @@ InfoRouter.get('/headers', (req, res) => {
     }" - ${req.headers['user-agent']}`
   );
 
-  res.status(418);
+  res.sendStatus(418);
 });
 
 InfoRouter.get('/commands', CommandsController.getCommands);
