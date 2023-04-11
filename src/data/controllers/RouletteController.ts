@@ -1,19 +1,16 @@
 import { Request, Response } from 'express';
-import { createRouletteGame, getRouletteStatus, getTopRoulette } from '../database/DatabaseQueries';
+import {
+  getRouletteStatus,
+  getTopRoulette,
+  updateUserRouletteStatus,
+} from '../database/DatabaseQueries';
 
 export default class RouletteController {
   public static async postRouletteGame(req: Request, res: Response): Promise<Response> {
-    const { userId, betValue, profit, didWin, betType, selectedValues } = req.body;
-    if (
-      !userId ||
-      !betValue ||
-      !profit ||
-      typeof didWin === 'undefined' ||
-      !betType ||
-      !selectedValues
-    )
+    const { userId, betValue, profit, didWin } = req.body;
+    if (!userId || !betValue || !profit || typeof didWin === 'undefined')
       return res.sendStatus(400);
-    await createRouletteGame(userId, betValue, profit, didWin, betType, selectedValues);
+    await updateUserRouletteStatus(userId, betValue, profit, didWin);
 
     return res.sendStatus(201);
   }

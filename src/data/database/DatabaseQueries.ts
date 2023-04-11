@@ -263,30 +263,6 @@ export const updateUserRouletteStatus = async (
   });
 };
 
-export const createRouletteGame = async (
-  userId: string,
-  betValue: number,
-  profit: number,
-  didWin: boolean,
-  betType: string,
-  selectedValues: string
-): Promise<void> => {
-  await Promise.all([
-    ensureUser(userId),
-    updateUserRouletteStatus(userId, betValue, profit, didWin),
-    Prisma.roulette.create({
-      data: {
-        user_id: userId,
-        bet_value: betValue,
-        didwin: didWin,
-        bet_type: betType,
-        selected_values: selectedValues,
-        profit,
-      },
-    }),
-  ]);
-};
-
 export const getRouletteStatus = async (
   userId: string
 ): Promise<AllNulable<RouletteStats> | null> => {
