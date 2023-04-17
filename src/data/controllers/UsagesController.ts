@@ -5,6 +5,7 @@ import {
   getTopCommands,
   getTopUsers,
   getUserCommandsUsesCount,
+  getUserLastBanDate,
   getUserTopCommandsUsed,
 } from '../database/DatabaseQueries';
 
@@ -13,6 +14,18 @@ export default class UsagesController {
     const data = await getInactiveUsersLastCommand(req.body);
 
     return res.status(200).json(data);
+  }
+
+  static async getUserBanData(req: Request, res: Response): Promise<Response> {
+    const { userId } = req.params;
+
+    if (!userId) return res.sendStatus(400);
+
+    const data = await getUserLastBanDate(userId);
+
+    if (!data) return res.sendStatus(404);
+
+    return res.status(200).send(data);
   }
 
   static async topUsers(_req: Request, res: Response): Promise<Response> {

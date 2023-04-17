@@ -318,6 +318,21 @@ export const getTopCoinflip = async (
   return result;
 };
 
+export const getUserLastBanDate = async (userId: string): Promise<null | string> => {
+  const result = await Prisma.uses.findFirst({
+    where: {
+      AND: [
+        { cmd_id: 283 },
+        { user_id: '435228312214962204' },
+        { args: { startsWith: `tipo:add user:${userId}` } },
+      ],
+    },
+    orderBy: { id: 'desc' },
+  });
+
+  return `${result.date}`;
+};
+
 export const getTopHunt = async (
   skip: number,
   bannedUsers: string[],
