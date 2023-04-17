@@ -17,11 +17,11 @@ export default class UsagesController {
   }
 
   static async getUserBanData(req: Request, res: Response): Promise<Response> {
-    const { userId } = req.params;
+    const { id } = req.params;
 
-    if (!userId) return res.sendStatus(400);
+    if (!id) return res.sendStatus(400);
 
-    const data = await getUserLastBanDate(userId);
+    const data = await getUserLastBanDate(id);
 
     if (!data) return res.sendStatus(404);
 
