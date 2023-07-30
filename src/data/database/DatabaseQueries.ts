@@ -479,6 +479,7 @@ export const createTransaction = async (
       reason,
       target_id: targetId,
       author_id: authorId,
+      date: Date.now()
     }
   });
 };
