@@ -34,7 +34,8 @@ StatisticsGroup.post('/roulette', RouletteController.postRouletteGame);
 const UsagesGroup = Router();
 UsagesGroup.post('/commands', StatsController.postCommand);
 
-UsagesGroup.get('/ban/:id', UsagesController.getUserBanData);
+UsagesGroup.get('/lastban/:id', UsagesController.getUserLastBanTime);
+UsagesGroup.get('/bans/:id', UsagesController.getUserBans);
 
 UsagesGroup.get('/inactive', UsagesController.getInactiveUsers);
 UsagesGroup.get('/user', UsagesController.getUserInfo);

@@ -213,9 +213,8 @@ export const getUserHuntData = async (userId: string): Promise<hunts | null> =>
 export async function getInactiveUsersLastCommand(
   users: string[] = []
 ): Promise<{ user: string; date: number }[]> {
-  const results = (await Prisma.$queryRaw`SELECT lc.user_id, lc.date FROM uses lc LEFT JOIN uses nc ON lc.user_id = nc.user_id AND lc.date > nc.date WHERE (nc.date IS NULL) AND (lc.date < ${
-    Date.now() - 604800000
-  }) AND (lc.user_id IN (${users})) ORDER BY lc.date DESC`) as { user: string; date: number }[];
+  const results = (await Prisma.$queryRaw`SELECT lc.user_id, lc.date FROM uses lc LEFT JOIN uses nc ON lc.user_id = nc.user_id AND lc.date > nc.date WHERE (nc.date IS NULL) AND (lc.date < ${Date.now() - 604800000
+    }) AND (lc.user_id IN (${users})) ORDER BY lc.date DESC`) as { user: string; date: number }[];
 
   return results;
 }
@@ -335,6 +334,27 @@ export const getUserLastBanDate = async (userId: string): Promise<null | string>
   if (!result) return null;
 
   return `${result.date}`;
+};
+
+export const getUserAllBans = async (userId: string): Promise<null | string> => {
+  const result = await Prisma.uses
+    .findMany({
+      where: {
+        AND: [
+          { cmd_id: 283 },
+          { user_id: '435228312214962204' },
+          { args: { startsWith: `tipo:add user:${userId}` } },
+        ],
+      },
+      orderBy: { id: 'desc' },
+      select: { args: true, date: true }
+    })
+    .catch(() => null);
+
+  if (!result) return null;
+
+
+  return result.map(a => ({ date: a.date, reason: a.args.slice(`tipo:add user:${userId} motivo:`.length) }));
 };
 
 export const getTopHunt = async (
