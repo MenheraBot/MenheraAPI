@@ -354,7 +354,7 @@ export const getUserAllBans = async (userId: string): Promise<null | string> => 
   if (!result) return null;
 
 
-  return result.map(a => ({ date: a.date, reason: a.args.slice(`tipo:add user:${userId} motivo:`.length) }));
+  return result.map(a => ({ date: `${a.date}`, reason: a.args.slice(`tipo:add user:${userId} motivo:`.length) }));
 };
 
 export const getTopHunt = async (

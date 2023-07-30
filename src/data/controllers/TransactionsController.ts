@@ -6,6 +6,10 @@ export default class TransactionsController {
   public static async postTransaction(req: Request, res: Response): Promise<Response> {
     const { authorId, targetId, amount, currencyType, reason } = req.body;
     if (!authorId || !targetId || !amount || !currencyType || !reason) {
+
+      console.log('THERE WILL BE A 400 IN TRANSACTIONS. SENT PAYLOAD')
+      console.log(req.body)
+
       return res.sendStatus(400);
     }
 
