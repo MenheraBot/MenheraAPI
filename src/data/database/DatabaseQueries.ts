@@ -499,5 +499,5 @@ export const getTransactions = async (
     }
   })
 
-  return result;
+  return result.map(a => ({...a, date: `${a.date}`}));
 };
