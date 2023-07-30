@@ -213,9 +213,8 @@ export const getUserHuntData = async (userId: string): Promise<hunts | null> =>
 export async function getInactiveUsersLastCommand(
   users: string[] = []
 ): Promise<{ user: string; date: number }[]> {
-  const results = (await Prisma.$queryRaw`SELECT lc.user_id, lc.date FROM uses lc LEFT JOIN uses nc ON lc.user_id = nc.user_id AND lc.date > nc.date WHERE (nc.date IS NULL) AND (lc.date < ${
-    Date.now() - 604800000
-  }) AND (lc.user_id IN (${users})) ORDER BY lc.date DESC`) as { user: string; date: number }[];
+  const results = (await Prisma.$queryRaw`SELECT lc.user_id, lc.date FROM uses lc LEFT JOIN uses nc ON lc.user_id = nc.user_id AND lc.date > nc.date WHERE (nc.date IS NULL) AND (lc.date < ${Date.now() - 604800000
+    }) AND (lc.user_id IN (${users})) ORDER BY lc.date DESC`) as { user: string; date: number }[];
 
   return results;
 }
@@ -337,6 +336,27 @@ export const getUserLastBanDate = async (userId: string): Promise<null | string>
   return `${result.date}`;
 };
 
+export const getUserAllBans = async (userId: string): Promise<null | string> => {
+  const result = await Prisma.uses
+    .findMany({
+      where: {
+        AND: [
+          { cmd_id: 283 },
+          { user_id: '435228312214962204' },
+          { args: { startsWith: `tipo:add user:${userId}` } },
+        ],
+      },
+      orderBy: { id: 'desc' },
+      select: { args: true, date: true }
+    })
+    .catch(() => null);
+
+  if (!result) return null;
+
+
+  return result.map(a => ({ date: a.date, reason: a.args.slice(`tipo:add user:${userId} motivo:`.length) }));
+};
+
 export const getTopHunt = async (
   skip: number,
   bannedUsers: string[],
@@ -445,6 +465,38 @@ export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
 
     return acc;
   }, []);
+
+  return result;
+};
+
+export const createTransaction = async (
+  authorId: string, targetId: string, amount: number, currencyType: string, reason: string
+): Promise<void> => {
+  await Prisma.transactions.create({
+    data: {
+      amount,
+      currency_type: currencyType,
+      reason,
+      target_id: targetId,
+      author_id: authorId,
+    }
+  });
+};
+
+export const getTransactions = async (
+  userId: string, page: number
+): Promise<unknown[]> => {
+  const result = await Prisma.transactions.findMany({
+    orderBy: { id: 'desc' },
+    take: 10,
+    skip: 10 * (page - 1),
+    where: {
+      OR: [
+        { target_id: userId },
+        { author_id: userId },
+      ],
+    }
+  })
 
   return result;
 };

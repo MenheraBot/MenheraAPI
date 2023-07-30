@@ -6,6 +6,7 @@ import CoinflipController from './controllers/CoinflipController';
 import HuntsController from './controllers/HuntController';
 import JogoDoBichoController from './controllers/JogoDoBichoController';
 import RouletteController from './controllers/RouletteController';
+import TransactionsController from './controllers/TransactionsController';
 
 const DataRouter = Router();
 
@@ -30,11 +31,15 @@ StatisticsGroup.post('/coinflip', CoinflipController.postCoinflip);
 StatisticsGroup.get('/roulette', RouletteController.getUserRouletteStatus);
 StatisticsGroup.get('/roulette/top', RouletteController.topRoulette);
 StatisticsGroup.post('/roulette', RouletteController.postRouletteGame);
+// Transactions System
+StatisticsGroup.get('/transaction', TransactionsController.getTransactionsFromUser)
+StatisticsGroup.post('/transaction', TransactionsController.postTransaction)
 
 const UsagesGroup = Router();
 UsagesGroup.post('/commands', StatsController.postCommand);
 
-UsagesGroup.get('/ban/:id', UsagesController.getUserBanData);
+UsagesGroup.get('/lastban/:id', UsagesController.getUserLastBanTime);
+UsagesGroup.get('/bans/:id', UsagesController.getUserBans);
 
 UsagesGroup.get('/inactive', UsagesController.getInactiveUsers);
 UsagesGroup.get('/user', UsagesController.getUserInfo);
