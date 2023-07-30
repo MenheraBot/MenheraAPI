@@ -468,3 +468,35 @@ export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
 
   return result;
 };
+
+export const createTransaction = async (
+  authorId: string, targetId: string, amount: number, currencyType: string, reason: string
+): Promise<void> => {
+  await Prisma.transactions.create({
+    data: {
+      amount,
+      currency_type: currencyType,
+      reason,
+      target_id: targetId,
+      author_id: authorId,
+    }
+  });
+};
+
+export const getTransactions = async (
+  userId: string, page: number
+): Promise<unknown[]> => {
+  const result = await Prisma.transactions.findMany({
+    orderBy: { id: 'desc' },
+    take: 10,
+    skip: 10 * (page - 1),
+    where: {
+      OR: [
+        { target_id: userId },
+        { author_id: userId },
+      ],
+    }
+  })
+
+  return result;
+};

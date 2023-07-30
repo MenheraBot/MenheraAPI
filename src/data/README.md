@@ -34,7 +34,10 @@
 | GET    | `/statistics/hunt/top`           | Returns the top hunters                                                                      |
 | POST   | `/statistics/hunt`               | Updates a Player's Data on Hunts                                                             |
 | POST   | `/usages/commands`               | Post a command execution                                                                     |
-| GET    | `/usages/ban/:id`                | Get the date of the last ban of a user                                                       |
+| GET    | `/usages/lastban/:id`            | Get the date of the last ban of a user |
+| GET    | `/usages/bans/:id`               | Get all bans from a user |
+| GET    | `/usages/transaction?userId=0&page=1`            |Get transactions related to a user |
+| POST    | `/usages/transaction`               | Register a transaction |
 | GET    | `/usages/inactive`               | Returns the ID of all users who have been inactive for more than a week                      |
 | GET    | `/usages/top/command`            | Returns the top 10 most used commands                                                        |
 | GET    | `/usages/top/user`               | Returns the top 10 users who most used commands                                              |
