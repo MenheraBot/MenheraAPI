@@ -274,7 +274,7 @@ export const updateUserPokerStatus = async (
   const userHand = hand.toLowerCase();
   const increment = didWin ? { increment: 1 } : { increment: 0 };
 
-  await Prisma.roletauser.upsert({
+  await Prisma.pokeruser.upsert({
     where: { user_id: userId },
     update: {
       [`${winOrLoseMoney}_money`]: { increment: chips },
