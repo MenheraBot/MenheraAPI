@@ -213,8 +213,9 @@ export const getUserHuntData = async (userId: string): Promise<hunts | null> =>
 export async function getInactiveUsersLastCommand(
   users: string[] = []
 ): Promise<{ user: string; date: number }[]> {
-  const results = (await Prisma.$queryRaw`SELECT lc.user_id, lc.date FROM uses lc LEFT JOIN uses nc ON lc.user_id = nc.user_id AND lc.date > nc.date WHERE (nc.date IS NULL) AND (lc.date < ${Date.now() - 604800000
-    }) AND (lc.user_id IN (${users})) ORDER BY lc.date DESC`) as { user: string; date: number }[];
+  const results = (await Prisma.$queryRaw`SELECT lc.user_id, lc.date FROM uses lc LEFT JOIN uses nc ON lc.user_id = nc.user_id AND lc.date > nc.date WHERE (nc.date IS NULL) AND (lc.date < ${
+    Date.now() - 604800000
+  }) AND (lc.user_id IN (${users})) ORDER BY lc.date DESC`) as { user: string; date: number }[];
 
   return results;
 }
@@ -257,6 +258,33 @@ export const updateUserRouletteStatus = async (
     create: {
       [`${winOrLoseMoney}_money`]: didWin ? profit : betValue,
       [`${winOrLoseGame}_games`]: 1,
+      user_id: userId,
+    },
+  });
+};
+
+export const updateUserPokerStatus = async (
+  userId: string,
+  chips: number,
+  didWin: boolean,
+  hand: string
+): Promise<void> => {
+  const winOrLoseGame = didWin ? 'won' : 'lost';
+  const winOrLoseMoney = didWin ? 'earn' : 'lost';
+  const userHand = hand.toLowerCase();
+  const increment = didWin ? { increment: 1 } : { increment: 0 };
+
+  await Prisma.roletauser.upsert({
+    where: { user_id: userId },
+    update: {
+      [`${winOrLoseMoney}_money`]: { increment: chips },
+      [`${winOrLoseGame}_games`]: { increment: 1 },
+      [userHand]: increment,
+    },
+    create: {
+      [`${winOrLoseMoney}_money`]: chips,
+      [`${winOrLoseGame}_games`]: 1,
+      [userHand]: didWin ? 1 : 0,
       user_id: userId,
     },
   });
@@ -347,14 +375,16 @@ export const getUserAllBans = async (userId: string): Promise<null | string> => 
         ],
       },
       orderBy: { id: 'desc' },
-      select: { args: true, date: true }
+      select: { args: true, date: true },
     })
     .catch(() => null);
 
   if (!result) return null;
 
-
-  return result.map(a => ({ date: `${a.date}`, reason: a.args.slice(`tipo:add user:${userId} motivo:`.length) }));
+  return result.map(a => ({
+    date: `${a.date}`,
+    reason: a.args.slice(`tipo:add user:${userId} motivo:`.length),
+  }));
 };
 
 export const getTopHunt = async (
@@ -470,7 +500,11 @@ export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
 };
 
 export const createTransaction = async (
-  authorId: string, targetId: string, amount: number, currencyType: string, reason: string
+  authorId: string,
+  targetId: string,
+  amount: number,
+  currencyType: string,
+  reason: string
 ): Promise<void> => {
   await Prisma.transactions.create({
     data: {
@@ -479,25 +513,20 @@ export const createTransaction = async (
       reason,
       target_id: targetId,
       author_id: authorId,
-      date: Date.now()
-    }
+      date: Date.now(),
+    },
   });
 };
 
-export const getTransactions = async (
-  userId: string, page: number
-): Promise<unknown[]> => {
+export const getTransactions = async (userId: string, page: number): Promise<unknown[]> => {
   const result = await Prisma.transactions.findMany({
     orderBy: { id: 'desc' },
     take: 10,
     skip: 10 * (page - 1),
     where: {
-      OR: [
-        { target_id: userId },
-        { author_id: userId },
-      ],
-    }
-  })
+      OR: [{ target_id: userId }, { author_id: userId }],
+    },
+  });
 
-  return result.map(a => ({...a, date: `${a.date}`}));
+  return result.map(a => ({ ...a, date: `${a.date}` }));
 };

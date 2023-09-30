@@ -47,6 +47,24 @@ model roletauser {
   users      users  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
 }
 
+model pokeruser {
+  user_id         String @id @db.VarChar(20)
+  earn_money      Int?   @default(0)
+  lost_money      Int?   @default(0)
+  lost_games      Int?   @default(0)
+  won_games       Int?   @default(0)
+  royal_flush     Int?   @default(0)
+  straight_flush  Int?   @default(0)
+  four_of_a_kind  Int?   @default(0)
+  full_house      Int?   @default(0)
+  straight        Int?   @default(0)
+  three_of_a_kind Int?   @default(0)
+  two_pair        Int?   @default(0)
+  pair            Int?   @default(0)
+  high_card       Int?   @default(0)
+  users           users  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
+}
+
 model users {
   id               String         @id @db.VarChar(20)
   uses             Int?           @default(0)
@@ -64,6 +82,7 @@ model users {
   uses_usersTouses uses[]
   weekly_hunts     weekly_hunts[]
   transactions     transactions[]
+  pokeruser        pokeruser[]
 }
 
 model uses {
@@ -97,12 +116,12 @@ model weekly_hunts {
 }
 
 model transactions {
-  id            Int      @id @default(autoincrement())
-  author_id     String   @db.VarChar(20)
-  target_id     String   @db.VarChar(20)
+  id            Int    @id @default(autoincrement())
+  author_id     String @db.VarChar(20)
+  target_id     String @db.VarChar(20)
   amount        Int
-  currency_type String   @db.VarChar(15)
-  reason        String   @db.VarChar(40)
+  currency_type String @db.VarChar(15)
+  reason        String @db.VarChar(40)
   date          BigInt
-  users         users    @relation(fields: [author_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users         users  @relation(fields: [author_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
