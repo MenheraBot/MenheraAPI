@@ -518,6 +518,10 @@ export const createTransaction = async (
   });
 };
 
+export const paidTaxes = async (userId: string, taxes: number): Promise<void> => {
+  await Prisma.users.update({ where: { id: userId }, data: { taxes: { increment: taxes } } });
+};
+
 export const getTransactions = async (userId: string, page: number): Promise<unknown[]> => {
   const result = await Prisma.transactions.findMany({
     orderBy: { id: 'desc' },

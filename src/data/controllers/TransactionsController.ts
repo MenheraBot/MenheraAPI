@@ -1,17 +1,21 @@
 /* eslint-disable no-param-reassign */
 import { Request, Response } from 'express';
-import { createTransaction, getTransactions } from '../database/DatabaseQueries';
+import { createTransaction, getTransactions, paidTaxes } from '../database/DatabaseQueries';
 
 export default class TransactionsController {
   public static async postTransaction(req: Request, res: Response): Promise<Response> {
-    const { authorId, targetId, amount, currencyType, reason } = req.body;
+    const { authorId, targetId, amount, currencyType, reason, taxes } = req.body;
     if (!authorId || !targetId || !amount || !currencyType || !reason) {
+      console.log(
+        new Date().toISOString(),
+        `Transaction error! ${authorId} ${targetId} ${amount} ${currencyType} ${reason}`
+      );
       return res.sendStatus(400);
     }
 
-    await createTransaction(
-      authorId, targetId, amount, currencyType, reason
-    );
+    await createTransaction(authorId, targetId, amount, currencyType, reason);
+
+    if (taxes && taxes > 0) await paidTaxes(authorId, taxes);
 
     return res.sendStatus(201);
   }
