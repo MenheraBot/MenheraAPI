@@ -15,7 +15,10 @@ export default class TransactionsController {
 
     await createTransaction(authorId, targetId, amount, currencyType, reason);
 
-    if (taxes && taxes > 0) await paidTaxes(authorId, taxes);
+    if (taxes && taxes > 0) {
+      const notMenheraId = authorId === process.env.MENHERA_ID ? targetId : authorId;
+      await paidTaxes(notMenheraId, taxes);
+    }
 
     return res.sendStatus(201);
   }
