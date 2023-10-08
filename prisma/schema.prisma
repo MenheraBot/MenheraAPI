@@ -57,6 +57,7 @@ model pokeruser {
   straight_flush  Int?   @default(0)
   four_of_a_kind  Int?   @default(0)
   full_house      Int?   @default(0)
+  flush           Int?   @default(0)
   straight        Int?   @default(0)
   three_of_a_kind Int?   @default(0)
   two_pair        Int?   @default(0)
