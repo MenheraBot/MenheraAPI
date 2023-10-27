@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { hunts } from './generated/client';
+import { farmuser, hunts } from './generated/client';
 import {
   AllNulable,
   BlackJackStats,
@@ -534,3 +534,27 @@ export const getTransactions = async (userId: string, page: number): Promise<unk
 
   return result.map(a => ({ ...a, date: `${a.date}` }));
 };
+
+export const registerFarmAction = async (
+  userId: string,
+  plant: number,
+  action: 'HARVEST' | 'ROTTED'
+): Promise<void> => {
+  await Prisma.farmuser.upsert({
+    where: {
+      user_id_plant: {
+        user_id: userId,
+        plant,
+      },
+    },
+    update: { [action.toLowerCase()]: { increment: 1 } },
+    create: {
+      user_id: userId,
+      plant,
+      [action.toLowerCase()]: 1,
+    },
+  });
+};
+
+export const getFarmerData = async (userId: string): Promise<farmuser[]> =>
+  Prisma.farmuser.findMany({ where: { user_id: userId } });

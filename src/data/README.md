@@ -16,29 +16,31 @@
 
 > This routes are based on the `/data` endpoint.
 
-| Method | Endpoint                         | Description                                                                                  |
-| ------ | -------------------------------- | -------------------------------------------------------------------------------------------- |
-| GET    | `/statistics/bicho`              | Returns the statistics of a user in Jogo do Bicho                                            |
-| GET    | `/statistics/bicho/top`          | Returns the top users of the Jogo do Bicho                                                   |
-| POST   | `/statistics/bicho`              | Updates a player's data on the Jogo do Bicho                                                 |
-| GET    | `/statistics/blackjack`          | Returns a user's Blackjack game information                                                  |
-| GET    | `/statistics/blackjack/top`      | Returns the top blackjack players                                                            |
-| POST   | `/statistics/blackjack`          | Updates a Blackjack player's data                                                            |
-| GET    | `/statistics/coinflip`           | Returns a user's coinflips information                                                       |
-| GET    | `/statistics/coinflip/top`       | Top coinflip players returns                                                                 |
-| POST   | `/statistics/coinflip`           | Update a coinflip player's data                                                              |
-| GET    | `/statistics/roulette`           | Returns a user's roulette information                                                        |
-| GET    | `/statistics/roulette/top`       | Top Roulette Players Returns                                                                 |
-| POST   | `/statistics/roulette`           | Updates a Roulette Player's Data                                                             |
-| GET    | `/statistics/hunt`               | Returns the user's hunt status                                                               |
-| GET    | `/statistics/hunt/top`           | Returns the top hunters                                                                      |
-| POST   | `/statistics/hunt`               | Updates a Player's Data on Hunts                                                             |
-| POST   | `/usages/commands`               | Post a command execution                                                                     |
-| GET    | `/usages/lastban/:id`            | Get the date of the last ban of a user |
-| GET    | `/usages/bans/:id`               | Get all bans from a user |
-| GET    | `/usages/transaction?userId=0&page=1`            |Get transactions related to a user |
-| POST    | `/usages/transaction`               | Register a transaction |
-| GET    | `/usages/inactive`               | Returns the ID of all users who have been inactive for more than a week                      |
-| GET    | `/usages/top/command`            | Returns the top 10 most used commands                                                        |
-| GET    | `/usages/top/user`               | Returns the top 10 users who most used commands                                              |
-| GET    | `/usages/user`                   | Returns the number of commands that a user has used, along with the command most used by him |
+| Method | Endpoint                              | Description                                                                                   |
+| ------ | ------------------------------------- | --------------------------------------------------------------------------------------------- |
+| GET    | `/statistics/bicho`                   | Returns the statistics of an user in Jogo do Bicho                                            |
+| GET    | `/statistics/bicho/top`               | Returns the top users of the Jogo do Bicho                                                    |
+| POST   | `/statistics/bicho`                   | Updates a player's data on the Jogo do Bicho                                                  |
+| GET    | `/statistics/blackjack`               | Returns an user's Blackjack game information                                                  |
+| GET    | `/statistics/blackjack/top`           | Returns the top blackjack players                                                             |
+| POST   | `/statistics/blackjack`               | Updates a Blackjack player's data                                                             |
+| GET    | `/statistics/coinflip`                | Returns an user's coinflips information                                                       |
+| GET    | `/statistics/coinflip/top`            | Top coinflip players returns                                                                  |
+| POST   | `/statistics/coinflip`                | Update a coinflip player's data                                                               |
+| GET    | `/statistics/roulette`                | Returns an user's roulette information                                                        |
+| GET    | `/statistics/roulette/top`            | Top Roulette Players Returns                                                                  |
+| POST   | `/statistics/roulette`                | Updates a Roulette Player's Data                                                              |
+| GET    | `/statistics/hunt`                    | Returns the user's hunt status                                                                |
+| GET    | `/statistics/hunt/top`                | Returns the top hunters                                                                       |
+| POST   | `/statistics/hunt`                    | Updates a Player's Data on Hunts                                                              |
+| POST   | `/usages/commands`                    | Post a command execution                                                                      |
+| GET    | `/usages/lastban/:id`                 | Get the date of the last ban of an user                                                       |
+| GET    | `/usages/bans/:id`                    | Get all bans from an user                                                                     |
+| GET    | `/usages/transaction?userId=0&page=1` | Get transactions related to an user                                                           |
+| POST   | `/usages/transaction`                 | Register a transaction                                                                        |
+| GET    | `/usages/fazendinha?userId=0`         | Get the farm data from an user                                                                |
+| POST   | `/usages/fazendinha`                  | Register a farm action                                                                        |
+| GET    | `/usages/inactive`                    | Returns the ID of all users who have been inactive for more than a week                       |
+| GET    | `/usages/top/command`                 | Returns the top 10 most used commands                                                         |
+| GET    | `/usages/top/user`                    | Returns the top 10 users who most used commands                                               |
+| GET    | `/usages/user`                        | Returns the number of commands that an user has used, along with the command most used by him |
