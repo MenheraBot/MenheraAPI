@@ -16,8 +16,8 @@ export default class CoinflipController {
     const winGames = result.cf_wins;
     const winMoney = result.cf_win_money;
     const lostMoney = result.cf_lose_money;
-    const winPorcentage = ((winGames ?? 0 / playedGames) * 100).toFixed(2) || 0;
-    const lostPorcentage = ((lostGames ?? 0 / playedGames) * 100).toFixed(2) || 0;
+    const winPorcentage = ((winGames / playedGames) * 100).toFixed(2) || 0;
+    const lostPorcentage = ((lostGames / playedGames) * 100).toFixed(2) || 0;
     const returnObject = {
       playedGames,
       lostGames,
