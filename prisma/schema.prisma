@@ -86,6 +86,7 @@ model users {
   weekly_hunts     weekly_hunts[]
   transactions     transactions[]
   pokeruser        pokeruser[]
+  farmuser         farmuser[]
 }
 
 model uses {
@@ -127,4 +128,12 @@ model transactions {
   reason        String @db.VarChar(40)
   date          BigInt
   users         users  @relation(fields: [author_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model farmuser {
+  user_id String @id @db.VarChar(20)
+  plant   Int
+  harvest Int?   @default(1)
+  rotted  Int?   @default(0)
+  users   users  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
 }
