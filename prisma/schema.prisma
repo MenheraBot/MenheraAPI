@@ -131,7 +131,7 @@ model transactions {
 }
 
 model farmuser {
-  user_id String @id @db.VarChar(20)
+  user_id String @db.VarChar(20)
   plant   Int
   harvest Int?   @default(0)
   rotted  Int?   @default(0)
