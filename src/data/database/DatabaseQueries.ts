@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { hunts } from './generated/client';
+import { farmuser, hunts } from './generated/client';
 import {
   AllNulable,
   BlackJackStats,
@@ -13,17 +13,27 @@ import {
 } from '../util/types';
 import Prisma from './Connection';
 
+const existingCommands = new Map<string, number>();
+
 export const ensureCommand = async (commandsName: string): Promise<number> => {
+  const fromCache = existingCommands.get(commandsName);
+
+  if (fromCache) return fromCache;
+
   const command = await Prisma.cmds.findFirst({ where: { name: commandsName } });
 
-  if (command) return command.id;
+  if (command) {
+    existingCommands.set(commandsName, command.id);
+    return command.id;
+  }
 
   const res = await Prisma.cmds.create({ data: { name: commandsName } });
+  existingCommands.set(commandsName, command.id);
   return res.id;
 };
 
 export const ensureUser = async (userId: string): Promise<string> => {
-  const user = await Prisma.users.findUnique({ where: { id: userId } });
+  const user = await Prisma.users.findUnique({ where: { id: userId }, select: { id: true } });
 
   if (user) return user.id;
 
@@ -72,11 +82,12 @@ export const createCommandExecution = async (
 export const getCoinflipStats = async (
   userId: string
 ): Promise<AllNulable<CoinflipStats> | null> => {
-  await ensureUser(userId);
-  const result = await Prisma.users.findUnique({
-    where: { id: userId },
-    select: { cf_wins: true, cf_loses: true, cf_win_money: true, cf_lose_money: true },
-  });
+  const result = await Prisma.users
+    .findUnique({
+      where: { id: userId },
+      select: { cf_wins: true, cf_loses: true, cf_win_money: true, cf_lose_money: true },
+    })
+    .catch(() => null);
 
   return result;
 };
@@ -101,11 +112,12 @@ export const getBichoStats = async (userId: string): Promise<AllNulable<Roulette
 export const getBlackJackStats = async (
   userId: string
 ): Promise<AllNulable<BlackJackStats> | null> => {
-  await ensureUser(userId);
-  const result = await Prisma.users.findUnique({
-    where: { id: userId },
-    select: { bj_wins: true, bj_loses: true, bj_win_money: true, bj_lose_money: true },
-  });
+  const result = await Prisma.users
+    .findUnique({
+      where: { id: userId },
+      select: { bj_wins: true, bj_loses: true, bj_win_money: true, bj_lose_money: true },
+    })
+    .catch(() => null);
 
   return result;
 };
@@ -115,18 +127,18 @@ export const postBlackJackGame = async (
   didWin: boolean,
   betValue: number
 ): Promise<void> => {
-  await ensureUser(userId);
-
-  if (didWin)
-    await Prisma.users.update({
-      where: { id: userId },
-      data: { bj_wins: { increment: 1 }, bj_win_money: { increment: betValue } },
-    });
-  else
-    await Prisma.users.update({
-      where: { id: userId },
-      data: { bj_loses: { increment: 1 }, bj_lose_money: { increment: betValue } },
-    });
+  const toUse = didWin ? 'win' : 'lose';
+  await Prisma.users.upsert({
+    where: {
+      id: userId,
+    },
+    update: { [`bj_${toUse}s`]: { increment: 1 }, [`bj_${toUse}_money`]: { increment: betValue } },
+    create: {
+      id: userId,
+      [`bj_${toUse}s`]: 1,
+      [`bj_${toUse}_money`]: betValue,
+    },
+  });
 };
 
 export const postCoinflip = async (
@@ -134,16 +146,16 @@ export const postCoinflip = async (
   loserId: string,
   value: number
 ): Promise<void> => {
-  await Promise.all([ensureUser(winnerId), ensureUser(loserId)]);
-
   await Prisma.$transaction([
-    Prisma.users.update({
+    Prisma.users.upsert({
       where: { id: winnerId },
-      data: { cf_wins: { increment: 1 }, cf_win_money: { increment: value } },
+      update: { cf_wins: { increment: 1 }, cf_win_money: { increment: value } },
+      create: { cf_wins: 1, cf_win_money: 1, id: winnerId },
     }),
-    Prisma.users.update({
+    Prisma.users.upsert({
       where: { id: loserId },
-      data: { cf_loses: { increment: 1 }, cf_lose_money: { increment: value } },
+      update: { cf_loses: { increment: 1 }, cf_lose_money: { increment: value } },
+      create: { cf_loses: 1, cf_lose_money: 1, id: loserId },
     }),
   ]);
 };
@@ -165,7 +177,12 @@ export const postHunt = async (
       [`${huntType}_tries`]: { increment: tries },
       [`${huntType}_success`]: { increment: success },
     },
-    create: { user_id: userId },
+    create: {
+      user_id: userId,
+      [`${huntType}_hunted`]: value,
+      [`${huntType}_tries`]: tries,
+      [`${huntType}_success`]: success,
+    },
   });
 
   if (value === 0) return;
@@ -534,3 +551,27 @@ export const getTransactions = async (userId: string, page: number): Promise<unk
 
   return result.map(a => ({ ...a, date: `${a.date}` }));
 };
+
+export const registerFarmAction = async (
+  userId: string,
+  plant: number,
+  action: 'HARVEST' | 'ROTTED'
+): Promise<void> => {
+  await Prisma.farmuser.upsert({
+    where: {
+      user_id_plant: {
+        user_id: userId,
+        plant,
+      },
+    },
+    update: { [action.toLowerCase()]: { increment: 1 } },
+    create: {
+      user_id: userId,
+      plant,
+      [action.toLowerCase()]: 1,
+    },
+  });
+};
+
+export const getFarmerData = async (userId: string): Promise<farmuser[]> =>
+  Prisma.farmuser.findMany({ where: { user_id: userId } });

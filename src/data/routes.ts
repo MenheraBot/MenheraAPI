@@ -8,6 +8,7 @@ import JogoDoBichoController from './controllers/JogoDoBichoController';
 import RouletteController from './controllers/RouletteController';
 import TransactionsController from './controllers/TransactionsController';
 import PokerController from './controllers/PokerController';
+import FarmController from './controllers/FarmController';
 
 const DataRouter = Router();
 
@@ -37,6 +38,9 @@ StatisticsGroup.post('/poker', PokerController.postPokerRound);
 // Transactions System
 StatisticsGroup.get('/transaction', TransactionsController.getTransactionsFromUser);
 StatisticsGroup.post('/transaction', TransactionsController.postTransaction);
+// Fazendinha Command
+StatisticsGroup.get('/fazendinha', FarmController.getFarmerData);
+StatisticsGroup.post('/fazendinha', FarmController.postAction);
 
 const UsagesGroup = Router();
 UsagesGroup.post('/commands', StatsController.postCommand);
