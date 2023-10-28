@@ -36,7 +36,7 @@ jobs:
 
       - name: '[API] Build'
         id: build
-        run: yarn build:test
+        run: yarn typecheck
         env:
           CI: true
 
