@@ -10,21 +10,7 @@ export type AllNulable<T> = { [P in keyof T]: T[P] | null };
 
 export type HuntTypes = 'demon' | 'giant' | 'angel' | 'archangel' | 'demigod' | 'god';
 
-export interface CoinflipStats {
-  cf_wins: number;
-  cf_loses: number;
-  cf_win_money: number;
-  cf_lose_money: number;
-}
-
-export interface BlackJackStats {
-  bj_wins: number;
-  bj_loses: number;
-  bj_win_money: number;
-  bj_lose_money: number;
-}
-
-export interface RouletteStats {
+export interface GamblingStats {
   earn_money: number;
   lost_money: number;
   lost_games: number;

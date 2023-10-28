@@ -4,18 +4,21 @@ import { getCoinflipStats, getTopCoinflip, postCoinflip } from '../database/Data
 export default class CoinflipController {
   public static async getUserInfo(req: Request, res: Response): Promise<Response> {
     const { userId } = req.body;
+
     if (!userId) return res.sendStatus(400);
+
     const result = await getCoinflipStats(userId);
 
-    if (!result) return res.sendStatus(400);
+    if (!result) return res.sendStatus(404);
 
-    const playedGames = result.cf_wins + result.cf_loses;
+    const playedGames = result.lost_games + result.won_games;
 
     if (playedGames === 0) return res.status(200).send({ error: true });
-    const lostGames = result.cf_loses;
-    const winGames = result.cf_wins;
-    const winMoney = result.cf_win_money;
-    const lostMoney = result.cf_lose_money;
+
+    const lostGames = result.lost_games;
+    const winGames = result.won_games;
+    const winMoney = result.earn_money;
+    const lostMoney = result.lost_money;
     const winPorcentage = ((winGames / playedGames) * 100).toFixed(2) || 0;
     const lostPorcentage = ((lostGames / playedGames) * 100).toFixed(2) || 0;
     const returnObject = {

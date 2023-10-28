@@ -2,15 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { farmuser, hunts } from './generated/client';
-import {
-  AllNulable,
-  BlackJackStats,
-  CoinflipStats,
-  commandInterface,
-  HuntTypes,
-  RouletteStats,
-  userInterface,
-} from '../util/types';
+import { commandInterface, GamblingStats, HuntTypes, userInterface } from '../util/types';
 import Prisma from './Connection';
 
 const existingCommands = new Map<string, number>();
@@ -79,29 +71,9 @@ export const createCommandExecution = async (
   await incrementUsages(userId, commandId);
 };
 
-export const getCoinflipStats = async (
-  userId: string
-): Promise<AllNulable<CoinflipStats> | null> => {
-  const result = await Prisma.users
-    .findUnique({
-      where: { id: userId },
-      select: { cf_wins: true, cf_loses: true, cf_win_money: true, cf_lose_money: true },
-    })
-    .catch(() => null);
-
-  return result;
-};
-
-export const getBichoStats = async (userId: string): Promise<AllNulable<RouletteStats> | null> => {
-  const result = await Prisma.bichouser.findUnique({
+export const getCoinflipStats = async (userId: string): Promise<GamblingStats | null> => {
+  const result = await Prisma.coinflipuser.findUnique({
     where: { user_id: userId },
-    select: {
-      earn_money: true,
-      lost_games: true,
-      lost_money: true,
-      won_games: true,
-      user_id: true,
-    },
   });
 
   if (!result) return null;
@@ -109,15 +81,22 @@ export const getBichoStats = async (userId: string): Promise<AllNulable<Roulette
   return result;
 };
 
-export const getBlackJackStats = async (
-  userId: string
-): Promise<AllNulable<BlackJackStats> | null> => {
-  const result = await Prisma.users
-    .findUnique({
-      where: { id: userId },
-      select: { bj_wins: true, bj_loses: true, bj_win_money: true, bj_lose_money: true },
-    })
-    .catch(() => null);
+export const getBichoStats = async (userId: string): Promise<GamblingStats | null> => {
+  const result = await Prisma.bichouser.findUnique({
+    where: { user_id: userId },
+  });
+
+  if (!result) return null;
+
+  return result;
+};
+
+export const getBlackJackStats = async (userId: string): Promise<GamblingStats | null> => {
+  const result = await Prisma.blackjackuser.findUnique({
+    where: { user_id: userId },
+  });
+
+  if (!result) return null;
 
   return result;
 };
@@ -127,16 +106,19 @@ export const postBlackJackGame = async (
   didWin: boolean,
   betValue: number
 ): Promise<void> => {
-  const toUse = didWin ? 'win' : 'lose';
-  await Prisma.users.upsert({
-    where: {
-      id: userId,
+  const winOrLoseGame = didWin ? 'won' : 'lost';
+  const winOrLoseMoney = didWin ? 'earn' : 'lost';
+
+  await Prisma.blackjackuser.upsert({
+    where: { user_id: userId },
+    update: {
+      [`${winOrLoseMoney}_money`]: { increment: betValue },
+      [`${winOrLoseGame}_games`]: { increment: 1 },
     },
-    update: { [`bj_${toUse}s`]: { increment: 1 }, [`bj_${toUse}_money`]: { increment: betValue } },
     create: {
-      id: userId,
-      [`bj_${toUse}s`]: 1,
-      [`bj_${toUse}_money`]: betValue,
+      [`${winOrLoseMoney}_money`]: betValue,
+      [`${winOrLoseGame}_games`]: 1,
+      user_id: userId,
     },
   });
 };
@@ -147,15 +129,15 @@ export const postCoinflip = async (
   value: number
 ): Promise<void> => {
   await Prisma.$transaction([
-    Prisma.users.upsert({
-      where: { id: winnerId },
-      update: { cf_wins: { increment: 1 }, cf_win_money: { increment: value } },
-      create: { cf_wins: 1, cf_win_money: 1, id: winnerId },
+    Prisma.coinflipuser.upsert({
+      where: { user_id: winnerId },
+      update: { won_games: { increment: 1 }, earn_money: { increment: value } },
+      create: { won_games: 1, earn_money: value, user_id: winnerId },
     }),
-    Prisma.users.upsert({
-      where: { id: loserId },
-      update: { cf_loses: { increment: 1 }, cf_lose_money: { increment: value } },
-      create: { cf_loses: 1, cf_lose_money: 1, id: loserId },
+    Prisma.coinflipuser.upsert({
+      where: { user_id: loserId },
+      update: { lost_games: { increment: 1 }, lost_money: { increment: value } },
+      create: { lost_games: 1, lost_money: value, user_id: loserId },
     }),
   ]);
 };
@@ -307,18 +289,9 @@ export const updateUserPokerStatus = async (
   });
 };
 
-export const getRouletteStatus = async (
-  userId: string
-): Promise<AllNulable<RouletteStats> | null> => {
+export const getRouletteStatus = async (userId: string): Promise<GamblingStats | null> => {
   const result = await Prisma.roletauser.findUnique({
     where: { user_id: userId },
-    select: {
-      earn_money: true,
-      lost_games: true,
-      lost_money: true,
-      won_games: true,
-      user_id: true,
-    },
   });
 
   if (!result) return null;
@@ -330,15 +303,14 @@ export const getTopBlackjack = async (
   skip: number,
   bannedUsers: string[],
   type: 'money' | 'wins'
-): Promise<BlackJackStats[]> => {
-  const toOrderBy = type === 'money' ? 'bj_win_money' : 'bj_wins';
+): Promise<GamblingStats[]> => {
+  const toOrderBy = type === 'money' ? 'earn_money' : 'won_games';
 
-  const result = await Prisma.users.findMany({
+  const result = await Prisma.blackjackuser.findMany({
     take: 10,
     skip,
-    where: { id: { notIn: bannedUsers } },
+    where: { user_id: { notIn: bannedUsers } },
     orderBy: { [toOrderBy]: 'desc' },
-    select: { bj_wins: true, bj_win_money: true, bj_loses: true, bj_lose_money: true, id: true },
   });
 
   return result;
@@ -348,15 +320,14 @@ export const getTopCoinflip = async (
   skip: number,
   bannedUsers: string[],
   type: 'money' | 'wins'
-): Promise<CoinflipStats[]> => {
-  const toOrderBy = type === 'money' ? 'cf_win_money' : 'cf_wins';
+): Promise<GamblingStats[]> => {
+  const toOrderBy = type === 'money' ? 'earn_money' : 'won_games';
 
-  const result = await Prisma.users.findMany({
+  const result = await Prisma.coinflipuser.findMany({
     take: 10,
     skip,
-    where: { id: { notIn: bannedUsers } },
+    where: { user_id: { notIn: bannedUsers } },
     orderBy: { [toOrderBy]: 'desc' },
-    select: { cf_wins: true, cf_win_money: true, cf_loses: true, cf_lose_money: true, id: true },
   });
 
   return result;
@@ -430,7 +401,7 @@ export const getTopRoulette = async (
   skip: number,
   bannedUsers: string[],
   type: 'wins' | 'money'
-): Promise<RouletteStats[]> => {
+): Promise<GamblingStats[]> => {
   const toOrderBy = type === 'money' ? 'earn_money' : 'won_games';
 
   const result = await Prisma.roletauser.findMany({
@@ -438,13 +409,6 @@ export const getTopRoulette = async (
     skip,
     where: { user_id: { notIn: bannedUsers } },
     orderBy: { [toOrderBy]: 'desc' },
-    select: {
-      earn_money: true,
-      lost_games: true,
-      lost_money: true,
-      won_games: true,
-      user_id: true,
-    },
   });
 
   return result;
@@ -454,7 +418,7 @@ export const getTopBicho = async (
   skip: number,
   bannedUsers: string[],
   type: 'wins' | 'money'
-): Promise<RouletteStats[]> => {
+): Promise<GamblingStats[]> => {
   const toOrderBy = type === 'money' ? 'earn_money' : 'won_games';
 
   const result = await Prisma.bichouser.findMany({
@@ -462,13 +426,6 @@ export const getTopBicho = async (
     skip,
     where: { user_id: { notIn: bannedUsers } },
     orderBy: { [toOrderBy]: 'desc' },
-    select: {
-      earn_money: true,
-      lost_games: true,
-      lost_money: true,
-      won_games: true,
-      user_id: true,
-    },
   });
 
   return result;
