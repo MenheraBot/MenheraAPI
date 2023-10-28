@@ -37,6 +37,20 @@ const incrementUsages = async (userId: string, commandId: number): Promise<void>
   await Prisma.$transaction([
     Prisma.users.update({ where: { id: userId }, data: { uses: { increment: 1 } } }),
     Prisma.cmds.update({ where: { id: commandId }, data: { usages: { increment: 1 } } }),
+    Prisma.usercmds.upsert({
+      where: {
+        user_id_cmd_id: {
+          user_id: userId,
+          cmd_id: commandId,
+        },
+      },
+      update: { uses: { increment: 1 } },
+      create: {
+        user_id: userId,
+        cmd_id: commandId,
+        uses: 1,
+      },
+    }),
   ]);
 };
 
@@ -235,8 +249,20 @@ export const getUserCommandsUsesCount = async (
 export const getUserTopCommandsUsed = async (
   userId: string
 ): Promise<{ name: string; count: number }[]> => {
-  const results = await Prisma.$queryRaw`SELECT cmds.name, COUNT(cmds.name) FROM uses INNER JOIN cmds ON uses.cmd_id = cmds.id WHERE user_id = ${userId} GROUP BY cmds.name ORDER BY count DESC LIMIT 10`;
-  return results as { name: string; count: number }[];
+  const result = await Prisma.usercmds.findMany({
+    take: 10,
+    where: { user_id: userId },
+    include: {
+      cmd: {
+        select: {
+          name: true,
+        },
+      },
+    },
+    orderBy: { uses: 'desc' },
+  });
+
+  return result.map(data => ({ name: data.cmd.name, count: data.uses }));
 };
 
 export const updateUserRouletteStatus = async (
