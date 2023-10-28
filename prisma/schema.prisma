@@ -9,10 +9,11 @@ datasource db {
 }
 
 model cmds {
-  id     Int    @id @default(autoincrement())
-  name   String @db.VarChar(20)
-  usages Int?   @default(0)
-  uses   uses[]
+  id       Int        @id @default(autoincrement())
+  name     String     @db.VarChar(20)
+  usages   Int?       @default(0)
+  uses     uses[]
+  usercmds usercmds[]
 }
 
 model hunts {
@@ -81,6 +82,7 @@ model users {
   farmuser         farmuser[]
   blackjackuser    blackjackuser[]
   coinflipuser     coinflipuser[]
+  usercmds         usercmds[]
 }
 
 model uses {
@@ -150,4 +152,15 @@ model farmuser {
   users   users  @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
 
   @@unique([user_id, plant])
+}
+
+model usercmds {
+  user_id String @db.VarChar(20)
+  cmd_id  Int
+  uses    Int    @default(0)
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "fk_user")
+  cmd  cmds  @relation(fields: [cmd_id], references: [id])
+
+  @@unique([user_id, cmd_id])
 }
