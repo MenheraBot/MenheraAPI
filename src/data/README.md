@@ -43,4 +43,4 @@
 | GET    | `/usages/inactive`                    | Returns the ID of all users who have been inactive for more than a week                       |
 | GET    | `/usages/top/command`                 | Returns the top 10 most used commands                                                         |
 | GET    | `/usages/top/user`                    | Returns the top 10 users who most used commands                                               |
-| GET    | `/usages/user`                        | Returns the number of commands that an user has used, along with the command most used by him |
+| GET    | `/usages/user?userId=0`               | Returns the number of commands that an user has used, along with the command most used by him |

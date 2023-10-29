@@ -5,9 +5,8 @@ import {
   getTopCommands,
   getTopUsers,
   getUserAllBans,
-  getUserCommandsUsesCount,
+  getUserProfileData,
   getUserLastBanDate,
-  getUserTopCommandsUsed,
 } from '../database/DatabaseQueries';
 
 export default class UsagesController {
@@ -47,15 +46,15 @@ export default class UsagesController {
   }
 
   static async getUserInfo(req: Request, res: Response): Promise<Response> {
-    const { userId } = req.body;
-    const commandsExecuted = await getUserCommandsUsesCount(userId);
+    const { userId } = req.query;
 
-    if (!commandsExecuted)
-      return res.status(404).send('Este usuário não exsite em meu banco de dados');
+    if (typeof userId !== 'string') return res.sendStatus(400);
 
-    const allCommands = await getUserTopCommandsUsed(userId);
+    const fromDb = await getUserProfileData(userId);
 
-    return res.send({ cmds: commandsExecuted, array: allCommands });
+    if (!fromDb) return res.sendStatus(404);
+
+    return res.status(200).json(fromDb);
   }
 
   static async topCommands(_req: Request, res: Response): Promise<Response> {

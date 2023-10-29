@@ -20,7 +20,7 @@ export const ensureCommand = async (commandsName: string): Promise<number> => {
   }
 
   const res = await Prisma.cmds.create({ data: { name: commandsName } });
-  existingCommands.set(commandsName, command.id);
+  existingCommands.set(commandsName, res.id);
   return res.id;
 };
 
@@ -233,17 +233,21 @@ export async function getInactiveUsersLastCommand(
   return results;
 }
 
-export const getUserCommandsUsesCount = async (
+export const getUserProfileData = async (
   userId: string
-): Promise<{ count: number } | null> => {
-  const commands = await Prisma.users.findUnique({
-    where: { id: userId },
-    select: { uses: true },
+): Promise<{ totalUses: number; topCommand: { name: string; uses: number } } | null> => {
+  const result = await Prisma.usercmds.findFirst({
+    orderBy: { uses: 'desc' },
+    where: { user_id: userId },
+    take: 1,
+    include: { user: { select: { uses: true } }, cmd: { select: { name: true } } },
   });
 
-  if (!commands) return null;
+  console.log(result);
 
-  return { count: commands.uses ?? 0 };
+  if (!result) return null;
+
+  return { totalUses: result.user.uses, topCommand: { name: result.cmd.name, uses: result.uses } };
 };
 
 export const getUserTopCommandsUsed = async (
