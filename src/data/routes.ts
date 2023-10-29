@@ -50,8 +50,8 @@ UsagesGroup.get('/bans/:id', UsagesController.getUserBans);
 
 UsagesGroup.get('/inactive', UsagesController.getInactiveUsers);
 UsagesGroup.get('/user', UsagesController.getUserInfo);
-UsagesGroup.get('/top/command', UsagesController.topCommands);
-UsagesGroup.get('/top/user', UsagesController.topUsers);
+UsagesGroup.get('/top/commands', UsagesController.topCommands);
+UsagesGroup.get('/top/users', UsagesController.topUsers);
 
 DataRouter.use('/statistics', StatisticsGroup);
 DataRouter.use('/usages', UsagesGroup);

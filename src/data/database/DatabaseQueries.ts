@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { farmuser, hunts } from './generated/client';
-import { commandInterface, GamblingStats, HuntTypes, userInterface } from '../util/types';
+import { CommandCount, GamblingStats, HuntTypes, userInterface } from '../util/types';
 import Prisma from './Connection';
 
 const existingCommands = new Map<string, number>();
@@ -54,12 +54,29 @@ const incrementUsages = async (userId: string, commandId: number): Promise<void>
   ]);
 };
 
-export const getTopCommands = async (): Promise<commandInterface[]> =>
-  Prisma.cmds.findMany({
-    orderBy: { usages: 'desc' },
-    take: 10,
-    select: { name: true, usages: true },
-  });
+export const getTopCommands = async (skip: number): Promise<CommandCount[]> =>
+  Prisma.cmds
+    .findMany({
+      take: 10,
+      skip,
+      orderBy: { usages: 'desc' },
+      select: { name: true, usages: true },
+    })
+    .then(a => a.map(b => ({ name: b.name, uses: b.usages })));
+
+export const getTopCommandsFromUser = async (
+  skip: number,
+  userId: string
+): Promise<CommandCount[]> =>
+  Prisma.usercmds
+    .findMany({
+      take: 10,
+      skip,
+      where: { user_id: userId },
+      orderBy: { uses: 'desc' },
+      select: { cmd: { select: { name: true } }, uses: true },
+    })
+    .then(a => a.map(b => ({ name: b.cmd.name, uses: b.uses })));
 
 export const getTopUsers = async (): Promise<userInterface[]> =>
   Prisma.users.findMany({
