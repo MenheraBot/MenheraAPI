@@ -8,6 +8,8 @@ import {
   getUserProfileData,
   getUserLastBanDate,
   getTopCommandsFromUser,
+  getTopUsersFromCommand,
+  ensureCommand,
 } from '../database/DatabaseQueries';
 
 export default class UsagesController {
@@ -41,9 +43,21 @@ export default class UsagesController {
     return res.status(200).send(data);
   }
 
-  static async topUsers(_req: Request, res: Response): Promise<Response> {
-    const rows = await getTopUsers();
-    return res.status(200).send(rows);
+  static async topUsers(req: Request, res: Response): Promise<Response> {
+    const { skip = 0, commandName } = req.query;
+    const { bannedUsers } = req.body;
+
+    if (typeof commandName === 'string') {
+      const commandId = await ensureCommand(commandName);
+
+      const result = await getTopUsersFromCommand(Number(skip), bannedUsers, commandId);
+
+      return res.status(200).json(result);
+    }
+
+    const result = await getTopUsers(Number(skip), bannedUsers);
+
+    return res.status(200).json(result);
   }
 
   static async getUserInfo(req: Request, res: Response): Promise<Response> {

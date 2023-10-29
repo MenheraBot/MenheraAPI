@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { farmuser, hunts } from './generated/client';
-import { CommandCount, GamblingStats, HuntTypes, userInterface } from '../util/types';
+import { CommandCount, GamblingStats, HuntTypes, UserCount } from '../util/types';
 import Prisma from './Connection';
 
 const existingCommands = new Map<string, number>();
@@ -78,12 +78,29 @@ export const getTopCommandsFromUser = async (
     })
     .then(a => a.map(b => ({ name: b.cmd.name, uses: b.uses })));
 
-export const getTopUsers = async (): Promise<userInterface[]> =>
+export const getTopUsers = async (skip: number, bannedUsers: string[]): Promise<UserCount[]> =>
   Prisma.users.findMany({
+    select: { id: true, uses: true },
+    where: { id: { notIn: bannedUsers } },
     orderBy: { uses: 'desc' },
     take: 10,
-    select: { id: true, uses: true }, // ok
+    skip,
   });
+
+export const getTopUsersFromCommand = async (
+  skip: number,
+  bannedUsers: string[],
+  commandId: number
+): Promise<Array<UserCount & { commandName: string }>> =>
+  Prisma.usercmds
+    .findMany({
+      select: { user_id: true, uses: true, cmd: { select: { name: true } } },
+      where: { cmd_id: commandId, user_id: { notIn: bannedUsers } },
+      orderBy: { uses: 'desc' },
+      take: 10,
+      skip,
+    })
+    .then(a => a.map(b => ({ id: b.user_id, uses: b.uses, commandName: b.cmd.name })));
 
 export const createCommandExecution = async (
   userId: string,
@@ -259,8 +276,6 @@ export const getUserProfileData = async (
     take: 1,
     include: { user: { select: { uses: true } }, cmd: { select: { name: true } } },
   });
-
-  console.log(result);
 
   if (!result) return null;
 

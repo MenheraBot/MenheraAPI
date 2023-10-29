@@ -17,9 +17,9 @@ export interface GamblingStats {
   won_games: number;
 }
 
-export interface userInterface {
+export interface UserCount {
   id: string;
-  uses: Nullable<number>;
+  uses: number;
 }
 
 export interface usagesInterface {
