@@ -30,6 +30,8 @@
 | GET    | `/statistics/roulette`                | Returns an user's roulette information                                                        |
 | GET    | `/statistics/roulette/top`            | Top Roulette Players Returns                                                                  |
 | POST   | `/statistics/roulette`                | Updates a Roulette Player's Data                                                              |
+| GET    | `/statistics/poker`                   | Returns an user's poker information                                                           |
+| POST   | `/statistics/poker`                   | Post a poker round                                                                            |
 | GET    | `/statistics/hunt`                    | Returns the user's hunt status                                                                |
 | GET    | `/statistics/hunt/top`                | Returns the top hunters                                                                       |
 | POST   | `/statistics/hunt`                    | Updates a Player's Data on Hunts                                                              |

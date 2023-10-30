@@ -35,6 +35,7 @@ StatisticsGroup.get('/roulette/top', RouletteController.topRoulette);
 StatisticsGroup.post('/roulette', RouletteController.postRouletteGame);
 // Poker Command
 StatisticsGroup.post('/poker', PokerController.postPokerRound);
+StatisticsGroup.get('/poker', PokerController.getUserPokerStatus);
 // Transactions System
 StatisticsGroup.get('/transaction', TransactionsController.getTransactionsFromUser);
 StatisticsGroup.post('/transaction', TransactionsController.postTransaction);
