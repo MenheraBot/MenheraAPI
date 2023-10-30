@@ -9,6 +9,7 @@ import RouletteController from './controllers/RouletteController';
 import TransactionsController from './controllers/TransactionsController';
 import PokerController from './controllers/PokerController';
 import FarmController from './controllers/FarmController';
+import TaxesController from './controllers/TaxesController';
 
 const DataRouter = Router();
 
@@ -39,6 +40,7 @@ StatisticsGroup.get('/poker', PokerController.getUserPokerStatus);
 // Transactions System
 StatisticsGroup.get('/transaction', TransactionsController.getTransactionsFromUser);
 StatisticsGroup.post('/transaction', TransactionsController.postTransaction);
+StatisticsGroup.get('/taxes/top', TaxesController.getTopTaxes);
 // Fazendinha Command
 StatisticsGroup.get('/fazendinha', FarmController.getFarmerData);
 StatisticsGroup.post('/fazendinha', FarmController.postAction);

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { farmuser, hunts, pokeruser } from './generated/client';
+import { farmuser, hunts, pokeruser, users as userTypes } from './generated/client';
 import { CommandCount, GamblingStats, HuntTypes, UserCount } from '../util/types';
 import Prisma from './Connection';
 
@@ -597,3 +597,11 @@ export const getFarmerData = async (userId: string): Promise<farmuser[]> =>
 
 export const getPokerData = async (userId: string): Promise<pokeruser> =>
   Prisma.pokeruser.findUnique({ where: { user_id: userId } });
+
+export const getTopTaxes = async (skip: number, bannedUsers: string[]): Promise<userTypes[]> =>
+  Prisma.users.findMany({
+    take: 10,
+    skip,
+    where: { id: { notIn: bannedUsers } },
+    orderBy: { taxes: 'desc' },
+  });
