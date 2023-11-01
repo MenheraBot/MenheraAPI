@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { farmuser, hunts } from './generated/client';
-import { commandInterface, GamblingStats, HuntTypes, userInterface } from '../util/types';
+import { farmuser, hunts, pokeruser, users as userTypes } from './generated/client';
+import { CommandCount, GamblingStats, HuntTypes, UserCount } from '../util/types';
 import Prisma from './Connection';
 
 const existingCommands = new Map<string, number>();
@@ -20,7 +20,7 @@ export const ensureCommand = async (commandsName: string): Promise<number> => {
   }
 
   const res = await Prisma.cmds.create({ data: { name: commandsName } });
-  existingCommands.set(commandsName, command.id);
+  existingCommands.set(commandsName, res.id);
   return res.id;
 };
 
@@ -54,19 +54,53 @@ const incrementUsages = async (userId: string, commandId: number): Promise<void>
   ]);
 };
 
-export const getTopCommands = async (): Promise<commandInterface[]> =>
-  Prisma.cmds.findMany({
-    orderBy: { usages: 'desc' },
-    take: 10,
-    select: { name: true, usages: true },
-  });
+export const getTopCommands = async (skip: number): Promise<CommandCount[]> =>
+  Prisma.cmds
+    .findMany({
+      take: 10,
+      skip,
+      orderBy: { usages: 'desc' },
+      select: { name: true, usages: true },
+    })
+    .then(a => a.map(b => ({ name: b.name, uses: b.usages })));
 
-export const getTopUsers = async (): Promise<userInterface[]> =>
+export const getTopCommandsFromUser = async (
+  skip: number,
+  userId: string
+): Promise<CommandCount[]> =>
+  Prisma.usercmds
+    .findMany({
+      take: 10,
+      skip,
+      where: { user_id: userId },
+      orderBy: { uses: 'desc' },
+      select: { cmd: { select: { name: true } }, uses: true },
+    })
+    .then(a => a.map(b => ({ name: b.cmd.name, uses: b.uses })));
+
+export const getTopUsers = async (skip: number, bannedUsers: string[]): Promise<UserCount[]> =>
   Prisma.users.findMany({
+    select: { id: true, uses: true },
+    where: { id: { notIn: bannedUsers } },
     orderBy: { uses: 'desc' },
     take: 10,
-    select: { id: true, uses: true }, // ok
+    skip,
   });
+
+export const getTopUsersFromCommand = async (
+  skip: number,
+  bannedUsers: string[],
+  commandId: number
+): Promise<Array<UserCount & { commandName: string }>> =>
+  Prisma.usercmds
+    .findMany({
+      select: { user_id: true, uses: true, cmd: { select: { name: true } } },
+      where: { cmd_id: commandId, user_id: { notIn: bannedUsers } },
+      orderBy: { uses: 'desc' },
+      take: 10,
+      skip,
+    })
+    .then(a => a.map(b => ({ id: b.user_id, uses: b.uses, commandName: b.cmd.name })));
 
 export const createCommandExecution = async (
   userId: string,
@@ -233,17 +267,19 @@ export async function getInactiveUsersLastCommand(
   return results;
 }
 
-export const getUserCommandsUsesCount = async (
+export const getUserProfileData = async (
   userId: string
-): Promise<{ count: number } | null> => {
-  const commands = await Prisma.users.findUnique({
-    where: { id: userId },
-    select: { uses: true },
+): Promise<{ totalUses: number; topCommand: { name: string; uses: number } } | null> => {
+  const result = await Prisma.usercmds.findFirst({
+    orderBy: { uses: 'desc' },
+    where: { user_id: userId },
+    take: 1,
+    include: { user: { select: { uses: true } }, cmd: { select: { name: true } } },
   });
 
-  if (!commands) return null;
+  if (!result) return null;
 
-  return { count: commands.uses ?? 0 };
+  return { totalUses: result.user.uses, topCommand: { name: result.cmd.name, uses: result.uses } };
 };
 
 export const getUserTopCommandsUsed = async (
@@ -558,3 +594,14 @@ export const registerFarmAction = async (
 
 export const getFarmerData = async (userId: string): Promise<farmuser[]> =>
   Prisma.farmuser.findMany({ where: { user_id: userId } });
+
+export const getPokerData = async (userId: string): Promise<pokeruser> =>
+  Prisma.pokeruser.findUnique({ where: { user_id: userId } });
+
+export const getTopTaxes = async (skip: number, bannedUsers: string[]): Promise<userTypes[]> =>
+  Prisma.users.findMany({
+    take: 10,
+    skip,
+    where: { id: { notIn: bannedUsers } },
+    orderBy: { taxes: 'desc' },
+  });

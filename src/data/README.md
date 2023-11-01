@@ -30,9 +30,12 @@
 | GET    | `/statistics/roulette`                | Returns an user's roulette information                                                        |
 | GET    | `/statistics/roulette/top`            | Top Roulette Players Returns                                                                  |
 | POST   | `/statistics/roulette`                | Updates a Roulette Player's Data                                                              |
+| GET    | `/statistics/poker`                   | Returns an user's poker information                                                           |
+| POST   | `/statistics/poker`                   | Post a poker round                                                                            |
 | GET    | `/statistics/hunt`                    | Returns the user's hunt status                                                                |
 | GET    | `/statistics/hunt/top`                | Returns the top hunters                                                                       |
 | POST   | `/statistics/hunt`                    | Updates a Player's Data on Hunts                                                              |
+| GET    | `/statistics/taxes/top`               | Returns the top 10 users that most paid taxes                                                 |
 | POST   | `/usages/commands`                    | Post a command execution                                                                      |
 | GET    | `/usages/lastban/:id`                 | Get the date of the last ban of an user                                                       |
 | GET    | `/usages/bans/:id`                    | Get all bans from an user                                                                     |
@@ -41,6 +44,6 @@
 | GET    | `/usages/fazendinha?userId=0`         | Get the farm data from an user                                                                |
 | POST   | `/usages/fazendinha`                  | Register a farm action                                                                        |
 | GET    | `/usages/inactive`                    | Returns the ID of all users who have been inactive for more than a week                       |
-| GET    | `/usages/top/command`                 | Returns the top 10 most used commands                                                         |
-| GET    | `/usages/top/user`                    | Returns the top 10 users who most used commands                                               |
-| GET    | `/usages/user`                        | Returns the number of commands that an user has used, along with the command most used by him |
+| GET    | `/usages/top/commands?userId`         | Returns the top 10 commands used from all Menhera or an user                                  |
+| GET    | `/usages/top/users?commandName`       | Returns the top 10 users who most used commands from all Menhera or a command                 |
+| GET    | `/usages/user?userId=0`               | Returns the number of commands that an user has used, along with the command most used by him |

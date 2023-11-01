@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 export type Nullable<T> = T | null;
 
-export interface commandInterface {
+export interface CommandCount {
   name: string;
-  usages: Nullable<number>;
+  uses: number;
 }
 
 export type AllNulable<T> = { [P in keyof T]: T[P] | null };
@@ -17,9 +17,9 @@ export interface GamblingStats {
   won_games: number;
 }
 
-export interface userInterface {
+export interface UserCount {
   id: string;
-  uses: Nullable<number>;
+  uses: number;
 }
 
 export interface usagesInterface {

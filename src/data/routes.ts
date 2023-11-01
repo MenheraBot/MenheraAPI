@@ -9,6 +9,7 @@ import RouletteController from './controllers/RouletteController';
 import TransactionsController from './controllers/TransactionsController';
 import PokerController from './controllers/PokerController';
 import FarmController from './controllers/FarmController';
+import TaxesController from './controllers/TaxesController';
 
 const DataRouter = Router();
 
@@ -35,9 +36,11 @@ StatisticsGroup.get('/roulette/top', RouletteController.topRoulette);
 StatisticsGroup.post('/roulette', RouletteController.postRouletteGame);
 // Poker Command
 StatisticsGroup.post('/poker', PokerController.postPokerRound);
+StatisticsGroup.get('/poker', PokerController.getUserPokerStatus);
 // Transactions System
 StatisticsGroup.get('/transaction', TransactionsController.getTransactionsFromUser);
 StatisticsGroup.post('/transaction', TransactionsController.postTransaction);
+StatisticsGroup.get('/taxes/top', TaxesController.getTopTaxes);
 // Fazendinha Command
 StatisticsGroup.get('/fazendinha', FarmController.getFarmerData);
 StatisticsGroup.post('/fazendinha', FarmController.postAction);
@@ -50,8 +53,8 @@ UsagesGroup.get('/bans/:id', UsagesController.getUserBans);
 
 UsagesGroup.get('/inactive', UsagesController.getInactiveUsers);
 UsagesGroup.get('/user', UsagesController.getUserInfo);
-UsagesGroup.get('/top/command', UsagesController.topCommands);
-UsagesGroup.get('/top/user', UsagesController.topUsers);
+UsagesGroup.get('/top/commands', UsagesController.topCommands);
+UsagesGroup.get('/top/users', UsagesController.topUsers);
 
 DataRouter.use('/statistics', StatisticsGroup);
 DataRouter.use('/usages', UsagesGroup);

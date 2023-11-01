@@ -5,9 +5,11 @@ import {
   getTopCommands,
   getTopUsers,
   getUserAllBans,
-  getUserCommandsUsesCount,
+  getUserProfileData,
   getUserLastBanDate,
-  getUserTopCommandsUsed,
+  getTopCommandsFromUser,
+  getTopUsersFromCommand,
+  ensureCommand,
 } from '../database/DatabaseQueries';
 
 export default class UsagesController {
@@ -41,25 +43,43 @@ export default class UsagesController {
     return res.status(200).send(data);
   }
 
-  static async topUsers(_req: Request, res: Response): Promise<Response> {
-    const rows = await getTopUsers();
-    return res.status(200).send(rows);
+  static async topUsers(req: Request, res: Response): Promise<Response> {
+    const { skip = 0, commandName } = req.query;
+    const { bannedUsers } = req.body;
+
+    if (typeof commandName === 'string') {
+      const commandId = await ensureCommand(commandName);
+
+      const result = await getTopUsersFromCommand(Number(skip), bannedUsers, commandId);
+
+      return res.status(200).json(result);
+    }
+
+    const result = await getTopUsers(Number(skip), bannedUsers);
+
+    return res.status(200).json(result);
   }
 
   static async getUserInfo(req: Request, res: Response): Promise<Response> {
-    const { userId } = req.body;
-    const commandsExecuted = await getUserCommandsUsesCount(userId);
+    const { userId } = req.query;
 
-    if (!commandsExecuted)
-      return res.status(404).send('Este usuário não exsite em meu banco de dados');
+    if (typeof userId !== 'string') return res.sendStatus(400);
 
-    const allCommands = await getUserTopCommandsUsed(userId);
+    const fromDb = await getUserProfileData(userId);
 
-    return res.send({ cmds: commandsExecuted, array: allCommands });
+    if (!fromDb) return res.sendStatus(404);
+
+    return res.status(200).json(fromDb);
   }
 
-  static async topCommands(_req: Request, res: Response): Promise<Response> {
-    const rows = await getTopCommands();
-    return res.status(200).send(rows);
+  static async topCommands(req: Request, res: Response): Promise<Response> {
+    const { skip = 0, userId } = req.query;
+
+    const result =
+      typeof userId === 'string'
+        ? await getTopCommandsFromUser(Number(skip), userId)
+        : await getTopCommands(Number(skip));
+
+    return res.status(200).json(result);
   }
 }
