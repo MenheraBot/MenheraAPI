@@ -24,15 +24,13 @@ export default class TransactionsController {
   }
 
   public static async getTransactionsFromUser(req: Request, res: Response): Promise<Response> {
-    const { userId, page = 1, types, user } = req.query;
+    const { page = 1, types, users } = req.query;
 
-    if (!userId) return res.sendStatus(400);
+    if (!Array.isArray(users)) return res.sendStatus(400);
 
     if (!Array.isArray(types)) return res.sendStatus(400);
 
-    const toSearchUser = user?.toString() ?? userId.toString();
-
-    const data = await getTransactions(toSearchUser, Number(page), types as string[]);
+    const data = await getTransactions(users as string[], Number(page), types as string[]);
 
     if (!data) return res.sendStatus(404);
 
