@@ -564,12 +564,17 @@ export const getTransactions = async (
   types: string[],
   currency: string[]
 ): Promise<unknown[]> => {
+  const usersSearch =
+    typeof users[1] !== 'undefined' && users[1].length > 1
+      ? { AND: [{ target_id: { in: users } }, { author_id: { in: users } }] }
+      : { OR: [{ target_id: users[0] }, { author_id: users[0] }] };
+
   const result = await Prisma.transactions.findMany({
     orderBy: { id: 'desc' },
     take: 10,
     skip: 10 * (page - 1),
     where: {
-      OR: [{ target_id: { in: users } }, { author_id: { in: users } }],
+      ...usersSearch,
       reason: { in: types },
       currency_type: { in: currency },
     },
