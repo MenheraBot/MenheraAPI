@@ -559,7 +559,7 @@ export const paidTaxes = async (userId: string, taxes: number): Promise<void> =>
 };
 
 export const getTransactions = async (
-  userId: string,
+  users: string[],
   page: number,
   types: string[]
 ): Promise<unknown[]> => {
@@ -568,7 +568,7 @@ export const getTransactions = async (
     take: 10,
     skip: 10 * (page - 1),
     where: {
-      OR: [{ target_id: userId }, { author_id: userId }],
+      OR: [{ target_id: { in: users } }, { author_id: { in: users } }],
       reason: { in: types },
     },
   });
