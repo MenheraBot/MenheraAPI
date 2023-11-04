@@ -561,7 +561,8 @@ export const paidTaxes = async (userId: string, taxes: number): Promise<void> =>
 export const getTransactions = async (
   users: string[],
   page: number,
-  types: string[]
+  types: string[],
+  currency: string[]
 ): Promise<unknown[]> => {
   const result = await Prisma.transactions.findMany({
     orderBy: { id: 'desc' },
@@ -570,6 +571,7 @@ export const getTransactions = async (
     where: {
       OR: [{ target_id: { in: users } }, { author_id: { in: users } }],
       reason: { in: types },
+      currency_type: { in: currency },
     },
   });
 
