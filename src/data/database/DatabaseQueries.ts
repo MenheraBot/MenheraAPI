@@ -287,7 +287,7 @@ export const getUserTopCommandsUsed = async (
 ): Promise<{ name: string; count: number }[]> => {
   const result = await Prisma.usercmds.findMany({
     take: 10,
-    where: { user_id: userId },
+    where: { user_id: userId, uses: { gt: 0 } },
     include: {
       cmd: {
         select: {
