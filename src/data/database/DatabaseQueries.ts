@@ -335,20 +335,26 @@ export const updateUserPokerStatus = async (
   const userHand = hand.toLowerCase();
   const increment = didWin ? { increment: 1 } : { increment: 0 };
 
-  await Prisma.pokeruser.upsert({
-    where: { user_id: userId },
-    update: {
-      [`${winOrLoseMoney}_money`]: { increment: chips },
-      [`${winOrLoseGame}_games`]: { increment: 1 },
-      [userHand]: increment,
-    },
-    create: {
-      [`${winOrLoseMoney}_money`]: chips,
-      [`${winOrLoseGame}_games`]: 1,
-      [userHand]: didWin ? 1 : 0,
-      user_id: userId,
-    },
-  });
+  await Prisma.pokeruser
+    .upsert({
+      where: { user_id: userId },
+      update: {
+        [`${winOrLoseMoney}_money`]: { increment: chips },
+        [`${winOrLoseGame}_games`]: { increment: 1 },
+        [userHand]: increment,
+      },
+      create: {
+        [`${winOrLoseMoney}_money`]: chips,
+        [`${winOrLoseGame}_games`]: 1,
+        [userHand]: didWin ? 1 : 0,
+        user_id: userId,
+      },
+    })
+    .catch(async e => {
+      console.log('Poker creation error', e);
+      await Prisma.users.create({ data: { id: userId } });
+      updateUserPokerStatus(userId, chips, didWin, hand);
+    });
 };
 
 export const getRouletteStatus = async (userId: string): Promise<GamblingStats | null> => {
