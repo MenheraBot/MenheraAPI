@@ -43,7 +43,7 @@ export default class JogoDoBichoController {
   public static async getBichoGames(req: Request, res: Response): Promise<Response> {
     const { page } = req.query;
 
-    const numberPage = parseInt(page ?? 0, 10);
+    const numberPage = parseInt(page as string ?? '0', 10);
 
     if (!numberPage || Number.isNaN(numberPage))
       return res.status(400).json({ message: 'You need to specify the "page" in query' });
