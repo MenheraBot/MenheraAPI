@@ -16,11 +16,12 @@
 
 > This routes are based on the `/info` endpoint.
 
-| Method | Endpoint    | Description                                                                                 |
-| ------ | ----------- | ------------------------------------------------------------------------------------------- |
-| GET    | `/ping`     | Returns the API uptime                                                                      |
-| GET    | `/hunts`    | Returns an array with weekly hunters data                                                   |
-| GET    | `/headers`  | Internal use                                                                                | 
-| GET    | `/commands` | Returns an array with information about Menhera's commands                                  |
-| POST   | `/commands` | Change the array of commands to the new commands passed                                     |
-| PATCH  | `/commands` | Change the maintenance state of some command                                                |
+| Method | Endpoint        | Description                                                |
+| ------ | --------------- | ---------------------------------------------------------- |
+| GET    | `/ping`         | Returns the API uptime                                     |
+| GET    | `/hunts`        | Returns an array with weekly hunters data                  |
+| GET    | `/bicho?page=1` | Get paginated bicho games history                          |
+| GET    | `/headers`      | Internal use                                               |
+| GET    | `/commands`     | Returns an array with information about Menhera's commands |
+| POST   | `/commands`     | Change the array of commands to the new commands passed    |
+| PATCH  | `/commands`     | Change the maintenance state of some command               |

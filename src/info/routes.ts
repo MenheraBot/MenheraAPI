@@ -1,7 +1,8 @@
-import { Router } from 'express';
+import Router from 'express';
 import WeeklyHunters from '../data/util/WeeklyHunters';
 import isAuthorized from '../data/middlewares/isAuthorized';
 import CommandsController from './controllers/CommandsController';
+import JogoDoBichoController from '../data/controllers/JogoDoBichoController';
 
 const startTime = Date.now();
 
@@ -12,6 +13,8 @@ InfoRouter.get('/hunts', async (_req, res) => {
 
   return res.send(results);
 });
+
+InfoRouter.get('/bicho', JogoDoBichoController.getBichoGames);
 
 InfoRouter.get('/headers', (req, res) => {
   console.log(

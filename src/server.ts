@@ -14,18 +14,21 @@ const app = express();
 const server = http.createServer(app);
 
 const limiter = rateLimit({
-  windowMs: 10 * 1000,
-  max: 15,
+  windowMs: 20 * 1000,
+  max: 10,
   skip: (req: Request) => req.headers['user-agent'] === process.env.MENHERA_AGENT,
   handler: (_req: Request, res: Response) => {
-    res.status(429).send({ message: 'You are beeing rate limited' });
+    res
+      .set('Like', 'HTTP 451')
+      .status(429)
+      .send({ message: 'This resource hurts me... Please be kind >_<' });
   },
 });
 
 app.use(cors());
+app.set('trust proxy', 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.set('trust proxy', 1);
 app.use((_, res, next) => {
   res.contentType('application/json');
   return next();

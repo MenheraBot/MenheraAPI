@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { farmuser, hunts, pokeruser, users as userTypes } from './generated/client';
+import { bichogames, farmuser, hunts, pokeruser, users as userTypes } from './generated/client';
 import { BichoGamePlayer, CommandCount, GamblingStats, HuntTypes, UserCount } from '../util/types';
 import Prisma from './Connection';
 
@@ -236,6 +236,19 @@ export const registerBichoGame = async (
     // @ts-expect-error This conversion is bad
     data: { date, players: users, results },
   });
+};
+
+const GAMES_PER_PAGE = 10;
+
+export const getBichoHistory = async (page: number): Promise<bichogames[]> => {
+  const result = await Prisma.bichogames.findMany({
+    take: GAMES_PER_PAGE,
+    skip: (page - 1) * GAMES_PER_PAGE,
+    orderBy: { id: 'desc' },
+  });
+
+  // @ts-expect-error Bigint to Number
+  return result.map(a => ({ ...a, date: Number(a.date), results: JSON.parse(a.results) }));
 };
 
 export const updateUserBichoStatus = async (

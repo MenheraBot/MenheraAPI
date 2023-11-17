@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import {
+  getBichoHistory,
   getBichoStats,
   getTopBicho,
   registerBichoGame,
@@ -37,6 +38,24 @@ export default class JogoDoBichoController {
     };
 
     return res.status(200).send(returnObject);
+  }
+
+  public static async getBichoGames(req: Request, res: Response): Promise<Response> {
+    const { page } = req.query;
+
+    const numberPage = Number(page);
+
+    if (!numberPage || Number.isNaN(numberPage))
+      return res.status(400).json({ message: 'You need to specify the "page" in query' });
+
+    if (numberPage < 1) return res.status(422).json({ message: 'The page must be grather than 0' });
+
+    if (numberPage >= 100)
+      return res.status(422).json({ message: 'The page must be less than 100' });
+
+    const results = await getBichoHistory(numberPage);
+
+    return res.status(200).json(results);
   }
 
   public static async postBichoGame(req: Request, res: Response): Promise<Response> {
