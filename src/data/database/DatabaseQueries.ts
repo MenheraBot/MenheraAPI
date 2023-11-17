@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { farmuser, hunts, pokeruser, users as userTypes } from './generated/client';
-import { CommandCount, GamblingStats, HuntTypes, UserCount } from '../util/types';
+import { BichoGamePlayer, CommandCount, GamblingStats, HuntTypes, UserCount } from '../util/types';
 import Prisma from './Connection';
 
 const existingCommands = new Map<string, number>();
@@ -224,6 +224,17 @@ export const postHunt = async (
       user_id: userId,
       user_tag: userTag,
     },
+  });
+};
+
+export const registerBichoGame = async (
+  users: BichoGamePlayer[],
+  date: number,
+  results: string
+): Promise<void> => {
+  await Prisma.bichogames.create({
+    // @ts-expect-error This conversion is bad
+    data: { date, players: users, results },
   });
 };
 

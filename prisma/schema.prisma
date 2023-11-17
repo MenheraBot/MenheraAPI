@@ -168,4 +168,5 @@ model bichogames {
   id      Int     @id @default(autoincrement())
   date    BigInt?
   players Json?
+  results String
 }
