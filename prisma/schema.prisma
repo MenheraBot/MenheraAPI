@@ -12,8 +12,8 @@ model cmds {
   id       Int        @id @default(autoincrement())
   name     String     @db.VarChar(20)
   usages   Int?       @default(0)
-  uses     uses[]
   usercmds usercmds[]
+  uses     uses[]
 }
 
 model hunts {
@@ -69,20 +69,20 @@ model pokeruser {
 }
 
 model users {
-  id               String          @id @db.VarChar(20)
-  uses             Int?            @default(0)
-  taxes            Int?            @default(0)
+  id               String         @id @db.VarChar(20)
+  uses             Int?           @default(0)
+  taxes            Int?           @default(0)
   bichouser        bichouser?
+  blackjackuser    blackjackuser?
+  coinflipuser     coinflipuser?
+  farmuser         farmuser[]
   hunts            hunts?
+  pokeruser        pokeruser?
   roletauser       roletauser?
+  transactions     transactions[]
+  usercmds         usercmds[]
   uses_usersTouses uses[]
   weekly_hunts     weekly_hunts[]
-  transactions     transactions[]
-  pokeruser        pokeruser[]
-  farmuser         farmuser[]
-  blackjackuser    blackjackuser[]
-  coinflipuser     coinflipuser[]
-  usercmds         usercmds[]
 }
 
 model uses {
@@ -158,9 +158,14 @@ model usercmds {
   user_id String @db.VarChar(20)
   cmd_id  Int
   uses    Int    @default(0)
-
-  user users @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "fk_user")
-  cmd  cmds  @relation(fields: [cmd_id], references: [id])
+  cmd     cmds   @relation(fields: [cmd_id], references: [id])
+  user    users  @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "fk_user")
 
   @@unique([user_id, cmd_id])
+}
+
+model bichogames {
+  id      Int     @id @default(autoincrement())
+  date    BigInt?
+  players Json?
 }
