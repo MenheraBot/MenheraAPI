@@ -572,16 +572,20 @@ export const createTransaction = async (
   currencyType: string,
   reason: string
 ): Promise<void> => {
-  await Prisma.transactions.create({
-    data: {
-      amount,
-      currency_type: currencyType,
-      reason,
-      target_id: targetId,
-      author_id: authorId,
-      date: Date.now(),
-    },
-  });
+  try {
+    await Prisma.transactions.create({
+      data: {
+        amount,
+        currency_type: currencyType,
+        reason,
+        target_id: targetId,
+        author_id: authorId,
+        date: Date.now(),
+      },
+    });
+  } catch (e) {
+    console.error(new Date().toISOString(), e);
+  }
 };
 
 export const paidTaxes = async (userId: string, taxes: number): Promise<void> => {
