@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import Router from 'express';
 import WeeklyHunters from '../data/util/WeeklyHunters';
 import isAuthorized from '../data/middlewares/isAuthorized';
@@ -12,6 +13,25 @@ InfoRouter.get('/hunts', async (_req, res) => {
   const results = await WeeklyHunters.request();
 
   return res.send(results);
+});
+
+InfoRouter.all('/lazymonitor', (req, res): unknown => {
+  const { status: sentStatus } = req.query;
+
+  let statusCode = parseInt(`${sentStatus}`, 10);
+
+  if (Number.isNaN(statusCode) || !statusCode) statusCode = 200;
+
+  if (statusCode < 100 || statusCode > 599)
+    return res.status(400).json({
+      message: 'Viana meu querido, só vou te enviar status codes entre 100 e 599',
+    });
+
+  console.log(statusCode);
+  res.statusCode = statusCode;
+  res.set('Connection', 'close');
+
+  res.end();
 });
 
 InfoRouter.get('/bicho', JogoDoBichoController.getBichoGames);
