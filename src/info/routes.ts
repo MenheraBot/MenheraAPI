@@ -9,12 +9,6 @@ const startTime = Date.now();
 
 const InfoRouter = Router();
 
-InfoRouter.get('/hunts', async (_req, res) => {
-  const results = await WeeklyHunters.request();
-
-  return res.send(results);
-});
-
 InfoRouter.all('/lazymonitor', (req, res): unknown => {
   const { status: sentStatus } = req.query;
 
@@ -27,14 +21,11 @@ InfoRouter.all('/lazymonitor', (req, res): unknown => {
       message: 'Viana meu querido, só vou te enviar status codes entre 100 e 599',
     });
 
-  console.log(statusCode);
   res.statusCode = statusCode;
   res.set('Connection', 'close');
 
   res.end();
 });
-
-InfoRouter.get('/bicho', JogoDoBichoController.getBichoGames);
 
 InfoRouter.get('/headers', (req, res) => {
   console.log(
@@ -46,6 +37,13 @@ InfoRouter.get('/headers', (req, res) => {
   res.sendStatus(418);
 });
 
+InfoRouter.get('/hunts', async (_req, res) => {
+  const results = await WeeklyHunters.request();
+
+  return res.send(results);
+});
+
+InfoRouter.get('/bicho', JogoDoBichoController.getBichoGames);
 InfoRouter.get('/commands', CommandsController.getCommands);
 InfoRouter.post('/commands', isAuthorized, CommandsController.createCommands);
 InfoRouter.patch('/commands/:name', isAuthorized, CommandsController.editMaintenance);
