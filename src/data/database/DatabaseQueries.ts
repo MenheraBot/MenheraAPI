@@ -588,10 +588,6 @@ export const createTransaction = async (
   }
 };
 
-export const paidTaxes = async (userId: string, taxes: number): Promise<void> => {
-  await Prisma.users.update({ where: { id: userId }, data: { taxes: { increment: taxes } } });
-};
-
 export const getTransactions = async (
   users: string[],
   page: number,
@@ -643,11 +639,3 @@ export const getFarmerData = async (userId: string): Promise<farmuser[]> =>
 
 export const getPokerData = async (userId: string): Promise<pokeruser> =>
   Prisma.pokeruser.findUnique({ where: { user_id: userId } });
-
-export const getTopTaxes = async (skip: number, bannedUsers: string[]): Promise<userTypes[]> =>
-  Prisma.users.findMany({
-    take: 10,
-    skip,
-    where: { id: { notIn: bannedUsers } },
-    orderBy: { taxes: 'desc' },
-  });

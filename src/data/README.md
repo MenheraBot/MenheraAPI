@@ -35,7 +35,6 @@
 | GET    | `/statistics/hunt`                    | Returns the user's hunt status                                                                |
 | GET    | `/statistics/hunt/top`                | Returns the top hunters                                                                       |
 | POST   | `/statistics/hunt`                    | Updates a Player's Data on Hunts                                                              |
-| GET    | `/statistics/taxes/top`               | Returns the top 10 users that most paid taxes                                                 |
 | POST   | `/usages/commands`                    | Post a command execution                                                                      |
 | GET    | `/usages/lastban/:id`                 | Get the date of the last ban of an user                                                       |
 | GET    | `/usages/bans/:id`                    | Get all bans from an user                                                                     |

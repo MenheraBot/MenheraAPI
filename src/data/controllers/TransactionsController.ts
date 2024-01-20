@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { Request, Response } from 'express';
-import { createTransaction, getTransactions, paidTaxes } from '../database/DatabaseQueries';
+import { createTransaction, getTransactions } from '../database/DatabaseQueries';
 
 export default class TransactionsController {
   public static async postTransaction(req: Request, res: Response): Promise<Response> {
-    const { authorId, targetId, amount, currencyType, reason, taxes } = req.body;
+    const { authorId, targetId, amount, currencyType, reason } = req.body;
     if (!authorId || !targetId || !amount || !currencyType || !reason) {
       console.log(
         new Date().toISOString(),
@@ -14,11 +14,6 @@ export default class TransactionsController {
     }
 
     await createTransaction(authorId, targetId, amount, currencyType, reason);
-
-    if (taxes && taxes > 0) {
-      const notMenheraId = authorId === process.env.MENHERA_ID ? targetId : authorId;
-      await paidTaxes(notMenheraId, taxes);
-    }
 
     return res.sendStatus(201);
   }

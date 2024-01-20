@@ -71,7 +71,6 @@ model pokeruser {
 model users {
   id               String         @id @db.VarChar(20)
   uses             Int?           @default(0)
-  taxes            Int?           @default(0)
   bichouser        bichouser?
   blackjackuser    blackjackuser?
   coinflipuser     coinflipuser?
