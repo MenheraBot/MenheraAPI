@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { bichogames, farmuser, hunts, pokeruser, users as userTypes } from './generated/client';
+import { bichogames, farmuser, hunts, pokeruser } from './generated/client';
 import { BichoGamePlayer, CommandCount, GamblingStats, HuntTypes, UserCount } from '../util/types';
 import Prisma from './Connection';
 
