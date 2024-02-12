@@ -549,20 +549,36 @@ export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
     orderBy: { id: 'desc' },
   });
 
-  const result = rawData.reduce<WeeklyHuntersTop[]>((acc, cur) => {
-    const found = acc.find(u => u.user_id === cur.user_id && u.hunt_type === cur.hunt_type);
+  const huntedByType: Array<{ type: string; users: WeeklyHuntersTop[] }> = [
+    { type: 'demon', users: [] },
+    { type: 'giant', users: [] },
+    { type: 'angel', users: [] },
+    { type: 'archangel', users: [] },
+    { type: 'demigod', users: [] },
+    { type: 'god', users: [] },
+  ];
+
+  rawData.forEach((cur, i) => {
+    const found = huntedByType.find(
+      a => a.type === cur.hunt_type && a.users.some(b => b.user_id === cur.user_id)
+    );
 
     if (!found) {
-      acc.push(cur);
-      return acc;
+      huntedByType.find(a => a.type === cur.hunt_type).users.push(cur);
+      return;
     }
 
-    found.hunted += cur.hunted;
+    found.users.find(a => a.user_id === cur.user_id).hunted += cur.hunted;
 
-    return acc;
+    if (i === rawData.length - 1) {
+      huntedByType.forEach(top => {
+        // eslint-disable-next-line no-param-reassign
+        top.users = top.users.sort((a, b) => b.hunted - a.hunted).slice(0, 10);
+      });
+    }
   }, []);
 
-  return result;
+  return huntedByType.map(a => a.users).flat();
 };
 
 export const createTransaction = async (
