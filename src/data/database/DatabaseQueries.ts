@@ -581,6 +581,75 @@ export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
   return huntedByType.map(a => a.users).flat();
 };
 
+export const createTransaction = async (
+  authorId: string,
+  targetId: string,
+  amount: number,
+  currencyType: string,
+  reason: string
+): Promise<void> => {
+  try {
+    await Prisma.transactions.create({
+      data: {
+        amount,
+        currency_type: currencyType,
+        reason,
+        target_id: targetId,
+        author_id: authorId,
+        date: Date.now(),
+      },
+    });
+  } catch (e) {
+    console.error(new Date().toISOString(), e);
+  }
+};
+
+export const getTransactions = async (
+  users: string[],
+  page: number,
+  types: string[],
+  currency: string[]
+): Promise<unknown[]> => {
+  const usersSearch =
+    typeof users[1] !== 'undefined' && users[1].length > 1
+      ? { AND: [{ target_id: { in: users } }, { author_id: { in: users } }] }
+      : { OR: [{ target_id: users[0] }, { author_id: users[0] }] };
+
+  const result = await Prisma.transactions.findMany({
+    orderBy: { id: 'desc' },
+    take: 10,
+    skip: 10 * (page - 1),
+    where: {
+      ...usersSearch,
+      reason: { in: types },
+      currency_type: { in: currency },
+    },
+  });
+
+  return result.map(a => ({ ...a, date: `${a.date}` }));
+};
+
+export const registerFarmAction = async (
+  userId: string,
+  plant: number,
+  action: 'HARVEST' | 'ROTTED'
+): Promise<void> => {
+  await Prisma.farmuser.upsert({
+    where: {
+      user_id_plant: {
+        user_id: userId,
+        plant,
+      },
+    },
+    update: { [action.toLowerCase()]: { increment: 1 } },
+    create: {
+      user_id: userId,
+      plant,
+      [action.toLowerCase()]: 1,
+    },
+  });
+};
+
 export const getFarmerData = async (userId: string): Promise<farmuser[]> =>
   Prisma.farmuser.findMany({ where: { user_id: userId } });
 
