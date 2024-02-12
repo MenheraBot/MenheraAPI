@@ -549,89 +549,36 @@ export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
     orderBy: { id: 'desc' },
   });
 
-  const result = rawData.reduce<WeeklyHuntersTop[]>((acc, cur) => {
-    const found = acc.find(u => u.user_id === cur.user_id && u.hunt_type === cur.hunt_type);
+  const huntedByType: Array<{ type: string; users: WeeklyHuntersTop[] }> = [
+    { type: 'demon', users: [] },
+    { type: 'giant', users: [] },
+    { type: 'angel', users: [] },
+    { type: 'archangel', users: [] },
+    { type: 'demigod', users: [] },
+    { type: 'god', users: [] },
+  ];
+
+  rawData.forEach((cur, i) => {
+    const found = huntedByType.find(
+      a => a.type === cur.hunt_type && a.users.some(b => b.user_id === cur.user_id)
+    );
 
     if (!found) {
-      acc.push(cur);
-      return acc;
+      huntedByType.find(a => a.type === cur.hunt_type).users.push(cur);
+      return;
     }
 
-    found.hunted += cur.hunted;
+    found.users.find(a => a.user_id === cur.user_id).hunted += cur.hunted;
 
-    return acc;
+    if (i === rawData.length - 1) {
+      huntedByType.forEach(top => {
+        // eslint-disable-next-line no-param-reassign
+        top.users = top.users.sort((a, b) => b.hunted - a.hunted).slice(0, 10);
+      });
+    }
   }, []);
 
-  return result;
-};
-
-export const createTransaction = async (
-  authorId: string,
-  targetId: string,
-  amount: number,
-  currencyType: string,
-  reason: string
-): Promise<void> => {
-  try {
-    await Prisma.transactions.create({
-      data: {
-        amount,
-        currency_type: currencyType,
-        reason,
-        target_id: targetId,
-        author_id: authorId,
-        date: Date.now(),
-      },
-    });
-  } catch (e) {
-    console.error(new Date().toISOString(), e);
-  }
-};
-
-export const getTransactions = async (
-  users: string[],
-  page: number,
-  types: string[],
-  currency: string[]
-): Promise<unknown[]> => {
-  const usersSearch =
-    typeof users[1] !== 'undefined' && users[1].length > 1
-      ? { AND: [{ target_id: { in: users } }, { author_id: { in: users } }] }
-      : { OR: [{ target_id: users[0] }, { author_id: users[0] }] };
-
-  const result = await Prisma.transactions.findMany({
-    orderBy: { id: 'desc' },
-    take: 10,
-    skip: 10 * (page - 1),
-    where: {
-      ...usersSearch,
-      reason: { in: types },
-      currency_type: { in: currency },
-    },
-  });
-
-  return result.map(a => ({ ...a, date: `${a.date}` }));
-};
-
-export const registerFarmAction = async (
-  userId: string,
-  plant: number,
-  action: 'HARVEST' | 'ROTTED'
-): Promise<void> => {
-  await Prisma.farmuser.upsert({
-    where: {
-      user_id_plant: {
-        user_id: userId,
-        plant,
-      },
-    },
-    update: { [action.toLowerCase()]: { increment: 1 } },
-    create: {
-      user_id: userId,
-      plant,
-      [action.toLowerCase()]: 1,
-    },
-  });
+  return huntedByType.map(a => a.users).flat();
 };
 
 export const getFarmerData = async (userId: string): Promise<farmuser[]> =>
