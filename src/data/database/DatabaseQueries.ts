@@ -566,7 +566,7 @@ export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
     { type: 'god', users: [] },
   ];
 
-  rawData.forEach((cur, i) => {
+  rawData.forEach(cur => {
     const found = huntedByType.find(
       a => a.type === cur.hunt_type && a.users.some(b => b.user_id === cur.user_id)
     );
@@ -577,16 +577,13 @@ export const getWeeklyHuntersTop = async (): Promise<WeeklyHuntersTop[]> => {
     }
 
     found.users.find(a => a.user_id === cur.user_id).hunted += cur.hunted;
-
-    if (i === rawData.length - 1) {
-      huntedByType.forEach(top => {
-        // eslint-disable-next-line no-param-reassign
-        top.users = top.users.sort((a, b) => b.hunted - a.hunted).slice(0, 10);
-      });
-    }
   }, []);
 
-  return huntedByType.map(a => a.users).flat();
+  const weekly = huntedByType.map(type =>
+    type.users.sort((a, b) => b.hunted - a.hunted).slice(0, 10)
+  );
+
+  return weekly.flat();
 };
 
 export const createTransaction = async (
