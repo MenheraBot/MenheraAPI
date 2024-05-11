@@ -4,6 +4,8 @@
 import { bichogames, farmuser, hunts, pokeruser } from './generated/client';
 import { BichoGamePlayer, CommandCount, GamblingStats, HuntTypes, UserCount } from '../util/types';
 import Prisma from './Connection';
+// eslint-disable-next-line import/no-cycle
+import Redis from './Redis';
 
 const existingCommands = new Map<string, number>();
 
@@ -24,13 +26,17 @@ export const ensureCommand = async (commandsName: string): Promise<number> => {
   return res.id;
 };
 
-export const ensureUser = async (userId: string): Promise<string> => {
-  const user = await Prisma.users.findUnique({ where: { id: userId }, select: { id: true } });
+export const findUsers = async (userIds: string[]): Promise<string[]> => {
+  const users = await Prisma.users.findMany({
+    where: { id: { in: userIds } },
+    select: { id: true },
+  });
 
-  if (user) return user.id;
+  return users.map(a => a.id);
+};
 
-  const res = await Prisma.users.create({ data: { id: userId } });
-  return res.id;
+export const createUsers = async (userIds: string[]): Promise<void> => {
+  await Prisma.users.createMany({ skipDuplicates: true, data: userIds.map(id => ({ id })) });
 };
 
 const incrementUsages = async (userId: string, commandId: number): Promise<void> => {
@@ -110,7 +116,7 @@ export const createCommandExecution = async (
   args: string
 ): Promise<void> => {
   const commandId = await ensureCommand(commandName);
-  await ensureUser(userId);
+  await Redis.ensureUsers(userId);
 
   await Prisma.uses.create({
     data: { guild_id: guildId, args, user_id: userId, cmd_id: commandId, date },
@@ -154,6 +160,8 @@ export const postBlackJackGame = async (
   didWin: boolean,
   betValue: number
 ): Promise<void> => {
+  await Redis.ensureUsers(userId);
+
   const winOrLoseGame = didWin ? 'won' : 'lost';
   const winOrLoseMoney = didWin ? 'earn' : 'lost';
 
@@ -176,6 +184,8 @@ export const postCoinflip = async (
   loserId: string,
   value: number
 ): Promise<void> => {
+  await Redis.ensureUsers(winnerId, loserId);
+
   await Prisma.$transaction([
     Prisma.coinflipuser.upsert({
       where: { user_id: winnerId },
@@ -198,7 +208,7 @@ export const postHunt = async (
   tries: number,
   userTag: string
 ): Promise<void> => {
-  await ensureUser(userId);
+  await Redis.ensureUsers(userId);
 
   await Prisma.hunts.upsert({
     where: { user_id: userId },
@@ -334,6 +344,8 @@ export const updateUserRouletteStatus = async (
   const winOrLoseGame = didWin ? 'won' : 'lost';
   const winOrLoseMoney = didWin ? 'earn' : 'lost';
 
+  await Redis.ensureUsers(userId);
+
   await Prisma.roletauser.upsert({
     where: { user_id: userId },
     update: {
@@ -354,31 +366,27 @@ export const updateUserPokerStatus = async (
   didWin: boolean,
   hand: string
 ): Promise<void> => {
+  await Redis.ensureUsers(userId);
+
   const winOrLoseGame = didWin ? 'won' : 'lost';
   const winOrLoseMoney = didWin ? 'earn' : 'lost';
   const userHand = hand.toLowerCase();
   const increment = didWin ? { increment: 1 } : { increment: 0 };
 
-  try {
-    await Prisma.pokeruser.upsert({
-      where: { user_id: userId },
-      update: {
-        [`${winOrLoseMoney}_money`]: { increment: chips },
-        [`${winOrLoseGame}_games`]: { increment: 1 },
-        [userHand]: increment,
-      },
-      create: {
-        [`${winOrLoseMoney}_money`]: chips,
-        [`${winOrLoseGame}_games`]: 1,
-        [userHand]: didWin ? 1 : 0,
-        user_id: userId,
-      },
-    });
-  } catch (e) {
-    console.log('Poker creation error', e);
-    await Prisma.users.create({ data: { id: userId } });
-    updateUserPokerStatus(userId, chips, didWin, hand);
-  }
+  await Prisma.pokeruser.upsert({
+    where: { user_id: userId },
+    update: {
+      [`${winOrLoseMoney}_money`]: { increment: chips },
+      [`${winOrLoseGame}_games`]: { increment: 1 },
+      [userHand]: increment,
+    },
+    create: {
+      [`${winOrLoseMoney}_money`]: chips,
+      [`${winOrLoseGame}_games`]: 1,
+      [userHand]: didWin ? 1 : 0,
+      user_id: userId,
+    },
+  });
 };
 
 export const getRouletteStatus = async (userId: string): Promise<GamblingStats | null> => {
@@ -588,6 +596,8 @@ export const createTransaction = async (
   currencyType: string,
   reason: string
 ): Promise<void> => {
+  await Redis.ensureUsers(authorId, targetId);
+
   try {
     await Prisma.transactions.create({
       data: {
@@ -634,6 +644,8 @@ export const registerFarmAction = async (
   plant: number,
   action: 'HARVEST' | 'ROTTED'
 ): Promise<void> => {
+  Redis.ensureUsers(userId);
+
   await Prisma.farmuser.upsert({
     where: {
       user_id_plant: {

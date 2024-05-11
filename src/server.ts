@@ -18,10 +18,7 @@ const limiter = rateLimit({
   max: 10,
   skip: (req: Request) => req.headers['user-agent'] === process.env.MENHERA_AGENT,
   handler: (_req: Request, res: Response) => {
-    res
-      .set('Like', 'HTTP 451')
-      .status(429)
-      .send({ message: 'This resource hurts me... Please be kind >_<' });
+    res.status(429).send({ message: 'This resource hurts me... Please be kind >_<' });
   },
 });
 
