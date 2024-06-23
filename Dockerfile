@@ -13,7 +13,7 @@ RUN yarn install --production
 RUN yarn autoclean --force
 
 FROM node:16.6.0-alpine
-USER api
+USER 1000
 WORKDIR /app
 COPY --from=builder /app/dist ./
 COPY --from=builder /app/node_modules ./node_modules
