@@ -118,11 +118,15 @@ export const createCommandExecution = async (
   const commandId = await ensureCommand(commandName);
   await Redis.ensureUsers(userId);
 
-  await Prisma.uses.create({
-    data: { guild_id: guildId, args, user_id: userId, cmd_id: commandId, date },
-  });
+  try {
+    await Prisma.uses.create({
+      data: { guild_id: guildId, args, user_id: userId, cmd_id: commandId, date },
+    });
 
-  await incrementUsages(userId, commandId);
+    await incrementUsages(userId, commandId);
+  } catch {
+    console.log(`[ERROR] - User ID constraint not followed for user ${userId}`);
+  }
 };
 
 export const getCoinflipStats = async (userId: string): Promise<GamblingStats | null> => {
