@@ -1,6 +1,6 @@
 {
   "name": "menheraapi",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "An HTTP API to help MenheraBot",
   "main": "dist/server.js",
   "private": true,

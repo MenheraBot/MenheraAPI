@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { Request, Response } from 'express';
-import { getFarmerData, registerFarmAction } from '../database/DatabaseQueries';
+import { getFarmerData, getTopFarmer, registerFarmAction } from '../database/DatabaseQueries';
 
 export default class FarmController {
   public static async postAction(req: Request, res: Response): Promise<Response> {
@@ -24,5 +24,13 @@ export default class FarmController {
     if (!data) return res.sendStatus(404);
 
     return res.status(200).send(data);
+  }
+
+  public static async topFarmer(req: Request, res: Response): Promise<Response> {
+    const { skip, bannedUsers, plantType } = req.body;
+
+    const top = await getTopFarmer(skip, bannedUsers, plantType);
+
+    return res.status(200).send(top);
   }
 }
