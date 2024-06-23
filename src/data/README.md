@@ -42,7 +42,8 @@
 | POST   | `/usages/transaction`                 | Register a transaction                                                                        |
 | GET    | `/usages/fazendinha?userId=0`         | Get the farm data from an user                                                                |
 | POST   | `/usages/fazendinha`                  | Register a farm action                                                                        |
-| GET    | `/usages/inactive`                    | Returns the ID of all users who have been inactive for more than a week                       |
+| POST   | `/usages/fazendinha`                  | Register a farm action                                                                        |
+| GET    | `/usages/fazendinha/top`              | Returns the top 10 farmers that harvest more plants of a type                                 |
 | GET    | `/usages/top/commands?userId`         | Returns the top 10 commands used from all Menhera or an user                                  |
 | GET    | `/usages/top/users?commandName`       | Returns the top 10 users who most used commands from all Menhera or a command                 |
 | GET    | `/usages/user?userId=0`               | Returns the number of commands that an user has used, along with the command most used by him |

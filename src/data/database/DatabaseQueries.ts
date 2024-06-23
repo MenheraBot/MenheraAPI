@@ -664,3 +664,19 @@ export const getFarmerData = async (userId: string): Promise<farmuser[]> =>
 
 export const getPokerData = async (userId: string): Promise<pokeruser> =>
   Prisma.pokeruser.findUnique({ where: { user_id: userId } });
+
+export const getTopFarmer = async (
+  skip: number,
+  bannedUsers: string[],
+  plantType: number
+): Promise<{ user_id: string; harvest: number }[]> => {
+  const result = await Prisma.farmuser.findMany({
+    take: 10,
+    skip,
+    where: { user_id: { notIn: bannedUsers }, plant: plantType },
+    orderBy: { harvest: 'desc' },
+    select: { harvest: true, user_id: true },
+  });
+
+  return result;
+};

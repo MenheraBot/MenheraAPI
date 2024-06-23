@@ -42,6 +42,7 @@ StatisticsGroup.post('/transaction', TransactionsController.postTransaction);
 // Fazendinha Command
 StatisticsGroup.get('/fazendinha', FarmController.getFarmerData);
 StatisticsGroup.post('/fazendinha', FarmController.postAction);
+StatisticsGroup.get('/fazendinha/top', FarmController.topFarmer);
 
 const UsagesGroup = Router();
 UsagesGroup.post('/commands', StatsController.postCommand);
