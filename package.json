@@ -17,7 +17,7 @@
   "dependencies": {
     "@prisma/client": "3.13.0",
     "cors": "^2.8.5",
-    "express": "^4.19.2",
+    "express": "^4.20.0",
     "express-rate-limit": "^6.3.0",
     "ioredis": "^5.4.1"
   },
