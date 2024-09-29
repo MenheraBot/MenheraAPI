@@ -8,7 +8,7 @@ export default (
 ): Response | void => {
   if (!error) return next();
 
-  console.error(new Date().toISOString, error.message);
+  console.error(new Date().toISOString(), error.message);
 
   return res.status(500).send({ message: 'An error occurred trying to process your request' });
 };

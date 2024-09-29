@@ -34,9 +34,7 @@ InfoRouter.get('/headers', (req, res) => {
     }" - ${req.headers['user-agent']}`
   );
 
-  res.send(JSON.stringify(req.headers));
-
-  res.sendStatus(418);
+  res.status(418).send(JSON.stringify(req.headers));
 });
 
 InfoRouter.get('/hunts', async (_req, res) => {
