@@ -27,7 +27,7 @@ InfoRouter.all('/lazymonitor', (req, res): unknown => {
   res.end();
 });
 
-InfoRouter.get('/headers', (req, res) => {
+InfoRouter.all('/headers', (req, res) => {
   console.log(
     `[${new Date().toISOString()}] IP="${req.headers['cf-connecting-ip']}" COUNTRY="${
       req.headers['cf-ipcountry']

@@ -63,6 +63,7 @@ export default class RockPaperScissorsController {
     const lostMoney = result.lost_money;
     const winPorcentage = ((winGames / playedGames) * 100).toFixed(2) || 0;
     const lostPorcentage = ((lostGames / playedGames) * 100).toFixed(2) || 0;
+    const drawPorcentage = ((drawGames / playedGames) * 100).toFixed(2) || 0;
 
     const returnObject = {
       drawGames,
@@ -72,6 +73,7 @@ export default class RockPaperScissorsController {
       lostMoney,
       winPorcentage,
       lostPorcentage,
+      drawPorcentage,
       rock: result.rock,
       paper: result.paper,
       scissors: result.scissors,
