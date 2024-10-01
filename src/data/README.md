@@ -35,6 +35,8 @@
 | GET    | `/statistics/hunt`                    | Returns the user's hunt status                                                                |
 | GET    | `/statistics/hunt/top`                | Returns the top hunters                                                                       |
 | POST   | `/statistics/hunt`                    | Updates a Player's Data on Hunts                                                              |
+| GET    | `/statistics/rockpaperscissors`       | Returns an user's rock paper scissors information                                             |
+| POST   | `/statistics/rockpaperscissors`       | Post a game of Rock Paper Scissors                                                            |
 | POST   | `/usages/commands`                    | Post a command execution                                                                      |
 | GET    | `/usages/lastban/:id`                 | Get the date of the last ban of an user                                                       |
 | GET    | `/usages/bans/:id`                    | Get all bans from an user                                                                     |

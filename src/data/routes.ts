@@ -9,6 +9,7 @@ import RouletteController from './controllers/RouletteController';
 import TransactionsController from './controllers/TransactionsController';
 import PokerController from './controllers/PokerController';
 import FarmController from './controllers/FarmController';
+import RockPaperScissorsController from './controllers/RockPaperScissorsController';
 
 const DataRouter = Router();
 
@@ -43,6 +44,12 @@ StatisticsGroup.post('/transaction', TransactionsController.postTransaction);
 StatisticsGroup.get('/fazendinha', FarmController.getFarmerData);
 StatisticsGroup.post('/fazendinha', FarmController.postAction);
 StatisticsGroup.get('/fazendinha/top', FarmController.topFarmer);
+// Rock Paper Scissors Command;
+StatisticsGroup.get(
+  '/rockpaperscissors',
+  RockPaperScissorsController.getUserRockPaperScissorsGames
+);
+StatisticsGroup.post('/rockpaperscissors', RockPaperScissorsController.postRockPaperScissorsGame);
 
 const UsagesGroup = Router();
 UsagesGroup.post('/commands', StatsController.postCommand);

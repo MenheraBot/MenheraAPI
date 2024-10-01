@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { bichogames, farmuser, hunts, pokeruser } from './generated/client';
+import { bichogames, farmuser, hunts, pokeruser, rockpaperscissorsuser } from './generated/client';
 import { BichoGamePlayer, CommandCount, GamblingStats, HuntTypes, UserCount } from '../util/types';
 import Prisma from './Connection';
 // eslint-disable-next-line import/no-cycle
@@ -645,7 +645,7 @@ export const registerFarmAction = async (
   plant: number,
   action: 'HARVEST' | 'ROTTED'
 ): Promise<void> => {
-  Redis.ensureUsers(userId);
+  await Redis.ensureUsers(userId);
 
   await Prisma.farmuser.upsert({
     where: {
@@ -662,6 +662,60 @@ export const registerFarmAction = async (
     },
   });
 };
+
+export const registerRockPaperScissorsGame = async (
+  winnerId: string,
+  loserId: string,
+  winnerSelected: string,
+  loserSelected: string,
+  draw: boolean,
+  bet: number
+): Promise<void> => {
+  await Redis.ensureUsers(winnerId, loserId);
+
+  const betResults = draw ? 0 : bet;
+  const resultIncrementer = draw ? 0 : 1;
+
+  await Prisma.$transaction([
+    Prisma.rockpaperscissorsuser.upsert({
+      where: {
+        user_id: winnerId,
+      },
+      update: {
+        earn_money: { increment: betResults },
+        total_games: { increment: 1 },
+        won_games: { increment: resultIncrementer },
+        [winnerSelected]: { increment: 1 },
+      },
+      create: {
+        user_id: winnerId,
+        total_games: 1,
+        won_games: resultIncrementer,
+        [winnerSelected]: 1,
+      },
+    }),
+    Prisma.rockpaperscissorsuser.upsert({
+      where: {
+        user_id: loserId,
+      },
+      update: {
+        lost_money: { increment: betResults },
+        total_games: { increment: 1 },
+        lost_games: { increment: resultIncrementer },
+        [loserSelected]: { increment: 1 },
+      },
+      create: {
+        user_id: loserId,
+        total_games: 1,
+        lost_games: resultIncrementer,
+        [loserSelected]: 1,
+      },
+    }),
+  ]);
+};
+
+export const getRockPaperScissorsData = async (userId: string): Promise<rockpaperscissorsuser> =>
+  Prisma.rockpaperscissorsuser.findUnique({ where: { user_id: userId } });
 
 export const getFarmerData = async (userId: string): Promise<farmuser[]> =>
   Prisma.farmuser.findMany({ where: { user_id: userId } });
