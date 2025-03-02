@@ -726,14 +726,18 @@ export const getPokerData = async (userId: string): Promise<pokeruser> =>
 export const getTopFarmer = async (
   skip: number,
   bannedUsers: string[],
-  plantType: number
+  plantType: number,
+  toOrderBy: 'rotten' | 'harvested'
 ): Promise<{ user_id: string; harvest: number }[]> => {
+  const orderBy =
+    toOrderBy === 'rotten' ? { rotted: 'desc' as const } : { harvest: 'desc' as const };
+
   const result = await Prisma.farmuser.findMany({
     take: 10,
     skip,
     where: { user_id: { notIn: bannedUsers }, plant: plantType },
-    orderBy: { harvest: 'desc' },
-    select: { harvest: true, user_id: true },
+    orderBy,
+    select: { harvest: true, user_id: true, rotted: true },
   });
 
   return result;
