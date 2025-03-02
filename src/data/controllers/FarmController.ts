@@ -27,9 +27,9 @@ export default class FarmController {
   }
 
   public static async topFarmer(req: Request, res: Response): Promise<Response> {
-    const { skip, bannedUsers, plantType } = req.body;
+    const { skip, bannedUsers, plantType, orderBy } = req.body;
 
-    const top = await getTopFarmer(skip, bannedUsers, plantType);
+    const top = await getTopFarmer(skip, bannedUsers, plantType, orderBy);
 
     return res.status(200).send(top);
   }
