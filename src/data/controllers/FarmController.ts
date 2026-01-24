@@ -20,7 +20,7 @@ export default class FarmController {
       return res.sendStatus(400);
     }
 
-    plants.reduce((p, c) => {
+    const reduced = plants.reduce((p, c) => {
       if (!p[c.plant]) p[c.plant] = 0;
 
       p[c.plant] += 1;
@@ -28,7 +28,7 @@ export default class FarmController {
       return p;
     }, {});
 
-    Object.entries(plants).forEach(([plant, amount]) => {
+    Object.entries(reduced).forEach(([plant, amount]) => {
       registerFarmAction(userId, Number(plant), 'HARVEST', Number(amount));
     });
 
