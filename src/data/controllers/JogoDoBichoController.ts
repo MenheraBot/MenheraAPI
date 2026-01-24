@@ -50,9 +50,6 @@ export default class JogoDoBichoController {
 
     if (numberPage < 1) return res.status(422).json({ message: 'The page must be grather than 0' });
 
-    if (numberPage >= 100)
-      return res.status(422).json({ message: 'The page must be less than 100' });
-
     const results = await getBichoHistory(numberPage);
 
     return res.status(200).json(results);

@@ -43,6 +43,7 @@ StatisticsGroup.post('/transaction', TransactionsController.postTransaction);
 // Fazendinha Command
 StatisticsGroup.get('/fazendinha', FarmController.getFarmerData);
 StatisticsGroup.post('/fazendinha', FarmController.postAction);
+StatisticsGroup.post('/fazendinha-harvest', FarmController.postMultipleHarvest);
 StatisticsGroup.get('/fazendinha/top', FarmController.topFarmer);
 // Rock Paper Scissors Command;
 StatisticsGroup.get(
