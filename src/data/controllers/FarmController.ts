@@ -14,6 +14,27 @@ export default class FarmController {
     return res.sendStatus(201);
   }
 
+  public static async postMultipleHarvest(req: Request, res: Response): Promise<Response> {
+    const { userId, plants } = req.body;
+    if (!userId || typeof plants === 'undefined') {
+      return res.sendStatus(400);
+    }
+
+    plants.reduce((p, c) => {
+      if (!p[c.plant]) p[c.plant] = 0;
+
+      p[c.plant] += 1;
+
+      return p;
+    }, {});
+
+    Object.entries(plants).forEach(([plant, amount]) => {
+      registerFarmAction(userId, Number(plant), 'HARVEST', Number(amount));
+    });
+
+    return res.sendStatus(201);
+  }
+
   public static async getFarmerData(req: Request, res: Response): Promise<Response> {
     const { userId } = req.query;
 
