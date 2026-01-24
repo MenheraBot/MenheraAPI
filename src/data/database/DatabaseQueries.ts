@@ -247,6 +247,7 @@ export const registerBichoGame = async (
   results: string
 ): Promise<void> => {
   await Prisma.bichogames.create({
+    // @ts-expect-error This conversion is bad
     data: { date, players: users, results },
   });
 };
@@ -260,6 +261,7 @@ export const getBichoHistory = async (page: number): Promise<bichogames[]> => {
     orderBy: { id: 'desc' },
   });
 
+  // @ts-expect-error Bigint to Number
   return result.map(a => ({ ...a, date: Number(a.date), results: JSON.parse(a.results) }));
 };
 
