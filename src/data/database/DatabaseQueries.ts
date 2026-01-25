@@ -627,10 +627,12 @@ export const getTransactions = async (
       ? { AND: [{ target_id: { in: users } }, { author_id: { in: users } }] }
       : { OR: [{ target_id: users[0] }, { author_id: users[0] }] };
 
+  const toSkip = itemsPerPage * (page - 1);
+
   const result = await Prisma.transactions.findMany({
     orderBy: { id: 'desc' },
     take: itemsPerPage,
-    skip: itemsPerPage * (page - 1),
+    skip: toSkip < 0 ? 0 : toSkip,
     where: {
       ...usersSearch,
       reason: { in: types },
