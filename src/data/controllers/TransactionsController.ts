@@ -37,8 +37,6 @@ export default class TransactionsController {
       itemsPerPageCount
     );
 
-    if (!data) return res.sendStatus(404);
-
     return res.status(200).send(data);
   }
 }

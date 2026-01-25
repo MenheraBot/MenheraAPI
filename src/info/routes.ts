@@ -16,9 +16,9 @@ InfoRouter.all('/lazymonitor', (req, res): unknown => {
 
   if (Number.isNaN(statusCode) || !statusCode) statusCode = 200;
 
-  if (statusCode < 100 || statusCode > 599)
+  if (statusCode < 100 || statusCode > 999)
     return res.status(400).json({
-      message: 'Viana meu querido, só vou te enviar status codes entre 100 e 599',
+      message: 'Viana meu querido, só vou te enviar status codes entre 100 e 999',
     });
 
   res.statusCode = statusCode;
