@@ -619,7 +619,8 @@ export const getTransactions = async (
   users: string[],
   page: number,
   types: string[],
-  currency: string[]
+  currency: string[],
+  itemsPerPage = 10
 ): Promise<unknown[]> => {
   const usersSearch =
     typeof users[1] !== 'undefined' && users[1].length > 1
@@ -628,8 +629,8 @@ export const getTransactions = async (
 
   const result = await Prisma.transactions.findMany({
     orderBy: { id: 'desc' },
-    take: 10,
-    skip: 10 * (page - 1),
+    take: itemsPerPage,
+    skip: itemsPerPage * (page - 1),
     where: {
       ...usersSearch,
       reason: { in: types },

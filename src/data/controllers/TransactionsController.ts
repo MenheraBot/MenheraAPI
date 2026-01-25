@@ -19,7 +19,7 @@ export default class TransactionsController {
   }
 
   public static async getTransactionsFromUser(req: Request, res: Response): Promise<Response> {
-    const { page = 1, types, users, currency } = req.query;
+    const { page = 1, types, users, currency, itemsPerPage } = req.query;
 
     if (!Array.isArray(users)) return res.sendStatus(400);
 
@@ -27,11 +27,14 @@ export default class TransactionsController {
 
     if (!Array.isArray(currency)) return res.sendStatus(400);
 
+    const itemsPerPageCount = Number(itemsPerPage ?? 10) || 10;
+
     const data = await getTransactions(
       users as string[],
       Number(page),
       types as string[],
-      currency as string[]
+      currency as string[],
+      itemsPerPageCount
     );
 
     if (!data) return res.sendStatus(404);
