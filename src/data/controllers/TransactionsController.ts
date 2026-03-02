@@ -18,6 +18,27 @@ export default class TransactionsController {
     return res.sendStatus(201);
   }
 
+  public static async bulkPostTransaction(req: Request, res: Response): Promise<Response> {
+    const { transactions } = req.body;
+
+    if (!transactions || !Array.isArray(transactions)) return res.sendStatus(400);
+
+    transactions.forEach(({ authorId, targetId, amount, currencyType, reason }) => {
+      if (!authorId || !targetId || !amount || !currencyType || !reason) {
+        console.log(
+          new Date().toISOString(),
+          `Transaction error! ${authorId} ${targetId} ${amount} ${currencyType} ${reason}`
+        );
+
+        return res.sendStatus(400);
+      }
+
+      return createTransaction(authorId, targetId, amount, currencyType, reason);
+    });
+
+    return res.sendStatus(202);
+  }
+
   public static async getTransactionsFromUser(req: Request, res: Response): Promise<Response> {
     const { page = 1, types, users, currency, itemsPerPage } = req.query;
 
