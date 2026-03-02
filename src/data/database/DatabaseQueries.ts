@@ -622,29 +622,24 @@ export const getTransactions = async (
   currency: string[],
   itemsPerPage = 10
 ): Promise<unknown[]> => {
-  const toSkip = Math.max(0, itemsPerPage * (page - 1));
+  const usersSearch =
+    typeof users[1] !== 'undefined' && users[1].length > 1
+      ? { AND: [{ target_id: { in: users } }, { author_id: { in: users } }] }
+      : { OR: [{ target_id: users[0] }, { author_id: users[0] }] };
 
-  const andConditions = [];
-
-  if (users.length === 1)
-    andConditions.push({
-      OR: [{ target_id: users[0] }, { author_id: users[0] }],
-    });
-  else andConditions.push({ target_id: { in: users } }, { author_id: { in: users } });
-
-  if (types?.length) andConditions.push({ reason: { in: types } });
-
-  if (currency.includes('plant'))
-    andConditions.push({
-      OR: [{ currency_type: { in: currency } }, { currency_type: { startsWith: 'plant' } }],
-    });
-  else andConditions.push({ currency_type: { in: currency } });
+  const currencyFilter = currency.includes('plant')
+    ? {
+        OR: [{ currency_type: { in: currency } }, { currency_type: { startsWith: 'plant' } }],
+      }
+    : { currency_type: { in: currency } };
 
   const result = await Prisma.transactions.findMany({
     orderBy: { id: 'desc' },
     take: itemsPerPage,
-    skip: toSkip,
-    where: andConditions.length > 0 ? { AND: andConditions } : {},
+    skip: itemsPerPage * (page - 1),
+    where: {
+      AND: [usersSearch, { reason: { in: types } }, currencyFilter],
+    },
   });
 
   return result.map(a => ({ ...a, date: `${a.date}` }));
