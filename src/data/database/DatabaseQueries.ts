@@ -627,9 +627,9 @@ export const getTransactions = async (
 
   if (users?.length)
     andConditions.push(
-      users.length > 1
-        ? { OR: [{ target_id: { in: users } }, { author_id: { in: users } }] }
-        : { OR: [{ target_id: users[0] }, { author_id: users[0] }] }
+      ...(users.length > 1
+        ? [{ target_id: { in: users } }, { author_id: { in: users } }]
+        : [{ OR: [{ target_id: users[0] }, { author_id: users[0] }] }])
     );
 
   if (types?.length) andConditions.push({ reason: { in: types } });
