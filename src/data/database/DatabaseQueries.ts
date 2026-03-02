@@ -636,7 +636,9 @@ export const getTransactions = async (
     where: {
       ...usersSearch,
       reason: { in: types },
-      currency_type: { in: currency },
+      currency_type: currency.includes('plant')
+        ? { OR: [{ in: currency }, { startsWith: 'plant' }] }
+        : { in: currency },
     },
   });
 
