@@ -150,7 +150,7 @@ model transactions {
   id            Int     @id @default(autoincrement())
   author_id     String  @db.VarChar(20)
   target_id     String  @db.VarChar(20)
-  amount        Decimal @db.Decimal(10, 1)
+  amount        Decimal @db.Decimal(14, 1)
   currency_type String  @db.VarChar(15)
   reason        String  @db.VarChar(40)
   date          BigInt
