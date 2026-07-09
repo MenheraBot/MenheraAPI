@@ -20,15 +20,27 @@ export default class FarmController {
       return res.sendStatus(400);
     }
 
-    const reduced = plants.reduce((p, c) => {
+    const rotted = plants.reduce((p, c) => {
       if (!p[c.plant]) p[c.plant] = 0;
 
-      p[c.plant] += 1;
+      if (c.weight === 0) p[c.plant] += 1;
 
       return p;
     }, {});
 
-    Object.entries(reduced).forEach(([plant, amount]) => {
+    const success = plants.reduce((p, c) => {
+      if (!p[c.plant]) p[c.plant] = 0;
+
+      if (c.weight > 0) p[c.plant] += 1;
+
+      return p;
+    }, {});
+
+    Object.entries(rotted).forEach(([plant, amount]) => {
+      registerFarmAction(userId, Number(plant), 'ROTTED', Number(amount));
+    });
+
+    Object.entries(success).forEach(([plant, amount]) => {
       registerFarmAction(userId, Number(plant), 'HARVEST', Number(amount));
     });
 
