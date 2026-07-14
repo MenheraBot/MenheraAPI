@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-param-reassign */
 import { Request, Response } from 'express';
 import { getFarmerData, getTopFarmer, registerFarmAction } from '../database/DatabaseQueries';
@@ -36,13 +38,13 @@ export default class FarmController {
       return p;
     }, {});
 
-    Object.entries(rotted).forEach(([plant, amount]) => {
-      registerFarmAction(userId, Number(plant), 'ROTTED', Number(amount));
-    });
+    for (const [plant, amount] of Object.entries(rotted)) {
+      await registerFarmAction(userId, Number(plant), 'ROTTED', Number(amount));
+    }
 
-    Object.entries(success).forEach(([plant, amount]) => {
-      registerFarmAction(userId, Number(plant), 'HARVEST', Number(amount));
-    });
+    for (const [plant, amount] of Object.entries(success)) {
+      await registerFarmAction(userId, Number(plant), 'HARVEST', Number(amount));
+    }
 
     return res.sendStatus(201);
   }
