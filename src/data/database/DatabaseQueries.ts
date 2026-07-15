@@ -645,27 +645,24 @@ export const getTransactions = async (
   return result.map(a => ({ ...a, date: `${a.date}` }));
 };
 
-export const registerFarmAction = async (
+export const registerFarmActions = async (
   userId: string,
   plant: number,
-  action: 'HARVEST' | 'ROTTED',
-  amount = 1
+  counts: { harvest?: number; rotted?: number }
 ): Promise<void> => {
   await Redis.ensureUsers(userId);
 
+  const harvest = counts.harvest ?? 0;
+  const rotted = counts.rotted ?? 0;
+  if (harvest === 0 && rotted === 0) return;
+
   await Prisma.farmuser.upsert({
-    where: {
-      user_id_plant: {
-        user_id: userId,
-        plant,
-      },
+    where: { user_id_plant: { user_id: userId, plant } },
+    update: {
+      harvest: { increment: harvest },
+      rotted: { increment: rotted },
     },
-    update: { [action.toLowerCase()]: { increment: amount } },
-    create: {
-      user_id: userId,
-      plant,
-      [action.toLowerCase()]: amount,
-    },
+    create: { user_id: userId, plant, harvest, rotted },
   });
 };
 

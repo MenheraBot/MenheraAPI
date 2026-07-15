@@ -2,18 +2,24 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-param-reassign */
 import { Request, Response } from 'express';
-import { getFarmerData, getTopFarmer, registerFarmAction } from '../database/DatabaseQueries';
+import { getFarmerData, getTopFarmer, registerFarmActions } from '../database/DatabaseQueries';
 
 export default class FarmController {
   public static async postAction(req: Request, res: Response): Promise<Response> {
     const { userId, plant, action } = req.body;
-    if (!userId || typeof plant === 'undefined' || !action) {
+    if (!userId || typeof plant === 'undefined' || (action !== 'HARVEST' && action !== 'ROTTED'))
       return res.sendStatus(400);
+
+    try {
+      await registerFarmActions(
+        userId,
+        plant,
+        action === 'HARVEST' ? { harvest: 1 } : { rotted: 1 }
+      );
+      return res.sendStatus(201);
+    } catch {
+      return res.sendStatus(500);
     }
-
-    await registerFarmAction(userId, plant, action);
-
-    return res.sendStatus(201);
   }
 
   public static async postMultipleHarvest(req: Request, res: Response): Promise<Response> {
@@ -22,28 +28,24 @@ export default class FarmController {
       return res.sendStatus(400);
     }
 
-    const rotted = plants.reduce((p, c) => {
-      if (!p[c.plant]) p[c.plant] = 0;
+    const counts = plants.reduce(
+      (
+        p: Record<number, { harvest: number; rotted: number }>,
+        c: { plant: number; weight: number }
+      ) => {
+        if (!p[c.plant]) p[c.plant] = { harvest: 0, rotted: 0 };
 
-      if (c.weight === 0) p[c.plant] += 1;
+        if (c.weight > 0) p[c.plant].harvest += 1;
+        else p[c.plant].rotted += 1;
 
-      return p;
-    }, {});
+        return p;
+      },
+      {}
+    );
 
-    const success = plants.reduce((p, c) => {
-      if (!p[c.plant]) p[c.plant] = 0;
-
-      if (c.weight > 0) p[c.plant] += 1;
-
-      return p;
-    }, {});
-
-    for (const [plant, amount] of Object.entries(rotted)) {
-      await registerFarmAction(userId, Number(plant), 'ROTTED', Number(amount));
-    }
-
-    for (const [plant, amount] of Object.entries(success)) {
-      await registerFarmAction(userId, Number(plant), 'HARVEST', Number(amount));
+    // @ts-expect-error Not typed
+    for (const [plant, { harvest, rotted }] of Object.entries(counts)) {
+      await registerFarmActions(userId, Number(plant), { harvest, rotted });
     }
 
     return res.sendStatus(201);
